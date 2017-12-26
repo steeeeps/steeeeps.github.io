@@ -365,13 +365,10 @@
           
             <p>logstash提供了很多过滤器，但是有些是需要自己安装的，以mongodb为例，纪录使用淘宝镜像安装mongodb output 过滤器。</p>
 <ol>
-<li><p>修改logstash 安装目录下的 gemfile文件 中的源为<a href="https://ruby.taobao.org/" target="_blank" rel="external">https://ruby.taobao.org/</a></p>
-</li>
-<li><p>安装离线插件，在 gemfile文件中找到或者添加如下配置,以 mongodb 为例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gem <span class="string">"logstash-output-mongodb"</span>, :path =&gt; <span class="string">"file:///C:/soft/logstash-output-mongodb-3.1.1"</span></div></pre></td></tr></table></figure>
-<p>​</p>
-</li>
+<li>修改logstash 安装目录下的 gemfile文件 中的源为<a href="https://ruby.taobao.org/" target="_blank" rel="external">https://ruby.taobao.org/</a></li>
+<li>安装离线插件，在 gemfile文件中找到或者添加如下配置,以 mongodb 为例：</li>
 </ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gem &quot;logstash-output-mongodb&quot;, :path =&gt; &quot;file:///C:/soft/logstash-output-mongodb-3.1.1&quot;</div></pre></td></tr></table></figure>
 
           
         
