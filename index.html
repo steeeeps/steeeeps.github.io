@@ -677,54 +677,14 @@
 
       
         
-          
-            <p>logstash提供了很多filter、input、output插件，但是有些是需要自己安装的，以logstash-output-mongodb为例，纪录安装插件的方法。</p>
-<h3 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h3><p>以下两个操作需要联网，并确保能访问<a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a>,如果不能访问可以使用代理或者修改logstash 安装目录下的 gemfile文件中的源为淘宝镜像<a href="https://ruby.taobao.org/。" target="_blank" rel="external">https://ruby.taobao.org/。</a></p>
-<h4 id="直接安装"><a href="#直接安装" class="headerlink" title="直接安装"></a>直接安装</h4><ol>
-<li><p>进入logstash安装目录，输入以下代码进行安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/logstash-plugin install</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h4><ol>
-<li><p>下载插件源码<a href="https://github.com/logstash-plugins/logstash-output-mongodb" target="_blank" rel="external">logstash-output-mongodb</a>,并解压。</p>
-</li>
-<li><p>打开解压目录，打开 gemfile文件并找到或者添加如下配置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gem <span class="string">"logstash-output-mongodb"</span>, :path =&gt; <span class="string">"file:///C:/soft/logstash-output-mongodb-3.1.1"</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>执行代码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/logstash-plugin install --no-verify</div></pre></td></tr></table></figure>
-</li>
-<li><p>安装成功</p>
-</li>
-</ol>
-<blockquote>
-<p>这一步网上介绍的都是属于离线安装模式，但是在实际操作中还是 <strong>需要联网</strong> </p>
-</blockquote>
-<h3 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h3><p>生产环境很多服务器无法联网，无法安装插件，可以先在能够联网的服务器上使用以上两种方式进行安装，然后使用以下两种方式将插件拷贝至无法联网的服务器。</p>
-<h4 id="直接拷贝"><a href="#直接拷贝" class="headerlink" title="直接拷贝"></a>直接拷贝</h4><ol>
-<li>拷贝 [logstash安装目录]/vender/bundle/jruby/1.9/gems/ 下面的你要的插件整个文件夹到目标机器同目录下。</li>
-<li>拷贝 [logstash安装目录]/vendor/bundle/jruby/1.9/specifications/ 下面对应的声明文件到目标机器同目录下。</li>
-<li>手动修改[logstash安装目录]/Gemfile 文件，加入插件行如：gem “logstash-output-mongodb”</li>
-</ol>
-<blockquote>
-<p>这种方法我测试了，安装无效， <strong>不推荐继续使用</strong>。</p>
-</blockquote>
-<h4 id="离线打包"><a href="#离线打包" class="headerlink" title="离线打包"></a>离线打包</h4><p>使用官方推荐的离线插件管理方法进行安装</p>
-<ol>
-<li><p>进入logstash安装目录，运行以下命令，对插件打包。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin\logstash-plugin prepare-offline-pack --output logstash-output-mongodb.zip logstash-output-mongodb</div></pre></td></tr></table></figure>
-</li>
-<li><p>将运行结果生成的logstash-output-mongodb.zip文件拷贝至目标服务器，运行以下命令，进行离线安装。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin\logstash-plugin install file:///c:/path/logstash-output-mongodb.zip</div></pre></td></tr></table></figure>
-</li>
-<li><p>提示，Install successful，安装成功。</p>
-</li>
-</ol>
-<blockquote>
-<p><strong>logstash离线安装插件推荐使用此方式进行安装</strong>。</p>
-</blockquote>
-
-          
+          <p>logstash提供了很多filter、input、output插件，但是有些是需要自己安装的，以logstash-output-mongodb为例，纪录安装插件的方法。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/logstash-install-plugin/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
