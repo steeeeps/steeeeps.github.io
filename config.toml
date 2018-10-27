@@ -1,0 +1,31 @@
+baseurl = "https://example.com"
+languageCode = "zh_CN"
+title = "steeeeps"
+theme = "kiss"
+copyright = "&copy; <a href=\"https://github.com/steeeeps\">steeeeps</a> 2012-2017"
+summaryLength = 5
+
+
+Paginate = 10 # Number of posts per page
+enableRobotsTXT = true
+
+[params.info]
+homeTitle = "steeeeps" # Title for home page
+poweredby = true # Adds powered by hugo and kiss below Copyright
+related = true # Includes related articles at the bottom of the article
+
+
+[params.assets]
+customCSS = ["css/custom.css"]
+
+[params.social]
+github = "steeeeps"
+email = "steeeeps@gmail.com"
+
+[params.extend]
+baiduAnalytics = "https://hm.baidu.com/hm.js?8ac2113fa94f527ab87a09d6ef1a82b1"
+dateFormat = "2006-01-02"
+
+[params.highlight]
+jsurl = "/highlight/highlight.pack.js"
+cssurl ="/highlight/styles/monokai.css"

@@ -1,0 +1,56 @@
+---
+title: 使用userAgent区分客户端类型
+date: 2015-01-14 23:23:38
+categories:
+- JavaScript
+tags:
+- userAgent
+---
+
+前段时间做了个小网站，需要在区别移动端和pc端显示效果。由于功能需求比较简单，所以就没有使用响应式设计，而是使用传统方式分别做了移动端和pc端两个页面。
+
+一般使用userAgent来区分移动端和pc端还是相对容易的事情，但是我的需求是pc端和pad端都需要显示pc端页面，而在手机端显示移动端页面。  
+<!-- more -->
+由于整个程序都是静态页面，就选择了使用javascript+正则表达式的方式，如下：
+
+``` javascript
+if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || /MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|Nexus|ZTE/.test(navigator.userAgent)) {	
+
+	try {
+    		//微信内嵌浏览器
+		    if(/MicroMessenger/i.test(navigator.userAgent)){
+       			//显示mobile页面
+    }
+    //ipad
+    else if (/iPad/i.test(navigator.userAgent)) {
+            //显示pc端页面
+    }
+    //Nexus 
+    else if(/Nexus/i.test(navigator.userAgent)){
+          var nexusVersion=navigator.userAgent.match(/Nexus ([\d.]+)/)[1];
+          //Nexus 7以上的平板
+         if(parseInt(nexusVersion)&gt;=7){
+             //显示pc端页面
+         }else{
+            		//显示mobile页面
+         	}
+    }           	
+    else if (/Android|webOS|iPhone|iPod|BlackBerry|BB/i.test(navigator.userAgent)) {
+            	//显示mobile页面
+     } else {
+               //显示pc端页面
+     }
+    } catch (e) {}
+   }else{
+   	 //显示pc端页面
+   }
+```
+
+当然，这段代码稍作修改放在服务器端处理那是最好不过的了。
+
+这个处理方式使用chrome 开发者工具，模拟手机和平板测试基本是没有问题的。
+
+目前知道的bug为：**无法获取可以判断为三星平板和小米平板的userAgent，所以这两个平板目前都显示为mobile页面。**
+
+因为不同的设备发送的userAgent都有特殊的标识，这是chrome开发者工具无法模拟的。例如小米3电信版中就含有MI3C字样，所以，如果您有兴趣的话，可以使用这段代码试试。
+
