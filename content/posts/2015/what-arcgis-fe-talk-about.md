@@ -16,7 +16,6 @@ tags:
 
 那么当我们在谈论 ArcGIS 前端工程师时，工程师们在谈论什么呢？
 
-<!-- more -->
 
 ![ags-front-end-develope-skills](/images/2015/ags-front-end-develope-skills.png)
 
@@ -26,7 +25,7 @@ tags:
 
 面对这么多技能，作为新手，都需要怎样的一步一步去学习这些知识呢？
 
-### ArcGIS 前端工程师入门 ### 
+# ArcGIS 前端工程师入门 
 
 作为入门ArcGIS 前端工程师，无论你是学生还是有其他框架开发经验的工作人员。我假设你是刚开始接触前端开发和 ArcGIS API for JavaScript，那么你首先需要去学习以下几点：
 
@@ -44,7 +43,7 @@ tags:
 
 如果你学习并在实际开发中运用到了以上几点，恭喜你，你需要开始进入苦逼的进阶阶段去涉猎更多开发时需要用到的知识了。
 
-### ArcGIS 前端工程师进阶 ###
+# ArcGIS 前端工程师进阶
 
 1. 去学习HTML5，CSS3的知识， 在系统中做更炫、功能更丰富的应用。
 
@@ -70,7 +69,7 @@ tags:
 
 12. 学习使用fiddler来查看网络请求信息。
 
-### ArcGIS 前端工程师高级进阶 ###  
+# ArcGIS 前端工程师高级进阶
 
 1. 深入学习ArcGIS Server，学习使用Web App Buider搭建应用和定制开发(用过的都说好^_^)。
 

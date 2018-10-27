@@ -10,8 +10,7 @@ tags:
 在浏览器中，dom的实现和javascript的实现通常是保持相互独立的，比如chrome使用webKit渲染页面，而使用v8作为javascript引擎，firefox使用Gecko渲染页面，使用IonMonkey作为最新的javascript引擎。
 
 有一个非常形象的比如就是将dom和js分别看做两座岛屿，而两者之间以收费桥连接，当js访问dom时，就需要过桥，需要交过桥费，所以访问的次数越多，教的过桥费也就越多（摘自[《High Performance Javascript](http://www.amazon.com/Performance-JavaScript-Faster-Application-Interfaces/dp/059680279X "High Performance Javascript")》）。所以合理的处理好dom和js的交互，对页面的性能也有很大的提升。
-
-<!-- more -->
+ 
 
 合理的操作dom主要包括访问和修改dom元素、注册dom元素事件、浏览器重绘与重排，前两者是最普遍的优化问题，也是最易优化的，但是理解重绘与重排对大型的web程序来说，是十分重要的。
 

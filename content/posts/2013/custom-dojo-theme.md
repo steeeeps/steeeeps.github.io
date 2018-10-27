@@ -9,9 +9,7 @@ tags:
 
 到现在的dojo1.8.3版本中，dojo框架提供了四个主题，**nihilo**、**tundra**、**soria**和**claro**，我个人是非常喜欢**claro**主题的风格，淡淡的蓝，用了一些css3的效果，整个体验都很不错,但是谁也不喜欢自己做的系统主题样式和别人一致，就像不喜欢和别人撞衫一样，所以在平时开发中也会想尽一切办法来改变dojo主题。下面就分享两个自定义dojo主题的方法。
 
-<!-- more -->
-
-## 重写样式  
+# 重写样式  
 
 这个方法可能是使用起来最简单，适用面最广的一种方法，用浏览器调试工具找出dijit的样式，修改为自己的想要的样式，比如我想修改dojo的Dialog的样式，我只需要找到Dialog对应的css样式，修改为以下css代码：
 ``` css
@@ -71,11 +69,11 @@ tags:
 
 虽然这样重写dijit样式的方式是比较简单、快捷，但是对于一个主题来说通常这样修改的地方都零零散散，如果需要修改多个控件，那修改的地方就比较多，显得比较麻烦。    
 
-## 使用LESS CSS创建dojo主题  
+# 使用LESS CSS创建dojo主题  
 
 随着整个Dojo Tookit越来越强大，从Dojo1.6开始增加了使用[LESS CSS](http://www.lesscss.net)框架来创建Dijit的主题。使用LESS来创建Dijit主题是一个非常明智的改变，因为这能够使开发者定制自己的主题越来越简单。下面就介绍一下Dojo是如何使用LESS来创建Dijit主题的，以及如何来定制我们自己的主题。
 
-### LESS
+## LESS
 
 LESS CSS背后的思想是十分简单的：通过使用变量(variables)、混入(mixins)、操作(operations)以及函数(functions)等动态行为来扩展CSS。简单来说：弥补了CSS的继承限制。LESS能够在服务器端的[Node.js](http://nodejs.org/)环境中使用，也能够通过在客户端引入JavaScript文件来使用。我们将使用第一种方法来创建Dojo主题。在Node.js环境中，我们使用nmp来安装LESS(假设你的机器上已经安装了Node.js和npm)：
 
@@ -83,7 +81,7 @@ LESS CSS背后的思想是十分简单的：通过使用变量(variables)、混�
 npm install less
 ```
 
-### Dijit中LESS的使用
+## Dijit中LESS的使用
 
 打开dojo1.6+安装目录中claro主题的位置：
 ``` bash
@@ -144,7 +142,7 @@ cd dijit/themes/claro/
 
 现在，打开 Calendar.less文件，并且查找”@border-color”的实例，你会发现这些实例都引用自在variables.less中定义的变量 “@border-color” 。所有以‘@’作为前缀的变量都会在编译时被替换为相应的值。
 
-### 创建你自己的Dijit主题
+## 创建你自己的Dijit主题
 
 自定义主题最简单的方式就是复制一份最新的，并且官方提供支持的主题，这里，我推荐claro.claro是一款有专业外观的蓝色主题，使用了被大部分浏览器所支持的Css gradients,transitions和roundeed corners等css3效果.
 
@@ -157,7 +155,7 @@ cd dijit/themes/claro/
 
 在将variables.less文件修改为我理想中的设计后。如果我们想要让小部件与claro主题中的看起来不一样，我们还需要打开相应的{WidgetName}.less文件做适当的调整。当根据你的喜好修改完所有的.less文件后,就需要将.less文件编译为能被浏览器识别的css文件。
 
-### 编译LESS主题
+## 编译LESS主题
 
 在编译主题之前，还需要介绍下目录中的compile.js文件，该文件是用来浏览当前目录以及‘form’和‘layout’子目录中所有的.less文件，所有的.less文件都会被解析并且使用variables.less中定义的值来替换相应的变量，并且创建同名的css文件。
 
@@ -169,7 +167,7 @@ cd dijit/themes/claro/
 
 通过运行这个命令，将会创建于.less文件相对应的同名.css文件。快速扫描这些文件将确认所有的变量都被替换在相应的位置，现在，你自定义的主题已经完成。
 
-### 使用自定义主题
+## 使用自定义主题
 
 找到themeTester.html文件(/dijit/themes/themeTester.html),将自己定义的主题添加至该文件。
 

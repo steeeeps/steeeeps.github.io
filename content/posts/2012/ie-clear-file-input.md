@@ -15,9 +15,6 @@ document.getElementById("myFile").value = "";
 
 来完成我们的操作。这个方法也是非IE浏览器主要使用的方法。  
 
-<!-- more -->
-
-
 但是在IE中，由于IE自身的安全策略，认为 file input 是read only 的控件，所以IE是不允许这样操作的，但是在IE中也可以使用如下两个方法完成： 
 
 1. 如果file input在表单中的话，可以直接使用document.getElementById(“myForm”).reset();来重置整个表单。  

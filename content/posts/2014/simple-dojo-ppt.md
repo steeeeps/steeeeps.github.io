@@ -11,8 +11,6 @@ tags:
 
 作为arcgis javascript api 的底层框架，很多初学者在学习使用arcgis javascript api时，对于dojo的理解都不够，造成了“dojo 入门难、ags javascript api开发门槛高”等误解。
 
-<!-- more -->
-
 下面的ppt主要针对dojo基础，对dojo的基础知识做一个梳理，使大家在学习使用arcgis javascript api之前学习dojo有一个比较清晰的线路。降低学习难度。
 
 内容中如有错误的地方，希望大家指正、交流!

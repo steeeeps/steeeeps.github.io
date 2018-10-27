@@ -13,9 +13,6 @@ tags:
 
 而4.0则是ArcGIS API for JavaScript的一次重大变革。除了新添加对万众瞩目的 Web 3D 的支持，API自身的变化和对最新的HTML5、CSS3元素的支持使API变的更简洁、强大、灵活、高效。  
 
-
-<!-- more -->
-
 4.0的变革，主要体现在：   
 
 > 1. 使用 [ES5 Accessors API](http://odoe.net/blog/arcgis-js-api-4-0beta1-accessors/) 代替使用事件来监控属性值的变化。[查看详情](https://developers.arcgis.com/javascript/beta/api-reference/esri-core-Accessor.html)。  

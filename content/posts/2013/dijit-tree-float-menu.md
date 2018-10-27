@@ -10,13 +10,11 @@ tags:
 
 使用dijit树控件时，对于额外的操作一般都会以添加右键菜单的方式来完成。但是对于用户而言，如果没有特别的提示，就有可能不知道该控件是否提供了右键操作菜单，所以，添加浮动菜单对用户体验而言是有一定增进效果的。
 
-<!-- more -->
-
 ![](https://raw.github.com/steeeeps/treeFloatMenu/master/example/dijitTree_FloatMenu.png)
 
 **[源码下载](https://github.com/steeeeps/treeFloatMenu)**
 
-## 用法
+# 用法
 
 *   引入css
 ``` html
@@ -50,13 +48,13 @@ tags:
 }]);
     ```
 
-## api说明
+# api说明
 
-### tree.floatMenu()
+## tree.floatMenu()
 
 传入菜单操作项对象(floatItem，例如上面语句中的删除节点项)或对象数组。
 
-### floatItem
+## floatItem
 
 *   node:操作项dom节点对象或html字符串。
 *   onClick:操作项点击事件，通过`event.floatNode`获得浮动菜单所在的当前树节点;通过`event.tree`获取当前树控件。

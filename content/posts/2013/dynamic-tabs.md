@@ -12,10 +12,8 @@ tags:
 
 所有js压缩后不到6kb，还算满足要求。
 
-<!-- more -->
 
 ![tabcontainer](/images/2013/tabcontainer.png)
-
 
 
 包含一个dom.js,lang.js,tabContainer.js。tabContainer.min.js为前面三个js文件的压缩文件。

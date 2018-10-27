@@ -10,8 +10,6 @@ tags:
 
 在eclipse里面编写java代码时，经常遇见这样一个情况，在tomcat启动后，保存更新后的java文件，代码经常跳转至 ThreadPoolExecutor.class，停留在workerDone(this)一行代码.
 
-<!-- more -->
-
 解决方法：
 
 在eclipse中，进入window->preferences->java->Debug，将Suspend execution on uncaught exceptions 前的复选框去掉。

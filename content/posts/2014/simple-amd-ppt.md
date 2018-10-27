@@ -8,7 +8,6 @@ tags:
 ---
 
 在dojo1.7版本之后，已经全部使用amd规范来定义模块，arcgis javascript api基于dojo之上，从3.0版本开始使用dojo1.7，也全面支持AMD规范。
-<!-- more -->
 
 AMD规范极大地改善了代码的可维护性，应用的性能、互用性。
 

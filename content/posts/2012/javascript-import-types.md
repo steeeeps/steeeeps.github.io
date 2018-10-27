@@ -9,8 +9,6 @@ tags:
 
 这一周开始学习大师 Nicholas C. Zakas 所著的[High Performance JavaScript](http://www.amazon.com/Performance-JavaScript-Faster-Application-Interfaces/dp/059680279X/ "High Performance JavaScript ")，第一次尝试阅读英文原版，感觉难度也不是想象中的那么大，遇见不懂得单词直接“有道”。对于有一定javascript基础的开发人员来说，我觉得读一点英文原版的技术书籍，对技术的理解还是会有很大的帮助。所以也希望自己能继续坚持下来。
 
-<!-- more -->
-
 在学习了第一章Loading and Execution(javascript的加载与执行)后，自己感触也挺深的，结合自己这两个月时间所做的项目，对javascript的加载与执行进行一次总结，希望对以后的工作有所帮助。
 
 关于javascript在浏览器中的加载，其实有点经验的开发人员大都知道，由于浏览器使用单进程来处理UI的更新和javascript的加载与执行，所以，当浏览器自上而下解析html页面时，遇上script标签的时候，浏览器就会去下载script标签中引入的外部javascript文件和执行内联或下载完成以后的javascript代码，而造成页面的等待，即使现在的主流浏览器都允许并行下载javascript，来节省下载js所用的时间，但是javascript下载的过程中也会影响其他的资源下载，比如说图片，而且，浏览器仍然会等待所有的javascript下载完成并执行完成以后才会继续解析页面，所以javascript的阻塞性质仍然存在。引用书中的一张图片来说明：

@@ -13,8 +13,6 @@ tags:
 
 由于是使用lnmp一键安装包，所以要让nginx支持wordpress固定链接非常简单，因为安装后/usr/local/nginx/conf/目录下有一个wordpress.conf文件，将其包含进nginx.conf即可。
 
-<!-- more -->
-
 具体的操作步骤如下：
 
 ``` bash
