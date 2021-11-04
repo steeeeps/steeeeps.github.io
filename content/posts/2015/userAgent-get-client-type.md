@@ -1,5 +1,6 @@
 ---
 title: 使用userAgent区分客户端类型
+description: 
 date: 2015-01-14 23:23:38
 categories:
 - JavaScript

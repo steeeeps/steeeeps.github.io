@@ -1,5 +1,6 @@
 ---
 title: 我的理想是做一名科学家
+description: 
 date: 2013-03-09 17:12:09
 categories:
 - 生活

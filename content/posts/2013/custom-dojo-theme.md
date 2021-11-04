@@ -1,5 +1,6 @@
 ---
 title: 自定义dojo主题
+description: 
 date: 2013-04-14 11:10:07
 categories:
 - JavaScript

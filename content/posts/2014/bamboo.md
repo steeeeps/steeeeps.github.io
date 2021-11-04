@@ -1,5 +1,6 @@
 ---
 title: 毛竹
+description: 
 date: 2014-05-31 13:25:25
 categories:
 - 生活

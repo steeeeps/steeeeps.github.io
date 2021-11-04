@@ -1,5 +1,6 @@
 ---
 title: dom编程优化
+description: 
 date: 2013-02-03 17:20:04
 categories:
 - JavaScript

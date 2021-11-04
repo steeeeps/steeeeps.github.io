@@ -1,5 +1,6 @@
 ---
 title: logstash 插件安装方式
+description: logstash提供了很多filter、input、output插件，但是有些是需要自己安装的，以logstash-output-mongodb为例，纪录安装插件的方法。
 date: 2017-12-26 22:10:49
 categories:
 - 大数据

@@ -1,5 +1,6 @@
 ---
 title: c# 执行sql脚本文件
+description: 
 date: 2015-03-07 23:16:39
 categories:
 - C#

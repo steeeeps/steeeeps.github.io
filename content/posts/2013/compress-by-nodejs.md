@@ -1,5 +1,6 @@
 ---
 title: 基于nodejs的js、css压缩打包程序
+description: 
 date: 2013-03-10 17:07:53
 categories:
 - JavaScript

@@ -1,6 +1,7 @@
 ---
 title: 拥抱 ArcGIS API for JavaScript 4.0
-date: 2015-8-16 22:38:29
+description: 
+date: 2015-08-16 22:38:29
 categories:
 - GIS
 - ArcGIS API for JavaScript

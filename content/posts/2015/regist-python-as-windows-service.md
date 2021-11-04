@@ -1,5 +1,6 @@
 ---
 title: 将python程序注册为windows服务
+description: 
 date: 2015-12-14 16:56:18
 categories:
 - Python

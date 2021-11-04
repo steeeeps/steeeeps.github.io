@@ -1,5 +1,6 @@
 ---
 title: dojo 基础交流
+description: 
 date: 2014-02-28 13:36:55
 categories:
 - JavaScript

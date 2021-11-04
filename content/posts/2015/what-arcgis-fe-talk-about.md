@@ -1,5 +1,6 @@
 ---
 title: 当我们在谈论 ArcGIS 前端工程师时，工程师们在谈论什么
+description: 随着HTML5的火热，不管是在校的GIS学生、马上进入工作岗位的GIS毕业生，还是有几年其他ArcGIS 开发框架开发经验的开发人员，看着ESRI停止对Flex 和 Silverlight API的更新，大力推荐开发者使用 ArcGIS API for JavaScript 来构建应用系统时，是不是都会感觉有一点小激动，小心脏扑通扑通的？都在想着能不能借HTML5的东风实现自己当上CTO、迎娶白富美、走上人生巅峰的梦想？
 date: 2015-07-06 22:55:41
 categories:
 - GIS

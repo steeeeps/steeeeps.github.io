@@ -1,5 +1,6 @@
 ---
 title: 当你有能力帮助他人的时候，想想曾经帮助过你的人
+description: 
 date: 2013-11-02 13:44:34
 categories:
 - 生活

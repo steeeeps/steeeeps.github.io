@@ -1,5 +1,6 @@
 ---
 title: AMD规范交流
+description: 
 date: 2014-02-28 13:38:19
 categories:
 - JavaScript

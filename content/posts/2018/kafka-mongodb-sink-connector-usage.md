@@ -1,5 +1,6 @@
 ---
 title: mongodb sink connector 使用方法
+description: mongodb sink connector 大致用法与 jdbc sink connector 相似。只是 jdbc sink connector 是 Confluent 官方提供。
 date: 2018-01-12 22:17:00
 categories:
 - 大数据

@@ -1,5 +1,6 @@
 ---
 title: 分享两个arcgis javascript api 小工程
+description: 
 date: 2012-12-05 17:39:23
 categories:
 - GIS

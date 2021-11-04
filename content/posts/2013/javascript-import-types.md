@@ -1,5 +1,6 @@
 ---
 title: javascript引入页面方式
+description: 
 date: 2012-12-15 17:34:04
 categories:
 - JavaScript

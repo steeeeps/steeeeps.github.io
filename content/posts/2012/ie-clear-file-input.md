@@ -1,5 +1,6 @@
 ---
 title: IE 清空file input值
+description: 
 date: 2012-10-10 21:38:32
 categories:
 - JavaScript

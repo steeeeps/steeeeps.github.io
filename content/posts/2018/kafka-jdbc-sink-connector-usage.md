@@ -1,5 +1,6 @@
 ---
 title: JDBC sink connector 使用方法
+description: Kafka Connect 是在0.9版本之后增加的新特性,可以更方便的创建和管理数据流管道。它为Kafka和其它系统创建规模可扩展的、可信赖的流数据提供了一个简单的模型，通过connectors可以将大数据从其它系统导入到Kafka中，也可以从Kafka中导出到其它系统。
 date: 2018-01-12 22:03:00
 categories:
 - 大数据

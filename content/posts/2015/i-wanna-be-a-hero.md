@@ -1,5 +1,6 @@
 ---
 title: 我该有正义感吗
+description: 
 date: 2015-03-13 23:12:43
 categories:
 - 生活

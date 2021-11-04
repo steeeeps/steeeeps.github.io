@@ -1,5 +1,6 @@
 ---
 title: logstash 使用配置纪录
+description: logstash是Elastic stack中最主要的数据获取、转换工作。主要记录一下日常使用中的配置信息。
 date: 2017-12-26 22:02:27
 categories:
 - 大数据

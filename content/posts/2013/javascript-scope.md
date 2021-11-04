@@ -1,5 +1,6 @@
 ---
 title: javascript 作用域的工作原理
+description: 
 date: 2013-02-03 17:27:08
 categories:
 - JavaScript

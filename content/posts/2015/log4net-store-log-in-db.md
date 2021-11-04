@@ -1,5 +1,6 @@
 ---
 title: log4net自定义日志内容入库
+description: 
 date: 2015-10-28 17:58:17
 categories:
 - C#
