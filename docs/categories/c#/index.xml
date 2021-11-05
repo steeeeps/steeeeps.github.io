@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C# on steeeeps</title>
+    <link>https://steeeeps.github.io/categories/c#/</link>
+    <description>Recent content in C# on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Wed, 28 Oct 2015 17:58:17 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/categories/c#/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>log4net自定义日志内容入库</title>
+      <link>https://steeeeps.github.io/posts/2015/log4net-store-log-in-db/</link>
+      <pubDate>Wed, 28 Oct 2015 17:58:17 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/log4net-store-log-in-db/</guid>
+      <description>在系统开发中，日志记录是最基本的功能，良好的日志记录习惯与记录格式，对开发调试、错误定位有很大的帮助。
+log4net是在.net开发中使用的最多的日志框架，使用很方便，只需要简单的配置，就能够将日志信息输出到文本文件中。其实log4net也支持将用户自定义的日志类型直接输出到各类型数据库中。这样就更方便的在程序中以表格或其他方式对日志进行展示。
+以sqlite数据库为例，展示log4net使用反射机制将自定义日志内容存入数据库中。
+具体步骤 1.在数据库中创建日志表 CREATE TABLE LOG (logtime timestamp,message varchar,user varchar) 2.创建自定义日志类 using System; using System.Collections.Generic; using System.Linq; using System.Text; namespace Loglite { class LogModel { public string User { get; set; } public DateTime LogTime { get; set; } public string Message { get; set; } public LogModel(string user, string message) { this.User = user; this.Message = message; this.LogTime = DateTime.Now; } } } 3.自定义视图转换器 using log4net.Layout.Pattern; using System; using System.</description>
+    </item>
+    
+    <item>
+      <title>c# 执行sql脚本文件</title>
+      <link>https://steeeeps.github.io/posts/2015/csharp-excute-sql-file/</link>
+      <pubDate>Sat, 07 Mar 2015 23:16:39 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/csharp-excute-sql-file/</guid>
+      <description>在工作中，之前遇见过这种情况：
+需要通过sql脚本在多个服务器上创建数据库，比如在oracle中创建一个数据库并导入数据，我之前是这样做的：
+  打开PlSql 打开创建表空间sql脚本，执行。 打开创建用户sql脚本，执行。 打开创建表结构sql脚本，执行。 打开初始数据sql脚本，执行。   然后要创建多个数据库的话，同上同上….
+然后根据不同的用户需求，我不仅要装oracle，还得装sqlserver和postgresql。反复的手工操作是很苦逼的。
+为了简化手工操作，便使用c# 写了这样一个工具，主要功能在于：
+ 手动选择数据库类型，oracle、sqlserver、postgresql。 手动配置需要执行的sql脚本与执行顺序。 根据配置的sql脚本顺序执行，并返回执行结果。  以oracle数据库为例，sql脚本配置如下：
+ create_tablespace.sql create_user.sql create_tables.sql import_data.sql
+ 其实使用c#来操作这三大主流数据库是非常简单的，网上有很多例子，我只是简单的封装了一下，在完成的过程中主要注意以下几点：
+ 工具需要即拿即用，不需要安装oracle客户端即可使用，所以需要下载操作相关dll，注意下载时需要根据实际需求区分64、32位版本。在此提供我用到的oracle11g_64位dll。 操作postgresql需要下载Npgsql.dll。 虽说是执行sql脚本文件，其实本质还是执行的一条条sql语句，不同的数据库平台语句分割方式不一样，oracle和postgresql使用“;”而sqlserver使用 “GO”，这一点可以在导出的sql脚本中查看。 oracle创建表空间时需要先创建表空间目录，所以推荐在创建表空间脚本中不写创建路径，系统会自动将表空间创建于默认目录，路径为：[ORACLE_INSTALL_DIR]\product\11.1.0\db_1\database。 postgresql创建表空间需要在数据库安装路径中手动创建表空间文件夹，该路径为[POSTGRESQL_INSTALL_DIR]\tablespace\，并且将新建的表空间文件夹的写权限赋予TrustedInstaller 和 user 用户。或者也可以选择使用默认表空间来导入数据。  主要调用代码如下：
+DBModel model = new DBModel(&amp;#34;Oracle&amp;#34;, &amp;#34;127.0.0.1&amp;#34;, &amp;#34;1521&amp;#34;, &amp;#34;sys&amp;#34;, &amp;#34;admin&amp;#34;, &amp;#34;&amp;#34;, &amp;#34;orcl&amp;#34;); string filepath = &amp;#34;test.sql&amp;#34;; IDBOperate dboperate = null; if (model.Type == &amp;#34;Oracle&amp;#34;) { dboperate = new OraceDBOperate(); } else if (model.</description>
+    </item>
+    
+  </channel>
+</rss>

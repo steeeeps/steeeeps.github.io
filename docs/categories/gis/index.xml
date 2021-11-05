@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GIS on steeeeps</title>
+    <link>https://steeeeps.github.io/categories/gis/</link>
+    <description>Recent content in GIS on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Sun, 16 Aug 2015 22:38:29 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/categories/gis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>拥抱 ArcGIS API for JavaScript 4.0</title>
+      <link>https://steeeeps.github.io/posts/2015/arcgis-js-api-4-0-coming/</link>
+      <pubDate>Sun, 16 Aug 2015 22:38:29 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/arcgis-js-api-4-0-coming/</guid>
+      <description>2015年7月，ESRI 推出了 ArcGIS API for JavaScript 3.14 和 ArcGIS API for JavaScript 4.0 Beta 1 两个 API 版本。
+前者是常规版本的一次更新，包含了对3.13bug的修改以及功能类和小部件的增加。
+而4.0则是ArcGIS API for JavaScript的一次重大变革。除了新添加对万众瞩目的 Web 3D 的支持，API自身的变化和对最新的HTML5、CSS3元素的支持使API变的更简洁、强大、灵活、高效。
+4.0的变革，主要体现在：
+  使用 ES5 Accessors API 代替使用事件来监控属性值的变化。查看详情。 绘图逻辑修改，增加MapView和SceneView来分别绘制2D、3D地图。 模块与包名的改变，使API变的更简洁，例如使用 ArcGISTiledLayer 替换 ArcGISTiledMapServiceLayer。 只支持使用 AMD 规范来定义、加载模块。 使用promise来解决事件监听带来的无限回调，让代码更简洁、优雅。 对现代浏览器的依赖，例如3D需要IE11。中国的工程师可能需要逐步引导用户由IE8 升级至新版本IE或Chrome、Firefox、Safari。   更多内容与用法，请点击查看:ArcGIS API for JavaScript Guide</description>
+    </item>
+    
+    <item>
+      <title>当我们在谈论 ArcGIS 前端工程师时，工程师们在谈论什么</title>
+      <link>https://steeeeps.github.io/posts/2015/what-arcgis-fe-talk-about/</link>
+      <pubDate>Mon, 06 Jul 2015 22:55:41 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/what-arcgis-fe-talk-about/</guid>
+      <description>随着HTML5的火热，不管是在校的GIS学生、马上进入工作岗位的GIS毕业生，还是有几年其他ArcGIS 开发框架开发经验的开发人员，看着ESRI停止对Flex 和 Silverlight API的更新，大力推荐开发者使用 ArcGIS API for JavaScript 来构建应用系统时，是不是都会感觉有一点小激动，小心脏扑通扑通的？都在想着能不能借HTML5的东风实现自己当上CTO、迎娶白富美、走上人生巅峰的梦想？
+那么当我们在谈论 ArcGIS 前端工程师时，工程师们在谈论什么呢？
+这个技能图参考了前两年网上流传的一张“前端工程师技能”图。看了这张图之后，你有什么感想？是不是觉得村里的小芳也挺不错的，长得好看又善良，一双美丽的大眼睛，辫子粗又长。
+其实相比于互联网行业的前端工程师所需要掌握的技能，ArcGIS 前端工程师已经很幸福了。
+面对这么多技能，作为新手，都需要怎样的一步一步去学习这些知识呢？
+ArcGIS 前端工程师入门 作为入门ArcGIS 前端工程师，无论你是学生还是有其他框架开发经验的工作人员。我假设你是刚开始接触前端开发和 ArcGIS API for JavaScript，那么你首先需要去学习以下几点：
+  学习HTML、CSS、JavaScript基础知识。
+  学习Dojo基本知识，包括但不限于AMD规范、dojo基础架构、dojoConfig配置、dojo面向对象、dijit 使用等。
+  学会使用web inspector或firebug对浏览器兼容性调试与修改。对于很多企事业单位都是用IE或360浏览器（老版本360安全浏览器。新版的360安全浏览器和极速都使用chromium内核），那么，也应该学会在IE8下对浏览器兼容性问题进行调试与修改。学会使用IETester对网站在个版本IE下的显示效果进行查看与调试。
+  学会JSON的使用。
+  学习ArcGIS API for JavaScript基本知识，包括但不限于下载并离线部署、代理配置。学会使用并理解ArcGIS 基本对象模型(如果有AO、AE、Flex等开发经验，很容易理解)，Map、Graphic、符号化、Task、Geoprocessor。
+  选择合适的开发工具，如果单纯的前端开发，推荐使用sublime text。当然，这种情况比较少，因为大多数情况下你需要和后台开发人员协同工作或者你也会涉及到后台代码编写，那根据实际情况选择visual studio、eclipse、myeclipse或其他IDE。
+  如果你学习并在实际开发中运用到了以上几点，恭喜你，你需要开始进入苦逼的进阶阶段去涉猎更多开发时需要用到的知识了。
+ArcGIS 前端工程师进阶   去学习HTML5，CSS3的知识， 在系统中做更炫、功能更丰富的应用。
+  学习JavaScript 模块化开发知识，深入学习Dojo框架及AMD规范的使用，学习自定义dojo 小部件。
+  深入学习ArcGIS API for JavaScript 框架，</description>
+    </item>
+    
+    <item>
+      <title>arcgis json to geojson</title>
+      <link>https://steeeeps.github.io/posts/2015/arcgis-json-to-geojson/</link>
+      <pubDate>Wed, 25 Mar 2015 23:09:01 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/arcgis-json-to-geojson/</guid>
+      <description>arcmap 有个feature to json 工具可以将feature转换为json，但是如果需要geojson格式的话，需要再次转换。
+可以使用下面工具将arcgis json 转为 geojson：
+arcgis json to geojson</description>
+    </item>
+    
+    <item>
+      <title>分享两个arcgis javascript api 小工程</title>
+      <link>https://steeeeps.github.io/posts/2012/two-js-project/</link>
+      <pubDate>Wed, 05 Dec 2012 17:39:23 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2012/two-js-project/</guid>
+      <description>不知是不是传说中“世界末日”的原因，感觉今年北京的冬天比去年冷多了。转眼间一年过去了，自己写javascript也整整一年了，在这一年里也学到了不少web开发的东西。虽然一年内一直在和javascript打交道，但是自己还是感觉像一个初学者一样。感觉javascript看上去仍像是一个平静的湖面，当你脚插进去才感觉深似海啊！
+在这一年内其实很少写有关于arcgis javascript api(以下简称ags api)的代码的。但是由于自己有一些AO开发的基础，加上自己这一年来一直在编写javascript和使用dojo框架，所以对于QQ群里或者论坛上的一些关于ags api的提问，我都会去关注一下，或者查查ags api samples，所以这一年下来对ags api的使用也有一些了解。自己大致估算了一下这一年内问的最多的问题差不多都是和下面几点相关的：
+1、如何部署ags api
+2、如何设置proxy
+3、如何解决跨域问题
+当然这两个都不是这篇文章讲的重点，上面几点的解决方案，网上有很多不错的文章来介绍，还请百度。如果细心一点的同学，会很快解决的。
+回到主题吧，写这篇文章主要目的是想通过这一年来我使用ags api写的两个小工程，来分享一下我学习ags api的一点经验。一个是我去年到公司刚开始学习javascript和ags api的时候写的一个小demo(别名checkData)，另一个是我今年6、7月份写的一个ags api 聚类展示的代码（别名cluster），其实具体啥时候写的我不记得了，我就记得我写出来的第二周ags api3.0就推出了，而且在这个版本中也加入了聚类展示的功能。所以后来也就放在那了。
+checkData是一个入门级的demo，当时主要是用来入门练习ags api，主要的练习的功能点就只包括：
+1、点数据的展示、添加(没有保存)、属性编辑
+2、编程的方式创建dojo小部件
+3、自定义小部件
+ 下载源码
+ cluster的难度相比于上一个demo，难度就要偏高一些了，用过flex clsuter的同学们肯定都对flex那种让人眼花的绚丽流连忘返呢，所以很多使用ags api的同学都在问，为什么ags api迟迟不推出cluster功能呢，其实在这之前国外一个大牛，自己也写了一个，但是那个版本的扩展性貌似不是太好，所以我在写clsuter的时候也参照了不少他里面的代码以及百度地图cluster的思想。当然与后面esri官方推出的cluster版本来说，我还是推荐使用官方的版本，毕竟整个ags api的稳定性还是挺高的。而我分享的这个，主要目的还是为了交流，希望能够给使用ags api的新手们一些帮助。在这这个demo里面，我当时主要学习到的包括：
+1、dojo类的继承
+2、简单的点抽希的思想.（其实关于点抽希的思想我还是理解的不够透彻，有比较了解的朋友还请多多交流）
+在cluster里面，我并没有加入像flex中对聚合的点华丽的展示方式，而是将聚合点通过鼠标上浮或点击事件传回，方便开发者自定义显示，比如下图中我就使用一个网上开源的js标签云的方式来显示聚合点的信息。这个实例的地图和数据都是使用舌尖上的中国上面的。当然我这个和它相比，就比较逊色呢，呵呵
+ 下载源码
+ 这两个demo从易到难，有兴趣的同学可以下载源码看一下，当然可能由于书写代码的时候的对javascript、dojo和ags api的某些知识点的理解不够准确，代码中可能还或多或少有些问题，还请你指出、交流。
+关于一些ags api学习的经验，其实说到经验我又不知道怎么说了，因为我本身写ags api的代码也比较少，但是我经常在群里看大家问的一些问题，其实很多问题的定位都不应该是在ags api这一层的，但大家上来就问ags api里该怎么解决。所以我建议大家有时间的话可以多花点时间在dojo框架和原生的javascript的学习上。而对于ags api的一些问题，ags api samples上的例子什么的只要你仔细、耐心的查找，90%是能找到解决方法的。
+最后，预祝大家都能够安安全全、欢欢乐乐的进入2013。</description>
+    </item>
+    
+  </channel>
+</rss>

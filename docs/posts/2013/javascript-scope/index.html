@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>javascript 作用域的工作原理 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="函数作用域
+每一个javascript函数都是一个对象，拥有一系列可被访问和仅能被javascript引擎访问的内部属性，其中一个内部属性就是函数的作用域。当一个函数创建的时候。Javascript引擎就会创建这个函数的作用域并且用一些对象来填充，这些对象代表创建这个函数的环境中可以访问的数据，比如创建一个全局函数，他的作用域中就填入了一个单独的可变对象，这个全局对象代表了所有全局范围定义的变量，比如说window、location、document之类的对象。如果创建的函数是一个嵌套的函数（闭包），此作用域上还会加上父函数中定义的对象。
+例如：
+function add (num1 , num2 ) { var sum=num1&#43;num2; return sum; } 当该函数被调用时,例如 var total=add(5,10);会建立另一个内部对象，称作“运行时上下文”,一个运行时上下文定义了一个函数运行时的环境，函数每次被调用都会产生一个独立的上下文，直到函数执行完毕，运行时上下文就被销毁。
+当上下文被创建时，它会使用函数作用域中所包含的对象来产生自己的作用域链，并且将函数作用域中的对象按照他们在函数中出现的顺序复制到上下文作用域的前端，比如说将函数的所有局部变量、命名参数、参数集合以及this关键字。当上下文销毁时。这个作用域也会被销毁。
+所以在函数的运行过程中，每遇到一个变量，解析器都会在作用域链中去查找与变量相对应的标识符，比如说上面函数中的sum，这个搜索过程会从第一个作用域前端一直查找，直到查找到了对应的标识符将其返回，或者直到作用域链的末端也未找到的话则返回undefined。所以在函数中，对于局部变量和全局变量的访问，由于全局变量存在更深的位置，所以它的读写速度就会比局部变量慢一些。
+所以当你多次访问一个存储位置较深的变量时。可以将这个变量保存为局部变量，来重复使用，比如说下面这个例子：
+function initUI(){ var bd = document.body, links = document.getElementsByTagName(&#34;a&#34;), i = 0, len = links.length; while (i &lt; len) { update(links[i&#43;&#43;]); } document.getElementById(&#34;go-btn&#34;).onclick = function(){ start(); }; bd.className = &#34;active&#34;; } 可以将其改为这个：
+function initUI(){ var doc = document, bd = doc.body, links = doc.getElementsByTagName(&#34;a&#34;), i= 0, len = links.length; while(i &lt; len){ update(links[i&#43;&#43;]); } doc." />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="javascript 作用域的工作原理" />
+<meta property="og:description" content="函数作用域
+每一个javascript函数都是一个对象，拥有一系列可被访问和仅能被javascript引擎访问的内部属性，其中一个内部属性就是函数的作用域。当一个函数创建的时候。Javascript引擎就会创建这个函数的作用域并且用一些对象来填充，这些对象代表创建这个函数的环境中可以访问的数据，比如创建一个全局函数，他的作用域中就填入了一个单独的可变对象，这个全局对象代表了所有全局范围定义的变量，比如说window、location、document之类的对象。如果创建的函数是一个嵌套的函数（闭包），此作用域上还会加上父函数中定义的对象。
+例如：
+function add (num1 , num2 ) { var sum=num1&#43;num2; return sum; } 当该函数被调用时,例如 var total=add(5,10);会建立另一个内部对象，称作“运行时上下文”,一个运行时上下文定义了一个函数运行时的环境，函数每次被调用都会产生一个独立的上下文，直到函数执行完毕，运行时上下文就被销毁。
+当上下文被创建时，它会使用函数作用域中所包含的对象来产生自己的作用域链，并且将函数作用域中的对象按照他们在函数中出现的顺序复制到上下文作用域的前端，比如说将函数的所有局部变量、命名参数、参数集合以及this关键字。当上下文销毁时。这个作用域也会被销毁。
+所以在函数的运行过程中，每遇到一个变量，解析器都会在作用域链中去查找与变量相对应的标识符，比如说上面函数中的sum，这个搜索过程会从第一个作用域前端一直查找，直到查找到了对应的标识符将其返回，或者直到作用域链的末端也未找到的话则返回undefined。所以在函数中，对于局部变量和全局变量的访问，由于全局变量存在更深的位置，所以它的读写速度就会比局部变量慢一些。
+所以当你多次访问一个存储位置较深的变量时。可以将这个变量保存为局部变量，来重复使用，比如说下面这个例子：
+function initUI(){ var bd = document.body, links = document.getElementsByTagName(&#34;a&#34;), i = 0, len = links.length; while (i &lt; len) { update(links[i&#43;&#43;]); } document.getElementById(&#34;go-btn&#34;).onclick = function(){ start(); }; bd.className = &#34;active&#34;; } 可以将其改为这个：
+function initUI(){ var doc = document, bd = doc.body, links = doc.getElementsByTagName(&#34;a&#34;), i= 0, len = links.length; while(i &lt; len){ update(links[i&#43;&#43;]); } doc." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2013/javascript-scope/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2013-02-03T17:27:08+00:00" />
+<meta property="article:modified_time" content="2013-02-03T17:27:08+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="javascript 作用域的工作原理"/>
+<meta name="twitter:description" content="函数作用域
+每一个javascript函数都是一个对象，拥有一系列可被访问和仅能被javascript引擎访问的内部属性，其中一个内部属性就是函数的作用域。当一个函数创建的时候。Javascript引擎就会创建这个函数的作用域并且用一些对象来填充，这些对象代表创建这个函数的环境中可以访问的数据，比如创建一个全局函数，他的作用域中就填入了一个单独的可变对象，这个全局对象代表了所有全局范围定义的变量，比如说window、location、document之类的对象。如果创建的函数是一个嵌套的函数（闭包），此作用域上还会加上父函数中定义的对象。
+例如：
+function add (num1 , num2 ) { var sum=num1&#43;num2; return sum; } 当该函数被调用时,例如 var total=add(5,10);会建立另一个内部对象，称作“运行时上下文”,一个运行时上下文定义了一个函数运行时的环境，函数每次被调用都会产生一个独立的上下文，直到函数执行完毕，运行时上下文就被销毁。
+当上下文被创建时，它会使用函数作用域中所包含的对象来产生自己的作用域链，并且将函数作用域中的对象按照他们在函数中出现的顺序复制到上下文作用域的前端，比如说将函数的所有局部变量、命名参数、参数集合以及this关键字。当上下文销毁时。这个作用域也会被销毁。
+所以在函数的运行过程中，每遇到一个变量，解析器都会在作用域链中去查找与变量相对应的标识符，比如说上面函数中的sum，这个搜索过程会从第一个作用域前端一直查找，直到查找到了对应的标识符将其返回，或者直到作用域链的末端也未找到的话则返回undefined。所以在函数中，对于局部变量和全局变量的访问，由于全局变量存在更深的位置，所以它的读写速度就会比局部变量慢一些。
+所以当你多次访问一个存储位置较深的变量时。可以将这个变量保存为局部变量，来重复使用，比如说下面这个例子：
+function initUI(){ var bd = document.body, links = document.getElementsByTagName(&#34;a&#34;), i = 0, len = links.length; while (i &lt; len) { update(links[i&#43;&#43;]); } document.getElementById(&#34;go-btn&#34;).onclick = function(){ start(); }; bd.className = &#34;active&#34;; } 可以将其改为这个：
+function initUI(){ var doc = document, bd = doc.body, links = doc.getElementsByTagName(&#34;a&#34;), i= 0, len = links.length; while(i &lt; len){ update(links[i&#43;&#43;]); } doc."/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">javascript 作用域的工作原理</h1>
+			<div class="meta">Posted on Feb 3, 2013</div>
+		</div>
+		
+
+		<section class="body">
+			<p><strong>函数作用域</strong></p>
+<p>每一个javascript函数都是一个对象，拥有一系列可被访问和仅能被javascript引擎访问的内部属性，其中一个内部属性就是函数的作用域。当一个函数创建的时候。Javascript引擎就会创建这个函数的作用域并且用一些对象来填充，这些对象代表创建这个函数的环境中可以访问的数据，比如创建一个全局函数，他的作用域中就填入了一个单独的可变对象，这个全局对象代表了所有全局范围定义的变量，比如说window、location、document之类的对象。如果创建的函数是一个嵌套的函数（闭包），此作用域上还会加上父函数中定义的对象。</p>
+<p>例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span>  <span style="color:#a6e22e">add</span> (<span style="color:#a6e22e">num1</span> , <span style="color:#a6e22e">num2</span> ) {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sum</span><span style="color:#f92672">=</span><span style="color:#a6e22e">num1</span><span style="color:#f92672">+</span><span style="color:#a6e22e">num2</span>;
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span>;
+}
+</code></pre></div><p><img src="/images/2013/1.png" alt="1"></p>
+<p>当该函数被调用时,例如 var total=add(5,10);会建立另一个内部对象，称作“运行时上下文”,一个运行时上下文定义了一个函数运行时的环境，函数每次被调用都会产生一个独立的上下文，直到函数执行完毕，运行时上下文就被销毁。</p>
+<p>当上下文被创建时，它会使用函数作用域中所包含的对象来产生自己的作用域链，并且将函数作用域中的对象按照他们在函数中出现的顺序复制到上下文作用域的前端，比如说将函数的所有局部变量、命名参数、参数集合以及this关键字。当上下文销毁时。这个作用域也会被销毁。</p>
+<p><img src="/images/2013/2.png" alt="2"></p>
+<p>所以在函数的运行过程中，每遇到一个变量，解析器都会在作用域链中去查找与变量相对应的标识符，比如说上面函数中的sum，这个搜索过程会从第一个作用域前端一直查找，直到查找到了对应的标识符将其返回，或者直到作用域链的末端也未找到的话则返回undefined。所以在函数中，对于局部变量和全局变量的访问，由于全局变量存在更深的位置，所以它的读写速度就会比局部变量慢一些。</p>
+<p>所以当你多次访问一个存储位置较深的变量时。可以将这个变量保存为局部变量，来重复使用，比如说下面这个例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">initUI</span>(){
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">bd</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">body</span>,
+		<span style="color:#a6e22e">links</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#34;a&#34;</span>),
+		<span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">len</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">links</span>.<span style="color:#a6e22e">length</span>;
+<span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">len</span>) {
+<span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">links</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>]);
+}
+document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;go-btn&#34;</span>).<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+<span style="color:#a6e22e">start</span>();
+};
+<span style="color:#a6e22e">bd</span>.<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;active&#34;</span>;
+}
+</code></pre></div><p>可以将其改为这个：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">initUI</span>(){
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">doc</span> <span style="color:#f92672">=</span> document,
+        <span style="color:#a6e22e">bd</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">body</span>,
+        <span style="color:#a6e22e">links</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#34;a&#34;</span>),
+        <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>,
+        <span style="color:#a6e22e">len</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">links</span>.<span style="color:#a6e22e">length</span>;
+    <span style="color:#66d9ef">while</span>(<span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">len</span>){
+        <span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">links</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>]);
+    }
+    <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;go-btn&#34;</span>).<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+        <span style="color:#a6e22e">start</span>();
+    };
+    <span style="color:#a6e22e">bd</span>.<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;active&#34;</span>;
+}
+</code></pre></div><p>在上面的例子中，将三次引用到的document这个全局变量，存储为局部变量，这样就不会在整个作用域链中去查找三次，节省一定的性能。当然这一个简单的函数在性能上不会有太多的提升，但是如果在整个页面中存在几十个这样的反复访问，那么通过这样的优化在性能上就会有很大的改进，特别是OPOA这种程序。</p>
+<p><strong>慎用with表达式</strong></p>
+<p>在javascript中有一个with表达式，比如下面这个例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">initUI</span>(){
+    <span style="color:#66d9ef">with</span> (document){     <span style="color:#75715e">//avoid!
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">bd</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">body</span>,
+            <span style="color:#a6e22e">links</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#34;a&#34;</span>),
+            <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>,
+            <span style="color:#a6e22e">len</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">links</span>.<span style="color:#a6e22e">length</span>;
+        <span style="color:#66d9ef">while</span>(<span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">len</span>){
+            <span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">links</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>]);
+        }
+        <span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;go-btn&#34;</span>).<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+            <span style="color:#a6e22e">start</span>();
+        };
+        <span style="color:#a6e22e">bd</span>.<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;active&#34;</span>;
+    }
+}
+</code></pre></div><p>这个函数中使用with表达式来避免多次书写document，虽然看起来方便了不少，但实际上对其他变量的访问的代价确更高了，在使用width表达式的时候，改变了作用域链，如下所示：</p>
+<p><img src="/images/2013/3.png" alt="3"></p>
+<p>如图所以，一个容纳了document对象所有属性的对象被插入到作用域的最前端，这样是访问document对象的属性变得非常快，但是访问其他变量确变得更慢了，所以，尽量避免使用with表达式，将document对象存储为局部变量，不仅方便而且还能提升整体性能。</p>
+<p>与with表达式相似的还有tay catch，当语句发生错误时，会在作用域最前端插入异常对象。但是如果在catch语句中没有对其他变量的访问，仅仅是作用域临时被改变了，是不会影响代码的性能的。</p>
+<p><strong>闭包的作用域</strong></p>
+<p>闭包是javascript最强大的一个方面，它允许函数访问局部范围之外的数据。</p>
+<p>比如这样一段代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">assignEvents</span>(){
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;xdi9592&#34;</span>;
+    document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;save-btn&#34;</span>).<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">event</span>){
+        <span style="color:#a6e22e">saveDocument</span>(<span style="color:#a6e22e">id</span>);
+    };
+}
+</code></pre></div><p>如上面所讲的一样，当a s s i g n E v e n t s函数被调用时，他的作用域链上会存在两个对象，第一个对象是被调用时产生的运行时上下文对象(Activation object)，第二个对象是创建函数时产生的全局对象。在函数被执行的时候，闭包被创建，这时候闭包的作用域对象就和这些对象一起被初始化。</p>
+<p><img src="/images/2013/4.png" alt="4"></p>
+<p>当闭包被执行时，又会产生一个闭包自己的运行时上下文。并且插入作用域链的最前端。</p>
+<p><img src="/images/2013/5.png" alt="5"></p>
+<p>所以使用闭包就会存在两个问题，第一个就是和其他函数调用时访问变量一样的问题，如图所示，当闭包直接去访问外部的saveDocument函数和id变量时，就会存在一定的性能损失，第二点就是，闭包的作用域属性和创建它的函数含有相同的运行时上下文引用，一般来说，当函数执行完毕时运行时上下文会一起被销毁，但是，当涉及到闭包的时候，他就无法正常的被销毁，所以说闭包比非闭包函数需要更多的内存，而且使用不当时，也更容易导致内存泄露。</p>
+<p><strong>同理，当我们访问原型链上的属性或嵌套的成员变量时，将位置比较深的变量，并且多次访问的变量存储为局部变量，都会提升变量的访问速度。</strong></p>
+<blockquote>
+<p>参考自<a href="http://www.amazon.com/Performance-JavaScript-Faster-Application-Interfaces/dp/059680279X" title="High Performance Javascript">《High Performance Javascript》</a></p>
+</blockquote>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/javascript">JavaScript</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

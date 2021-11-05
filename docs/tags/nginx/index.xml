@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nginx on steeeeps</title>
+    <link>https://steeeeps.github.io/tags/nginx/</link>
+    <description>Recent content in Nginx on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Thu, 03 Apr 2014 13:31:15 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>让Nginx支持WordPress的固定链接</title>
+      <link>https://steeeeps.github.io/posts/2014/nginx-suppor-wp-regular-url/</link>
+      <pubDate>Thu, 03 Apr 2014 13:31:15 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/nginx-suppor-wp-regular-url/</guid>
+      <description>最近给博客搬了家，但是之前的固定链接打开全是404，造成了之前很多页面没法使用固定链接访问，虽然使用那个默认连接能够访问，但还是有些不方便，今天找了下解决方案，终于恢复了，解决方案如下：
+由于是使用lnmp一键安装包，所以要让nginx支持wordpress固定链接非常简单，因为安装后/usr/local/nginx/conf/目录下有一个wordpress.conf文件，将其包含进nginx.conf即可。
+具体的操作步骤如下：
+cd /usr/local/nginx/conf/ cp nginx.conf nginx.conf.bak // 将原配置文件备份一下 vi nginx.conf 将nginx.conf中的代码:
+{ listen 80; server_name gevin.me; index index.html index.htm index.php; root /home/wwwroot; location ~ .*\.(php|php5)?$ { fastcgi_pass unix:/tmp/php-cgi.sock; fastcgi_index index.php; include fcgi.conf; } location /status { stub_status on; access_log off; } 替换成（增加了include wordpress.conf;）
+server { listen 80; server_name gevin.me; index index.html index.htm index.php; root /home/wwwroot; include wordpress.conf; location ~ .*\.(php|php5)?$ { fastcgi_pass unix:/tmp/php-cgi.sock; fastcgi_index index.php; include fcgi.conf; } location /status { stub_status on; access_log off; } 然后，重启lnmp即可.</description>
+    </item>
+    
+  </channel>
+</rss>

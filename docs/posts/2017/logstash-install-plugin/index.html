@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>logstash 插件安装方式 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="logstash提供了很多filter、input、output插件，但是有些是需要自己安装的，以logstash-output-mongodb为例，纪录安装插件的方法。" />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="logstash 插件安装方式" />
+<meta property="og:description" content="logstash提供了很多filter、input、output插件，但是有些是需要自己安装的，以logstash-output-mongodb为例，纪录安装插件的方法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2017/logstash-install-plugin/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-12-26T22:10:49+00:00" />
+<meta property="article:modified_time" content="2017-12-26T22:10:49+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="logstash 插件安装方式"/>
+<meta name="twitter:description" content="logstash提供了很多filter、input、output插件，但是有些是需要自己安装的，以logstash-output-mongodb为例，纪录安装插件的方法。"/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">logstash 插件安装方式</h1>
+			<div class="meta">Posted on Dec 26, 2017</div>
+		</div>
+		
+
+		<section class="body">
+			<p>logstash提供了很多filter、input、output插件，但是有些是需要自己安装的，以logstash-output-mongodb为例，纪录安装插件的方法。</p>
+<h3 id="在线安装">在线安装</h3>
+<p>以下两个操作需要联网，并确保能访问<a href="https://rubygems.org/">https://rubygems.org/</a>,如果不能访问可以使用代理或者修改logstash 安装目录下的 gemfile文件中的源为淘宝镜像https://ruby.taobao.org/。</p>
+<h4 id="直接安装">直接安装</h4>
+<ol>
+<li>
+<p>进入logstash安装目录，输入以下代码进行安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bin/logstash-plugin install
+</code></pre></div></li>
+</ol>
+<h4 id="源码安装">源码安装</h4>
+<ol>
+<li>
+<p>下载插件源码<a href="https://github.com/logstash-plugins/logstash-output-mongodb">logstash-output-mongodb</a>,并解压。</p>
+</li>
+<li>
+<p>打开解压目录，打开 gemfile文件并找到或者添加如下配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gem <span style="color:#e6db74">&#34;logstash-output-mongodb&#34;</span>, :path <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;file:///C:/soft/logstash-output-mongodb-3.1.1&#34;</span>
+</code></pre></div></li>
+<li>
+<p>执行代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> bin/logstash-plugin install --no-verify
+</code></pre></div></li>
+<li>
+<p>安装成功</p>
+</li>
+</ol>
+<blockquote>
+<p>这一步网上介绍的都是属于离线安装模式，但是在实际操作中还是 <strong>需要联网</strong></p>
+</blockquote>
+<h3 id="离线安装">离线安装</h3>
+<p>生产环境很多服务器无法联网，无法安装插件，可以先在能够联网的服务器上使用以上两种方式进行安装，然后使用以下两种方式将插件拷贝至无法联网的服务器。</p>
+<h4 id="直接拷贝">直接拷贝</h4>
+<ol>
+<li>拷贝 [logstash安装目录]/vender/bundle/jruby/1.9/gems/ 下面的你要的插件整个文件夹到目标机器同目录下。</li>
+<li>拷贝 [logstash安装目录]/vendor/bundle/jruby/1.9/specifications/ 下面对应的声明文件到目标机器同目录下。</li>
+<li>手动修改[logstash安装目录]/Gemfile 文件，加入插件行如：gem &ldquo;logstash-output-mongodb&rdquo;</li>
+</ol>
+<blockquote>
+<p>这种方法我测试了，安装无效， <strong>不推荐继续使用</strong>。</p>
+</blockquote>
+<h4 id="离线打包">离线打包</h4>
+<p>使用官方推荐的离线插件管理方法进行安装</p>
+<ol>
+<li>
+<p>进入logstash安装目录，运行以下命令，对插件打包。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bin<span style="color:#ae81ff">\l</span>ogstash-plugin prepare-offline-pack --output logstash-output-mongodb.zip logstash-output-mongodb
+</code></pre></div></li>
+<li>
+<p>将运行结果生成的logstash-output-mongodb.zip文件拷贝至目标服务器，运行以下命令，进行离线安装。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bin<span style="color:#ae81ff">\l</span>ogstash-plugin install file:///c:/path/logstash-output-mongodb.zip
+</code></pre></div></li>
+<li>
+<p>提示，Install successful，安装成功。</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>logstash离线安装插件推荐使用此方式进行安装</strong>。</p>
+</blockquote>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/elk">ELK</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

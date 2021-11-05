@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ELK on steeeeps</title>
+    <link>https://steeeeps.github.io/tags/elk/</link>
+    <description>Recent content in ELK on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Tue, 26 Dec 2017 22:10:49 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/tags/elk/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>logstash 插件安装方式</title>
+      <link>https://steeeeps.github.io/posts/2017/logstash-install-plugin/</link>
+      <pubDate>Tue, 26 Dec 2017 22:10:49 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2017/logstash-install-plugin/</guid>
+      <description>logstash提供了很多filter、input、output插件，但是有些是需要自己安装的，以logstash-output-mongodb为例，纪录安装插件的方法。
+在线安装 以下两个操作需要联网，并确保能访问https://rubygems.org/,如果不能访问可以使用代理或者修改logstash 安装目录下的 gemfile文件中的源为淘宝镜像https://ruby.taobao.org/。
+直接安装   进入logstash安装目录，输入以下代码进行安装
+bin/logstash-plugin install   源码安装   下载插件源码logstash-output-mongodb,并解压。
+  打开解压目录，打开 gemfile文件并找到或者添加如下配置：
+gem &amp;#34;logstash-output-mongodb&amp;#34;, :path =&amp;gt; &amp;#34;file:///C:/soft/logstash-output-mongodb-3.1.1&amp;#34;   执行代码
+bin/logstash-plugin install --no-verify   安装成功
+   这一步网上介绍的都是属于离线安装模式，但是在实际操作中还是 需要联网
+ 离线安装 生产环境很多服务器无法联网，无法安装插件，可以先在能够联网的服务器上使用以上两种方式进行安装，然后使用以下两种方式将插件拷贝至无法联网的服务器。
+直接拷贝  拷贝 [logstash安装目录]/vender/bundle/jruby/1.9/gems/ 下面的你要的插件整个文件夹到目标机器同目录下。 拷贝 [logstash安装目录]/vendor/bundle/jruby/1.9/specifications/ 下面对应的声明文件到目标机器同目录下。 手动修改[logstash安装目录]/Gemfile 文件，加入插件行如：gem &amp;ldquo;logstash-output-mongodb&amp;rdquo;   这种方法我测试了，安装无效， 不推荐继续使用。
+ 离线打包 使用官方推荐的离线插件管理方法进行安装
+  进入logstash安装目录，运行以下命令，对插件打包。
+bin\logstash-plugin prepare-offline-pack --output logstash-output-mongodb.zip logstash-output-mongodb   将运行结果生成的logstash-output-mongodb.</description>
+    </item>
+    
+    <item>
+      <title>logstash 使用配置纪录</title>
+      <link>https://steeeeps.github.io/posts/2017/logstash-useage/</link>
+      <pubDate>Tue, 26 Dec 2017 22:02:27 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2017/logstash-useage/</guid>
+      <description>logstash是Elastic stack中最主要的数据获取、转换工作。主要记录一下日常使用中的配置信息。
+导入带有地理位置的 csv文件到 ES 中 input { file { path =&amp;gt; &amp;#34;/home/steeeeps/workspace/es_datas/csv/sicuan.csv&amp;#34; # type =&amp;gt; &amp;#34;testeFile_lite&amp;#34; start_position =&amp;gt; &amp;#34;beginning&amp;#34; sincedb_path =&amp;gt; &amp;#34;/home/steeeeps/workspace/es_datas/logs&amp;#34; } } filter { csv{ columns =&amp;gt; [&amp;#39;poiid&amp;#39;, &amp;#39;title&amp;#39;, &amp;#39;address&amp;#39;,&amp;#39;lon&amp;#39;,&amp;#39;lat&amp;#39;,&amp;#39;city&amp;#39;,&amp;#39;category_name&amp;#39;,&amp;#39;checkun_num&amp;#39;,&amp;#39;photo_num&amp;#39;] separator =&amp;gt; &amp;#34;,&amp;#34; } mutate { add_field =&amp;gt; { &amp;#34;[location][lat]&amp;#34; =&amp;gt; &amp;#34;%{lat}&amp;#34; } add_field =&amp;gt; { &amp;#34;[location][lon]&amp;#34; =&amp;gt; &amp;#34;%{lon}&amp;#34; } } mutate { convert =&amp;gt; { &amp;#34;[location][lat]&amp;#34; =&amp;gt; &amp;#34;float&amp;#34; &amp;#34;[location][lon]&amp;#34; =&amp;gt; &amp;#34;float&amp;#34; } } } output { elasticsearch { # action =&amp;gt; &amp;#34;index&amp;#34; hosts =&amp;gt; [&amp;#34;http://172.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>数据库性能优化(三)—数据库表分区 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="当对 sql 语句也做了优化，同事对数据表也建立了相应的索引后，数据库的整体查询性能能提高不少。但是随着系统的运行我们又会遇见其他问题。" />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="数据库性能优化(三)—数据库表分区" />
+<meta property="og:description" content="当对 sql 语句也做了优化，同事对数据表也建立了相应的索引后，数据库的整体查询性能能提高不少。但是随着系统的运行我们又会遇见其他问题。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2017/database-optimization-table-partition/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-11-09T22:58:29+00:00" />
+<meta property="article:modified_time" content="2017-11-09T22:58:29+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据库性能优化(三)—数据库表分区"/>
+<meta name="twitter:description" content="当对 sql 语句也做了优化，同事对数据表也建立了相应的索引后，数据库的整体查询性能能提高不少。但是随着系统的运行我们又会遇见其他问题。"/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">数据库性能优化(三)—数据库表分区</h1>
+			<div class="meta">Posted on Nov 9, 2017</div>
+		</div>
+		
+
+		<section class="body">
+			<p>当对 sql 语句也做了优化，同事对数据表也建立了相应的索引后，数据库的整体查询性能能提高不少。但是随着系统的运行我们又会遇见其他问题。</p>
+<p>我相信大家在开发过程中也都遇见过这种场景：随着使用时间的增加，数据库中的数据量也不断增加，因此数据库查询越来越慢。而且许多数据是历史数据并且随着时间的推移它们的重要性逐渐降低，可能很少会用到，但是这些数据又不能删除，所以如果能找到一个办法将这些可能不太重要的数据隐藏，数据库查询速度将会大幅提高。</p>
+<p>比如说我们的系统运行日志，还有车辆轨迹监控数据。都存在这种问题。因此，就需要一个高效的把历史数据从当前查询中隐藏起来并且不造成数据丢失的方法。而数据库表分区就能达到这样的效果。</p>
+<h3 id="数据库表分区含义">数据库表分区含义</h3>
+<p>数据库表分区指的是把大的物理表分成若干个小的物理表，并使得这些小物理表在逻辑上可以被当成一张表来使用。</p>
+<p>分区表有一张主表和若干子表组成，主表是正常的普通表，但正常情况下并不存储任何数据，子表继承并属于主表，用来存储具体的数据。如下图所示：</p>
+<p><img src="http://www.jasongj.com/img/sql/SQL3/partition_arch.png" alt=""></p>
+<h3 id="数据库表分区优势">数据库表分区优势</h3>
+<ol>
+<li>在特定场景下，查询性能极大提高，尤其是当大部分经常访问的数据记录在一个或少数几个分区表上时。表分区减小了索引的大小，并使得常访问的分区表的索引更容易保存于内存中。</li>
+<li>当查询或者更新访问一个或少数几个分区表中的大部分数据时，可以通过顺序扫描该分区表而非使用大表索引来提高性能。</li>
+<li>可通过添加或移除分区表来高效的批量增删数据。如可使用ALTERTABLE NO INHERIT可将特定分区从主逻辑表中移除（该表依然存在，并可单独使用，只是与主表不再有继承关系并无法再通过主表访问该分区表），或使用DROPTABLE直接将该分区表删除。这两种方式完全避免了使用DELETE时所需的VACUUM额外代价。</li>
+<li>很少使用的数据可被迁移到便宜些的慢些的存储介质中</li>
+</ol>
+<blockquote>
+<p>数据库表分区详细内容与具体实现，参考<a href="http://www.jasongj.com/2015/12/13/SQL3_partition/">http://www.jasongj.com/2015/12/13/SQL3_partition/</a></p>
+</blockquote>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

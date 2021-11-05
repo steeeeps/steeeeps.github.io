@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>前端 on steeeeps</title>
+    <link>https://steeeeps.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
+    <description>Recent content in 前端 on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Mon, 06 Jul 2015 22:55:41 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>当我们在谈论 ArcGIS 前端工程师时，工程师们在谈论什么</title>
+      <link>https://steeeeps.github.io/posts/2015/what-arcgis-fe-talk-about/</link>
+      <pubDate>Mon, 06 Jul 2015 22:55:41 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/what-arcgis-fe-talk-about/</guid>
+      <description>随着HTML5的火热，不管是在校的GIS学生、马上进入工作岗位的GIS毕业生，还是有几年其他ArcGIS 开发框架开发经验的开发人员，看着ESRI停止对Flex 和 Silverlight API的更新，大力推荐开发者使用 ArcGIS API for JavaScript 来构建应用系统时，是不是都会感觉有一点小激动，小心脏扑通扑通的？都在想着能不能借HTML5的东风实现自己当上CTO、迎娶白富美、走上人生巅峰的梦想？
+那么当我们在谈论 ArcGIS 前端工程师时，工程师们在谈论什么呢？
+这个技能图参考了前两年网上流传的一张“前端工程师技能”图。看了这张图之后，你有什么感想？是不是觉得村里的小芳也挺不错的，长得好看又善良，一双美丽的大眼睛，辫子粗又长。
+其实相比于互联网行业的前端工程师所需要掌握的技能，ArcGIS 前端工程师已经很幸福了。
+面对这么多技能，作为新手，都需要怎样的一步一步去学习这些知识呢？
+ArcGIS 前端工程师入门 作为入门ArcGIS 前端工程师，无论你是学生还是有其他框架开发经验的工作人员。我假设你是刚开始接触前端开发和 ArcGIS API for JavaScript，那么你首先需要去学习以下几点：
+  学习HTML、CSS、JavaScript基础知识。
+  学习Dojo基本知识，包括但不限于AMD规范、dojo基础架构、dojoConfig配置、dojo面向对象、dijit 使用等。
+  学会使用web inspector或firebug对浏览器兼容性调试与修改。对于很多企事业单位都是用IE或360浏览器（老版本360安全浏览器。新版的360安全浏览器和极速都使用chromium内核），那么，也应该学会在IE8下对浏览器兼容性问题进行调试与修改。学会使用IETester对网站在个版本IE下的显示效果进行查看与调试。
+  学会JSON的使用。
+  学习ArcGIS API for JavaScript基本知识，包括但不限于下载并离线部署、代理配置。学会使用并理解ArcGIS 基本对象模型(如果有AO、AE、Flex等开发经验，很容易理解)，Map、Graphic、符号化、Task、Geoprocessor。
+  选择合适的开发工具，如果单纯的前端开发，推荐使用sublime text。当然，这种情况比较少，因为大多数情况下你需要和后台开发人员协同工作或者你也会涉及到后台代码编写，那根据实际情况选择visual studio、eclipse、myeclipse或其他IDE。
+  如果你学习并在实际开发中运用到了以上几点，恭喜你，你需要开始进入苦逼的进阶阶段去涉猎更多开发时需要用到的知识了。
+ArcGIS 前端工程师进阶   去学习HTML5，CSS3的知识， 在系统中做更炫、功能更丰富的应用。
+  学习JavaScript 模块化开发知识，深入学习Dojo框架及AMD规范的使用，学习自定义dojo 小部件。
+  深入学习ArcGIS API for JavaScript 框架，</description>
+    </item>
+    
+    <item>
+      <title>web前端开发交流</title>
+      <link>https://steeeeps.github.io/posts/2014/simple-fed-ppt/</link>
+      <pubDate>Wed, 12 Feb 2014 13:39:44 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/simple-fed-ppt/</guid>
+      <description>这周给同事做了一个关于web前端开发知识的交流，内容主要包含了前端知识体系、javascript特性、dojo基础内容、AMD规范以及开发调试工具。没有太多的语法、api细节。
+内容比较基础，主要目的在于为web开发入门梳理一下杂乱的知识点，提供一个学习的结构。为之后学习、使用arcgis javascript api做一些基础性知识的准备工作。
+交流对象主要针对有其他语言开发经验、对web前端开发有一点了解并希望系统性学习web前端开发、希望快速上手arcgis javascript api的朋友。
+ppt的备注中有一些相关网址，内容都不错，有兴趣的朋友可以点开学习学习。
+ ppt下载地址：http://pan.baidu.com/s/1kTgDol5
+ </description>
+    </item>
+    
+  </channel>
+</rss>

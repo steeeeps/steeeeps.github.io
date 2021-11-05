@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on steeeeps</title>
+    <link>https://steeeeps.github.io/categories/python/</link>
+    <description>Recent content in Python on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Mon, 14 Dec 2015 16:56:18 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>将python程序注册为windows服务</title>
+      <link>https://steeeeps.github.io/posts/2015/regist-python-as-windows-service/</link>
+      <pubDate>Mon, 14 Dec 2015 16:56:18 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/regist-python-as-windows-service/</guid>
+      <description>根据项目需求，需要将python写的程序，注册成windows服务，方便用户启动、停止与管理。
+注册方法如下：
+ 下载并安装Windows Resource Kit，默认安装目录 ：C:\Program Files\Windows Resource Kits\ 。注册服务只使用srvany.exe文件，可将该文件单独拷出。 打开cmd，输入如下命令创建服务：  sc create &amp;#34;[YourService]&amp;#34; binPath= &amp;#34;C:\Program Files\Windows Resource Kits\srvany.exe&amp;#34; 打开注册表，在HKEY_LOCAL_MACHINE &amp;gt; SYSTEM &amp;gt; CurrentControlSet &amp;gt; Services项中找到刚才创建的服务。 右键服务名&amp;gt;新建&amp;gt;项,将新项重命名为Parameters。 在刚才创建的Parameters上右键&amp;gt;新建&amp;gt;字符串值，将新值重命名为Application，双击Application，修改数据为[python安装目录]\python.exe [你的python程序].py。    参考：http://stackoverflow.com/questions/8666373/start-python-py-as-a-service-in-windows
+ </description>
+    </item>
+    
+    <item>
+      <title>Undefined-variable-from-import-BuildPyramidsAndStatistics_management</title>
+      <link>https://steeeeps.github.io/posts/2015/undefined-variable-from-import-buildpyramidsandstatistics-management/</link>
+      <pubDate>Tue, 24 Nov 2015 17:53:54 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/undefined-variable-from-import-buildpyramidsandstatistics-management/</guid>
+      <description>使用arcpy.BuildPyramidsAndStatistics_management ()构建栅格数据金字塔和做统计值时，提示该方法为定义:
+ Undefined variable from import: BuildPyramidsAndStatistics_management.
+ 查看arcpy源码发现，时帮助文档中单词拼写出现了问题，正确的写法应该是:
+arcpy.BuildPyramidsandStatistics_management() </description>
+    </item>
+    
+  </channel>
+</rss>

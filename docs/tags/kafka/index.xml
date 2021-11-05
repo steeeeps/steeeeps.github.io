@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kafka on steeeeps</title>
+    <link>https://steeeeps.github.io/tags/kafka/</link>
+    <description>Recent content in Kafka on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Fri, 12 Jan 2018 22:17:00 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mongodb sink connector 使用方法</title>
+      <link>https://steeeeps.github.io/posts/2018/kafka-mongodb-sink-connector-usage/</link>
+      <pubDate>Fri, 12 Jan 2018 22:17:00 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2018/kafka-mongodb-sink-connector-usage/</guid>
+      <description>mongodb sink connector 大致用法与 jdbc sink connector 相似。只是 jdbc sink connector 是 Confluent 官方提供。
+mongodb sink connector 是开源社区提供，我选择是的hpgrahsl/kafka-connect-mongodb。
+mongodb sink connector 使用步骤   下载上述 kafka connector mongodb,执行 mvn clean package 对工程打包。
+  将打包后的jar 包注册到java CLASSPATH 中，或者将打包后的kafka-connect-mongodb-1.0-SNAPSHOT-jar-with-dependencies.jar 文件拷贝至Confluent platform安装目录/share/java/confluent-common 中，我选择的是后者。
+  在Confluent 安装目录/etc/ 目录下创建 mongodb 文件夹，将 kafka-connect-mongodb目录/config/MongoDbSinkConnector.properties 文件拷贝于此。关于此文件的配置信息请参考mongodb-sink-connector-configuration
+  下载并安装 mongodb
+  开启三个 terminal，分别执行
+1) $ ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties 2) $ ./bin/kafka-server-start ./etc/kafka/server.properties 3) $ ./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties   以单机模式启动 connector</description>
+    </item>
+    
+    <item>
+      <title>JDBC sink connector 使用方法</title>
+      <link>https://steeeeps.github.io/posts/2018/kafka-jdbc-sink-connector-usage/</link>
+      <pubDate>Fri, 12 Jan 2018 22:03:00 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2018/kafka-jdbc-sink-connector-usage/</guid>
+      <description>Kafka Connect 是在0.9版本之后增加的新特性,可以更方便的创建和管理数据流管道。
+它为Kafka和其它系统创建规模可扩展的、可信赖的流数据提供了一个简单的模型，通过connectors可以将大数据从其它系统导入到Kafka中，也可以从Kafka中导出到其它系统。
+Kafka Connect可以将完整的数据库注入到Kafka的Topic中，或者将服务器的系统监控指标注入到Kafka，然后像正常的Kafka流处理机制一样进行数据流处理。而导出工作则是将数据从Kafka Topic中导出到其它数据存储系统、查询系统或者离线分析系统等，比如数据库、Elastic Search、Apache Ignite等。
+下面以 Confluent platform 提供的 JDBC sink connector和社区提供的 mongodb sink connector 为例，介绍 connector 的用法。Confluent Platform 详细使用请看帮助文档
+JDBC sink connector 使用步骤   下载 Confluent Platform 3.2,该版本使用的 Kafka 版本为 10.0.2.0。Confluent platform需要在 linux 或者 osx 下使用，同时需要/var/lib目录的写权限，window 暂时支持的不好。
+  下载安装 sqlite
+  进入 Confluent platform 的的文件目录
+  在单独的 terminal 中启动 Zookeeper
+$ ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties   在单独的 terminal 中启动 kafka
+$ ./bin/kafka-server-start .</description>
+    </item>
+    
+  </channel>
+</rss>

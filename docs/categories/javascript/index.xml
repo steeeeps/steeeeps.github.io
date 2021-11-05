@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JavaScript on steeeeps</title>
+    <link>https://steeeeps.github.io/categories/javascript/</link>
+    <description>Recent content in JavaScript on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Wed, 14 Jan 2015 23:23:38 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/categories/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用userAgent区分客户端类型</title>
+      <link>https://steeeeps.github.io/posts/2015/useragent-get-client-type/</link>
+      <pubDate>Wed, 14 Jan 2015 23:23:38 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/useragent-get-client-type/</guid>
+      <description>前段时间做了个小网站，需要在区别移动端和pc端显示效果。由于功能需求比较简单，所以就没有使用响应式设计，而是使用传统方式分别做了移动端和pc端两个页面。
+一般使用userAgent来区分移动端和pc端还是相对容易的事情，但是我的需求是pc端和pad端都需要显示pc端页面，而在手机端显示移动端页面。
+由于整个程序都是静态页面，就选择了使用javascript+正则表达式的方式，如下：
+if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || /MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|Nexus|ZTE/.test(navigator.userAgent)) {	try { //微信内嵌浏览器 	if(/MicroMessenger/i.test(navigator.userAgent)){ //显示mobile页面  } //ipad  else if (/iPad/i.test(navigator.userAgent)) { //显示pc端页面  } //Nexus  else if(/Nexus/i.test(navigator.userAgent)){ var nexusVersion=navigator.userAgent.match(/Nexus ([\d.]+)/)[1]; //Nexus 7以上的平板  if(parseInt(nexusVersion)&amp;amp;gt;=7){ //显示pc端页面  }else{ //显示mobile页面  } } else if (/Android|webOS|iPhone|iPod|BlackBerry|BB/i.test(navigator.userAgent)) { //显示mobile页面  } else { //显示pc端页面  } } catch (e) {} }else{ //显示pc端页面  } 当然，这段代码稍作修改放在服务器端处理那是最好不过的了。
+这个处理方式使用chrome 开发者工具，模拟手机和平板测试基本是没有问题的。
+目前知道的bug为：无法获取可以判断为三星平板和小米平板的userAgent，所以这两个平板目前都显示为mobile页面。
+因为不同的设备发送的userAgent都有特殊的标识，这是chrome开发者工具无法模拟的。例如小米3电信版中就含有MI3C字样，所以，如果您有兴趣的话，可以使用这段代码试试。</description>
+    </item>
+    
+    <item>
+      <title>javascript 操作 shapefile</title>
+      <link>https://steeeeps.github.io/posts/2015/javascript-parse-shapefile/</link>
+      <pubDate>Mon, 05 Jan 2015 23:31:20 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/javascript-parse-shapefile/</guid>
+      <description> ESRI Shapefile（shp），或简称shapefile，是美国环境系统研究所公司（ESRI）开发的一种空间数据开放格式。[1]目前，该文件格式已经成为了地理信息软件界的一个开放标准，这表明ESRI公司在全球的地理信息系统市场的重要性。Shapefile也是一种重要的交换格式，它能够在ESRI与其他公司的产品之间进行数据互操作。
+ 目前有很多读取shapefile的开源库，随着HTML5的发展，使用javascript在客户端直接读取shapefile文件也成了现实。这里介绍一个javascript开源库，使用html5在客户端将shapefile转为geojson。
+有兴趣的朋友可以研究一下：
+ 项目地址：js-shapefile-to-geojson demo地址 ：js-shapefile-to-geojson demo  </description>
+    </item>
+    
+    <item>
+      <title>url filter 源码</title>
+      <link>https://steeeeps.github.io/posts/2014/url-filter-source/</link>
+      <pubDate>Fri, 11 Jul 2014 13:23:09 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/url-filter-source/</guid>
+      <description>由于新版本的chrome浏览器禁止使用非chrome webstore 的扩展程序，所以将源码放出，有兴趣的朋友可以使用开发者模式加载扩展程序。
+ 源码地址：https://gitlab.com/steeeeps/urlfilter
+ </description>
+    </item>
+    
+    <item>
+      <title>url filter</title>
+      <link>https://steeeeps.github.io/posts/2014/url-filter/</link>
+      <pubDate>Mon, 19 May 2014 13:28:25 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/url-filter/</guid>
+      <description>url filter 是我最近做的一款 chrome 插件，主要用于 在chrome 浏览器中过滤掉不想访问的网站，可以添加时间段来进行过滤。
+作为一个程序员，公司没有在上班时间禁网，是非常幸福的事情，但是，整天天面对着电脑，也避免不了自己偶尔weibo一下、tao下bao什么的，放松一下其实也挺好，但是长时间浏览的话，必定会影响工作效率和一天的工作状态。
+前几天，没什么工作状态，上班期间老是不由自主的走神，看着 IDE 却打开浏览器，刷刷 weibo 、上上 zhihu 。所以为了强制的管住自己，有了给自己禁网的一个想法。
+禁网的方式有很多种，因为我一般使用chrome浏览器，所以就采取了最简单编写chrome插件的方式。
+如果你和我一样，上班或学习时间管不住自己去浏览其他网址，你也可以试一试该插件。
+使用方法：
+  通过我的百度网盘下载 URLFilter.crx 文件。
+  打开chrome扩展程序窗口，安装插件。
+  插件安装完成之后，可以在浏览器的右上角看见插件图标，单击插件.
+  点击enable，使用和禁用插件。
+  点击选项，跳到插件设置页面，对需要过滤的域名和时间段进行设置.
+  当访问了被过滤的网站时，网页会自动跳转，提示你当前不能访问该网站.
+  自从使用了该插件，我再也不用担心自己在工作时间内管不住自己的手了！
+欢迎大家使用该插件，希望能给大家带来帮助。</description>
+    </item>
+    
+    <item>
+      <title>AMD规范交流</title>
+      <link>https://steeeeps.github.io/posts/2014/simple-amd-ppt/</link>
+      <pubDate>Fri, 28 Feb 2014 13:38:19 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/simple-amd-ppt/</guid>
+      <description>在dojo1.7版本之后，已经全部使用amd规范来定义模块，arcgis javascript api基于dojo之上，从3.0版本开始使用dojo1.7，也全面支持AMD规范。
+AMD规范极大地改善了代码的可维护性，应用的性能、互用性。
+下面的ppt主要从what、why、how三个方面对AMD规范知识做了一个整理，帮助dojo和arcgis javascript api初学者学习AMD规范，内容中有错误的地方，希望大家指正、交流!
+ ppt地址：http://pan.baidu.com/s/1sj6llOp
+ </description>
+    </item>
+    
+    <item>
+      <title>dojo 基础交流</title>
+      <link>https://steeeeps.github.io/posts/2014/simple-dojo-ppt/</link>
+      <pubDate>Fri, 28 Feb 2014 13:36:55 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/simple-dojo-ppt/</guid>
+      <description>随着富 Internet 应用的不断兴起，各种 JavaScript 开发工具包的功能也在不断增强，Dojo 正是其中的佼佼者。Dojo 提供了一套完整的开发解决方案，包括核心的 JavaScript 库、简单易用的小部件（Widget）等。
+作为arcgis javascript api 的底层框架，很多初学者在学习使用arcgis javascript api时，对于dojo的理解都不够，造成了“dojo 入门难、ags javascript api开发门槛高”等误解。
+下面的ppt主要针对dojo基础，对dojo的基础知识做一个梳理，使大家在学习使用arcgis javascript api之前学习dojo有一个比较清晰的线路。降低学习难度。
+内容中如有错误的地方，希望大家指正、交流!
+ ppt地址：http://pan.baidu.com/s/1jGkKMqU
+ </description>
+    </item>
+    
+    <item>
+      <title>web前端开发交流</title>
+      <link>https://steeeeps.github.io/posts/2014/simple-fed-ppt/</link>
+      <pubDate>Wed, 12 Feb 2014 13:39:44 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/simple-fed-ppt/</guid>
+      <description>这周给同事做了一个关于web前端开发知识的交流，内容主要包含了前端知识体系、javascript特性、dojo基础内容、AMD规范以及开发调试工具。没有太多的语法、api细节。
+内容比较基础，主要目的在于为web开发入门梳理一下杂乱的知识点，提供一个学习的结构。为之后学习、使用arcgis javascript api做一些基础性知识的准备工作。
+交流对象主要针对有其他语言开发经验、对web前端开发有一点了解并希望系统性学习web前端开发、希望快速上手arcgis javascript api的朋友。
+ppt的备注中有一些相关网址，内容都不错，有兴趣的朋友可以点开学习学习。
+ ppt下载地址：http://pan.baidu.com/s/1kTgDol5
+ </description>
+    </item>
+    
+    <item>
+      <title>dijit Tree 浮动菜单</title>
+      <link>https://steeeeps.github.io/posts/2013/dijit-tree-float-menu/</link>
+      <pubDate>Mon, 15 Apr 2013 11:06:32 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/dijit-tree-float-menu/</guid>
+      <description>使用dijit树控件时，对于额外的操作一般都会以添加右键菜单的方式来完成。但是对于用户而言，如果没有特别的提示，就有可能不知道该控件是否提供了右键操作菜单，所以，添加浮动菜单对用户体验而言是有一定增进效果的。
+源码下载
+用法  引入css  &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; type=&amp;#34;text/css&amp;#34; href=&amp;#34;../treeFloatMenu.css&amp;#34;&amp;gt;  引入js文件。(我使用的dojo1.7，并且使用AMD规范定义treeFloatMenu.js扩展模块) require([&amp;#34;dojo/ready&amp;#34;, &amp;#34;dojo/_base/window&amp;#34;, &amp;#34;dojo/store/Memory&amp;#34;, &amp;#34;dijit/tree/ObjectStoreModel&amp;#34;, &amp;#34;dijit/Tree&amp;#34;, &amp;#34;treeFloatMenu&amp;#34;], function(ready, win, Memory, ObjectStoreModel, Tree){...})  调用扩展方法显示菜单并添加菜单操作项。(tree为实例化后的Tree控件) tree.floatMenu([{ node: &amp;#39;&amp;lt;span class=&amp;#34;dijitTree-float-menu-del&amp;#34; title=&amp;#34;删除节点&amp;#34;&amp;gt;&amp;lt;/span&amp;gt;&amp;#39;, onClick: function(event){ console.log(event.floatNode); console.log(event.tree); var name = event.floatNode.item.name; alert(name); }, onTreeNodeMouseOver: function(event){ var type = event.floatNode.item.type; if (type == &amp;#39;planet&amp;#39;) { event.floatItem.style.display = &amp;#34;none&amp;#34;; } else { event.floatItem.style.display = &amp;#34;inline-block&amp;#34;; } }   }]); ```
+api说明 tree.floatMenu() 传入菜单操作项对象(floatItem，例如上面语句中的删除节点项)或对象数组。
+floatItem  node:操作项dom节点对象或html字符串。 onClick:操作项点击事件，通过event.</description>
+    </item>
+    
+    <item>
+      <title>自定义dojo主题</title>
+      <link>https://steeeeps.github.io/posts/2013/custom-dojo-theme/</link>
+      <pubDate>Sun, 14 Apr 2013 11:10:07 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/custom-dojo-theme/</guid>
+      <description>到现在的dojo1.8.3版本中，dojo框架提供了四个主题，nihilo、tundra、soria和claro，我个人是非常喜欢claro主题的风格，淡淡的蓝，用了一些css3的效果，整个体验都很不错,但是谁也不喜欢自己做的系统主题样式和别人一致，就像不喜欢和别人撞衫一样，所以在平时开发中也会想尽一切办法来改变dojo主题。下面就分享两个自定义dojo主题的方法。
+重写样式 这个方法可能是使用起来最简单，适用面最广的一种方法，用浏览器调试工具找出dijit的样式，修改为自己的想要的样式，比如我想修改dojo的Dialog的样式，我只需要找到Dialog对应的css样式，修改为以下css代码：
+/*------------对话框-----------*/ .steeeeps .dijitDialog { border: 1px solid #bec0e1; -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25); -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25); box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25); -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; } /*对话框标题栏*/ .steeeeps .dijitDialogTitleBar { background: rgb(248, 248, 248); /* Old browsers */ background: -moz-linear-gradient(top, rgba(248, 248, 248, 1) 0%, rgba(229, 229, 229, 1) 100%); /* FF3.6+ */ background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,248,248,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */ background:-webkit-linear-gradient(top,rgba(248, 248, 248, 1) 0%, rgba(229, 229, 229, 1) 100%); /* Chrome10+,Safari5.</description>
+    </item>
+    
+    <item>
+      <title>基于nodejs的js、css压缩打包程序</title>
+      <link>https://steeeeps.github.io/posts/2013/compress-by-nodejs/</link>
+      <pubDate>Sun, 10 Mar 2013 17:07:53 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/compress-by-nodejs/</guid>
+      <description>之前在项目中一直想再上线之前将js、css文件进行打包压缩处理，由于js代码基本上都是用的dojo框架，dojo虽然提供了一个build功能，但是处于当时对这个功能的使用不是很明白，于是就想到了yui提供的yuicompressor功能，再加上一直对nodejs比较感兴趣，所以自己使用yuicompressor和nodejs编写了一套压缩打包的程序。
+虽然说yuicompressor是使用nodejs来调用的，但是其本质还是是调用的java。不过结合着nodejs的异步操作，使用起来还是不错的。
+对于nodejs，nodejs使用事件轮询机制来实现异步，真的是相当不错的，大量的js文件压缩，使用异步操作，效率是非常高的。不过在使用nodejs过程中，如何控制异步操作的流程，是必须要好好考虑的，不过所幸，github上有很多关于控制异步的框架可以拿来使用学习。
+使用说明：   安装nodejs
+  打开config.json,修改需要打包的配置信息。
+  运行 node pack.js 进行打包合并处理。
+  运行 node compress.js 进行压缩处理。
+  配置说明 { &amp;#34;baseDir&amp;#34;:&amp;#34;H:\\cbtest\\from&amp;#34;, &amp;#34;targetDir&amp;#34;:&amp;#34;H:\\cbtest\\to&amp;#34;, &amp;#34;layers&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;a.js&amp;#34;, &amp;#34;compress&amp;#34;:true, &amp;#34;depends&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;applications.js&amp;#34;, &amp;#34;depends&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;effects.js&amp;#34;, &amp;#34;depends&amp;#34;: [] },{ &amp;#34;name&amp;#34;:&amp;#34;mgr\\util.js&amp;#34;, &amp;#34;depends&amp;#34;:[] } ] },{ &amp;#34;name&amp;#34;:&amp;#34;portal/message.js&amp;#34;, &amp;#34;depends&amp;#34;:[] } ] }, { &amp;#34;name&amp;#34;: &amp;#34;b.js&amp;#34;, &amp;#34;compress&amp;#34;:false, &amp;#34;depends&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;applications.js&amp;#34;, &amp;#34;depends&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;effects.</description>
+    </item>
+    
+    <item>
+      <title>可动态添加的TabContainer</title>
+      <link>https://steeeeps.github.io/posts/2013/dynamic-tabs/</link>
+      <pubDate>Sat, 09 Mar 2013 17:14:38 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/dynamic-tabs/</guid>
+      <description>公司产品新的安装包需要使用一个TabContainer，由于整个安装包大小不大，所以使用js框架不太适合，于是使用原生javascript完成了一个。
+所有js压缩后不到6kb，还算满足要求。
+包含一个dom.js,lang.js,tabContainer.js。tabContainer.min.js为前面三个js文件的压缩文件。
+TabContainer的样式参考了http:tympanus.net/codrops/2012/04/12/animated-content-tabs-with-css3/
+api介绍： window.dom(dom)介绍 dom.hasClass(/*String (&amp;#39;a&amp;#39;)*/classStr, /*node*/node) dom.removeClass(/*String (&amp;#39;a&amp;#39; or &amp;#39;a b&amp;#39;)*/classStrs, /*node*/node) dom.addClass(/*String (&amp;#39;a&amp;#39; or &amp;#39;a b&amp;#39;)*/classStrs, /*node*/node) dom.getDom(/*String (name:&amp;#39;name&amp;#39; or class:&amp;#39;.class&amp;#39;)*/param, /*node*/root, /*String (&amp;#39;div&amp;#39;)*/tag) dom.createDom(/*String (&amp;#39;div&amp;#39;)*/tag,/*Object*/ opts,/*domNode*/parentNode) dom.getFirstElementChild(/*domNode*/node) window.lang(lang)介绍 lang.trim(/*String*/str) lang.stopPropagation(/*Event*/event) lang.srcElement(/*Event*/event) lang.isFunction(it); lang.isString(str); lang.isIp(ip); lang.isNull(str); lang.isLinuxPath(str); lang.isWinPath(str); lang.isNum(str); lang.hasChinese(str); String.toFirstCharUpperCase(); window.TabContainer(TabContainer)介绍 var tabContainer = new TabContainer(/*domNode*/node); tabContainer.addTab({ title: &amp;#34;title&amp;#34;, content: &amp;#34;&amp;amp;lt;p&amp;amp;gt;tab内容&amp;amp;lt;/p&amp;amp;gt;&amp;#34;, closable: false }); tabContainer.addTabBtn.onclick = function(){ tabContainer.addTab({ title: &amp;#34;title&amp;#34;, content: &amp;#34;&amp;amp;lt;p&amp;amp;gt;tab内容&amp;amp;lt;/p&amp;amp;gt;&amp;#34;, closable: false }); }; var selected=tabContainer.</description>
+    </item>
+    
+    <item>
+      <title>javascript 作用域的工作原理</title>
+      <link>https://steeeeps.github.io/posts/2013/javascript-scope/</link>
+      <pubDate>Sun, 03 Feb 2013 17:27:08 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/javascript-scope/</guid>
+      <description>函数作用域
+每一个javascript函数都是一个对象，拥有一系列可被访问和仅能被javascript引擎访问的内部属性，其中一个内部属性就是函数的作用域。当一个函数创建的时候。Javascript引擎就会创建这个函数的作用域并且用一些对象来填充，这些对象代表创建这个函数的环境中可以访问的数据，比如创建一个全局函数，他的作用域中就填入了一个单独的可变对象，这个全局对象代表了所有全局范围定义的变量，比如说window、location、document之类的对象。如果创建的函数是一个嵌套的函数（闭包），此作用域上还会加上父函数中定义的对象。
+例如：
+function add (num1 , num2 ) { var sum=num1+num2; return sum; } 当该函数被调用时,例如 var total=add(5,10);会建立另一个内部对象，称作“运行时上下文”,一个运行时上下文定义了一个函数运行时的环境，函数每次被调用都会产生一个独立的上下文，直到函数执行完毕，运行时上下文就被销毁。
+当上下文被创建时，它会使用函数作用域中所包含的对象来产生自己的作用域链，并且将函数作用域中的对象按照他们在函数中出现的顺序复制到上下文作用域的前端，比如说将函数的所有局部变量、命名参数、参数集合以及this关键字。当上下文销毁时。这个作用域也会被销毁。
+所以在函数的运行过程中，每遇到一个变量，解析器都会在作用域链中去查找与变量相对应的标识符，比如说上面函数中的sum，这个搜索过程会从第一个作用域前端一直查找，直到查找到了对应的标识符将其返回，或者直到作用域链的末端也未找到的话则返回undefined。所以在函数中，对于局部变量和全局变量的访问，由于全局变量存在更深的位置，所以它的读写速度就会比局部变量慢一些。
+所以当你多次访问一个存储位置较深的变量时。可以将这个变量保存为局部变量，来重复使用，比如说下面这个例子：
+function initUI(){ var bd = document.body, links = document.getElementsByTagName(&amp;#34;a&amp;#34;), i = 0, len = links.length; while (i &amp;lt; len) { update(links[i++]); } document.getElementById(&amp;#34;go-btn&amp;#34;).onclick = function(){ start(); }; bd.className = &amp;#34;active&amp;#34;; } 可以将其改为这个：
+function initUI(){ var doc = document, bd = doc.body, links = doc.getElementsByTagName(&amp;#34;a&amp;#34;), i= 0, len = links.length; while(i &amp;lt; len){ update(links[i++]); } doc.</description>
+    </item>
+    
+    <item>
+      <title>dom编程优化</title>
+      <link>https://steeeeps.github.io/posts/2013/dom-optimize/</link>
+      <pubDate>Sun, 03 Feb 2013 17:20:04 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/dom-optimize/</guid>
+      <description>在浏览器中，dom的实现和javascript的实现通常是保持相互独立的，比如chrome使用webKit渲染页面，而使用v8作为javascript引擎，firefox使用Gecko渲染页面，使用IonMonkey作为最新的javascript引擎。
+有一个非常形象的比如就是将dom和js分别看做两座岛屿，而两者之间以收费桥连接，当js访问dom时，就需要过桥，需要交过桥费，所以访问的次数越多，教的过桥费也就越多（摘自《High Performance Javascript》）。所以合理的处理好dom和js的交互，对页面的性能也有很大的提升。
+合理的操作dom主要包括访问和修改dom元素、注册dom元素事件、浏览器重绘与重排，前两者是最普遍的优化问题，也是最易优化的，但是理解重绘与重排对大型的web程序来说，是十分重要的。
+访问和修改dom元素 访问和修改dom多采用innerHTML和DocumentFragment，并注意尽量减少dom和javascript交互的次数。
+例如下面的代码创建多个节点：
+function CreateNodes(){ for(var i = 0;i &amp;amp;lt; 10000;i++){ var tmpNode = document.createElement(&amp;#34;div&amp;#34;); tmpNode.innerHTML = &amp;#34;test&amp;#34; + i + &amp;#34; &amp;amp;lt;br /&amp;amp;gt;&amp;#34;; document.body.appendChild(tmpNode); } } 就不如使用DocumentFragment或者innerHTML快速：
+function CreateFragments(){ var fragment = document.createDocumentFragment(); for(var i = 0;i &amp;amp;lt; 10000;i++){ var tmpNode = document.createElement(&amp;#34;div&amp;#34;); tmpNode.innerHTML = &amp;#34;test&amp;#34; + i + &amp;#34;&amp;amp;lt;br /&amp;amp;gt;&amp;#34;; fragment.appendChild(tmpNode); } document.body.appendChild(fragment); } 添加dom事件 利用javascript事件冒泡的特性，来最小化事件句柄数量。
+例如将下面给td标签注册事件的例子：
+function addTdEvent1(){ var table = document.getElementById(&amp;#39;table&amp;#39;); var tds = table.</description>
+    </item>
+    
+    <item>
+      <title>javascript引入页面方式</title>
+      <link>https://steeeeps.github.io/posts/2012/javascript-import-types/</link>
+      <pubDate>Sat, 15 Dec 2012 17:34:04 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2012/javascript-import-types/</guid>
+      <description>这一周开始学习大师 Nicholas C. Zakas 所著的High Performance JavaScript，第一次尝试阅读英文原版，感觉难度也不是想象中的那么大，遇见不懂得单词直接“有道”。对于有一定javascript基础的开发人员来说，我觉得读一点英文原版的技术书籍，对技术的理解还是会有很大的帮助。所以也希望自己能继续坚持下来。
+在学习了第一章Loading and Execution(javascript的加载与执行)后，自己感触也挺深的，结合自己这两个月时间所做的项目，对javascript的加载与执行进行一次总结，希望对以后的工作有所帮助。
+关于javascript在浏览器中的加载，其实有点经验的开发人员大都知道，由于浏览器使用单进程来处理UI的更新和javascript的加载与执行，所以，当浏览器自上而下解析html页面时，遇上script标签的时候，浏览器就会去下载script标签中引入的外部javascript文件和执行内联或下载完成以后的javascript代码，而造成页面的等待，即使现在的主流浏览器都允许并行下载javascript，来节省下载js所用的时间，但是javascript下载的过程中也会影响其他的资源下载，比如说图片，而且，浏览器仍然会等待所有的javascript下载完成并执行完成以后才会继续解析页面，所以javascript的阻塞性质仍然存在。引用书中的一张图片来说明：
+所以针对javascript加载的方式，书中提到了以下几点方法来优化：
+ 1、将script放在页面底部，紧邻&amp;amp;lt;/body&amp;amp;gt;标签，这一方法也是最简单，用的最多的。 2、减少script标签，将所使用的外部js文件组合成一个js文件(组合的时候需要注意不同js文件间的依赖关系，以及变量的命名冲突),为了降低文件大小，也可以选择将组合后的js代码进行压缩。当然这一点对于少量页面的网站来说可能还比较适用，但是对于大型网站来说，这样组合js的方式，就比较麻烦了。yahoo在其CDN上就使用了在服务器合并js的方法：  例如： http://l.yimg.com/zz/combo?cv/eng/externals/yfpad/combo/120416/a/yfpadobject.js&amp;amp;cv/eng/externals/yfpad/combo/120416/a/yfpad_useragent.js，这是在yahoo官网上使用到的部分js文件，他在后台多个js文件合并成一个返回给前台使用。
+当然，上面两种方式只能减轻js加载对页面解析的影响，而不能做到真正的无阻塞加载 。
+关于无阻塞加载js， Nicholas C. Zakas介绍了以下几种方式：
+ 1、使用script标签的defer属性，不过这个属性只有IE和Firefox支持，对于跨浏览器的解决方案不是很好，所以可能用到的也比较少。 2、动态创建script标签，添加到页面。比如：  这种方式的最大好处就是在于，无论在哪里执行这段脚本，js文件的下载与执行都不会阻塞其他页面的处理。然而，这种处理方式也有一点弊端，就是不能很好地处理不同js文件之间的依赖关系，除了在firefox和opera中，浏览器会按照你添加js文件的顺序去下载js文件，然后按照顺序执行js，在其他的浏览器中，会立即执行服务器返回的js，这个执行顺序全取决于服务器返回js文件的顺序，所以对于存在js依赖关系的js文件，就容易产生错误。
+ 3、使用ajax获取javascript脚本，然后通过动态添加script标签的方式，将获取的javascript代码作为内联的javascript代码添加到页面。这样做的优点在于，获取到的javascript脚本不会立即执行，我们可以自己控制加载到页面的顺序和执行的顺序，来解决js文件之间的依赖关系。当然，这样做最大的缺点就在于，不能够获取跨域的js文件。  这上面就是书中作者提到的几种解决加载javascript阻塞页面的方法。
+对于上面提到的无阻塞加载的js方式中，如何解决js文件之间的依赖关系，是每一个方法都必须注意得一点，所以作者在最后推荐的无阻塞加载方式中也提到了两个轻量级的js框架，lazyload和labjs，这两个框架很好的处理了js加载中不同js文件的依赖关系。关于这两个js框架我也没怎么使用过，有兴趣的朋友可以去官网上下载源码研究。
+除了这两个框架之外，我还想向大家推荐两种异步加载js的方式：
+ 1、基于AMD规范的RequireJS。 2、基于CMD规范的SeaJS。  前者是国外支持AMD规范比较好的js框架，后者是支付宝大牛玉伯所开发的。关于AMD规范和CMD规范以及两者的区别请点击http://www.zhihu.com/question/20351507/answer/14859415查看。
+由于公司一直都是AMD规范另一实现者dojo的追随者，所以在学习dojo AMD模块加载机制中，对requirejs也有了一定的了解，而SeaJS我也没有具体使用过，但是对两者一起努力推广javascript模块化开发的思想，是十分敬佩的！
+其实从我个人而言，我是推崇使用AMD规范来进行javascript模块化开发和加载(我没用过CMD规范，CMD规范的追随者别喷我…)，因为随着web应用的升温，现在的javascript再也不是以前开发者口中的“玩具式语言”，所以对于javascript开发的规范性和易用性，现在要求越来越高，而使用AMD模块化开发，能够极大地改善代码的可维护性，应用的性能和互用性。我们可以不再为臃肿的js文件而烦恼，也不需要去担心过度的对js文件细粒度划分带来的js加载问题。我们只需要按照AMD规范来定义模块，来编写我们的逻辑、业务层的代码，对于我们的开发效率也会有很大的提升。
+另外，对于ArcGIS Javascript Api的使用者来说，在3.0版本后已经开始使用dojo1.7版本，所以我也推荐在3.0及后续版本中使用AMD规范来进行ArcGIS Javascript Api的开发。
+以上便是我学习High Performance JavaScript 第一章后对js加载的一些心得与总结，这其中可能有些理解和用词欠妥，如果你有更好的理解，欢迎批评指正。</description>
+    </item>
+    
+    <item>
+      <title>javascript引入页面方式</title>
+      <link>https://steeeeps.github.io/posts/2013/javascript-import-types/</link>
+      <pubDate>Sat, 15 Dec 2012 17:34:04 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/javascript-import-types/</guid>
+      <description>这一周开始学习大师 Nicholas C. Zakas 所著的High Performance JavaScript，第一次尝试阅读英文原版，感觉难度也不是想象中的那么大，遇见不懂得单词直接“有道”。对于有一定javascript基础的开发人员来说，我觉得读一点英文原版的技术书籍，对技术的理解还是会有很大的帮助。所以也希望自己能继续坚持下来。
+在学习了第一章Loading and Execution(javascript的加载与执行)后，自己感触也挺深的，结合自己这两个月时间所做的项目，对javascript的加载与执行进行一次总结，希望对以后的工作有所帮助。
+关于javascript在浏览器中的加载，其实有点经验的开发人员大都知道，由于浏览器使用单进程来处理UI的更新和javascript的加载与执行，所以，当浏览器自上而下解析html页面时，遇上script标签的时候，浏览器就会去下载script标签中引入的外部javascript文件和执行内联或下载完成以后的javascript代码，而造成页面的等待，即使现在的主流浏览器都允许并行下载javascript，来节省下载js所用的时间，但是javascript下载的过程中也会影响其他的资源下载，比如说图片，而且，浏览器仍然会等待所有的javascript下载完成并执行完成以后才会继续解析页面，所以javascript的阻塞性质仍然存在。引用书中的一张图片来说明：
+所以针对javascript加载的方式，书中提到了以下几点方法来优化：
+ 1、将script放在页面底部，紧邻&amp;amp;lt;/body&amp;amp;gt;标签，这一方法也是最简单，用的最多的。 2、减少script标签，将所使用的外部js文件组合成一个js文件(组合的时候需要注意不同js文件间的依赖关系，以及变量的命名冲突),为了降低文件大小，也可以选择将组合后的js代码进行压缩。当然这一点对于少量页面的网站来说可能还比较适用，但是对于大型网站来说，这样组合js的方式，就比较麻烦了。yahoo在其CDN上就使用了在服务器合并js的方法：  例如： http://l.yimg.com/zz/combo?cv/eng/externals/yfpad/combo/120416/a/yfpadobject.js&amp;amp;cv/eng/externals/yfpad/combo/120416/a/yfpad_useragent.js，这是在yahoo官网上使用到的部分js文件，他在后台多个js文件合并成一个返回给前台使用。
+当然，上面两种方式只能减轻js加载对页面解析的影响，而不能做到真正的无阻塞加载 。
+关于无阻塞加载js， Nicholas C. Zakas介绍了以下几种方式：
+ 1、使用script标签的defer属性，不过这个属性只有IE和Firefox支持，对于跨浏览器的解决方案不是很好，所以可能用到的也比较少。 2、动态创建script标签，添加到页面。比如：  这种方式的最大好处就是在于，无论在哪里执行这段脚本，js文件的下载与执行都不会阻塞其他页面的处理。然而，这种处理方式也有一点弊端，就是不能很好地处理不同js文件之间的依赖关系，除了在firefox和opera中，浏览器会按照你添加js文件的顺序去下载js文件，然后按照顺序执行js，在其他的浏览器中，会立即执行服务器返回的js，这个执行顺序全取决于服务器返回js文件的顺序，所以对于存在js依赖关系的js文件，就容易产生错误。
+ 3、使用ajax获取javascript脚本，然后通过动态添加script标签的方式，将获取的javascript代码作为内联的javascript代码添加到页面。这样做的优点在于，获取到的javascript脚本不会立即执行，我们可以自己控制加载到页面的顺序和执行的顺序，来解决js文件之间的依赖关系。当然，这样做最大的缺点就在于，不能够获取跨域的js文件。  这上面就是书中作者提到的几种解决加载javascript阻塞页面的方法。
+对于上面提到的无阻塞加载的js方式中，如何解决js文件之间的依赖关系，是每一个方法都必须注意得一点，所以作者在最后推荐的无阻塞加载方式中也提到了两个轻量级的js框架，lazyload和labjs，这两个框架很好的处理了js加载中不同js文件的依赖关系。关于这两个js框架我也没怎么使用过，有兴趣的朋友可以去官网上下载源码研究。
+除了这两个框架之外，我还想向大家推荐两种异步加载js的方式：
+ 1、基于AMD规范的RequireJS。 2、基于CMD规范的SeaJS。  前者是国外支持AMD规范比较好的js框架，后者是支付宝大牛玉伯所开发的。关于AMD规范和CMD规范以及两者的区别请点击http://www.zhihu.com/question/20351507/answer/14859415查看。
+由于公司一直都是AMD规范另一实现者dojo的追随者，所以在学习dojo AMD模块加载机制中，对requirejs也有了一定的了解，而SeaJS我也没有具体使用过，但是对两者一起努力推广javascript模块化开发的思想，是十分敬佩的！
+其实从我个人而言，我是推崇使用AMD规范来进行javascript模块化开发和加载(我没用过CMD规范，CMD规范的追随者别喷我…)，因为随着web应用的升温，现在的javascript再也不是以前开发者口中的“玩具式语言”，所以对于javascript开发的规范性和易用性，现在要求越来越高，而使用AMD模块化开发，能够极大地改善代码的可维护性，应用的性能和互用性。我们可以不再为臃肿的js文件而烦恼，也不需要去担心过度的对js文件细粒度划分带来的js加载问题。我们只需要按照AMD规范来定义模块，来编写我们的逻辑、业务层的代码，对于我们的开发效率也会有很大的提升。
+另外，对于ArcGIS Javascript Api的使用者来说，在3.0版本后已经开始使用dojo1.7版本，所以我也推荐在3.0及后续版本中使用AMD规范来进行ArcGIS Javascript Api的开发。
+以上便是我学习High Performance JavaScript 第一章后对js加载的一些心得与总结，这其中可能有些理解和用词欠妥，如果你有更好的理解，欢迎批评指正。</description>
+    </item>
+    
+    <item>
+      <title>IE 清空file input值</title>
+      <link>https://steeeeps.github.io/posts/2012/ie-clear-file-input/</link>
+      <pubDate>Wed, 10 Oct 2012 21:38:32 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2012/ie-clear-file-input/</guid>
+      <description>在web 页面使用file input 控件进行上传操作时，有时会需要在上传完成后对file input中的值清空，来做其他的操作，一般我们会想到直接使用
+document.getElementById(&amp;#34;myFile&amp;#34;).value = &amp;#34;&amp;#34;; 来完成我们的操作。这个方法也是非IE浏览器主要使用的方法。
+但是在IE中，由于IE自身的安全策略，认为 file input 是read only 的控件，所以IE是不允许这样操作的，但是在IE中也可以使用如下两个方法完成：
+ 如果file input在表单中的话，可以直接使用document.getElementById(“myForm”).reset();来重置整个表单。 如果没有使用表单的话，可以结合使用cloneNode、replaceChild两个方法来完成，如下面代码所示：  var oldfile=document.getElementById(&amp;#34;myFile&amp;#34;); var newfile=oldfile.cloneNode(false); oldfile.parentNode.replaceChild(newfile,oldfile); </description>
+    </item>
+    
+  </channel>
+</rss>

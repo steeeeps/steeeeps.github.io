@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>让Nginx支持WordPress的固定链接 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="最近给博客搬了家，但是之前的固定链接打开全是404，造成了之前很多页面没法使用固定链接访问，虽然使用那个默认连接能够访问，但还是有些不方便，今天找了下解决方案，终于恢复了，解决方案如下：
+由于是使用lnmp一键安装包，所以要让nginx支持wordpress固定链接非常简单，因为安装后/usr/local/nginx/conf/目录下有一个wordpress.conf文件，将其包含进nginx.conf即可。
+具体的操作步骤如下：
+cd /usr/local/nginx/conf/ cp nginx.conf nginx.conf.bak // 将原配置文件备份一下 vi nginx.conf 将nginx.conf中的代码:
+{ listen 80; server_name gevin.me; index index.html index.htm index.php; root /home/wwwroot; location ~ .*\.(php|php5)?$ { fastcgi_pass unix:/tmp/php-cgi.sock; fastcgi_index index.php; include fcgi.conf; } location /status { stub_status on; access_log off; } 替换成（增加了include wordpress.conf;）
+server { listen 80; server_name gevin.me; index index.html index.htm index.php; root /home/wwwroot; include wordpress.conf; location ~ .*\.(php|php5)?$ { fastcgi_pass unix:/tmp/php-cgi.sock; fastcgi_index index.php; include fcgi.conf; } location /status { stub_status on; access_log off; } 然后，重启lnmp即可." />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="让Nginx支持WordPress的固定链接" />
+<meta property="og:description" content="最近给博客搬了家，但是之前的固定链接打开全是404，造成了之前很多页面没法使用固定链接访问，虽然使用那个默认连接能够访问，但还是有些不方便，今天找了下解决方案，终于恢复了，解决方案如下：
+由于是使用lnmp一键安装包，所以要让nginx支持wordpress固定链接非常简单，因为安装后/usr/local/nginx/conf/目录下有一个wordpress.conf文件，将其包含进nginx.conf即可。
+具体的操作步骤如下：
+cd /usr/local/nginx/conf/ cp nginx.conf nginx.conf.bak // 将原配置文件备份一下 vi nginx.conf 将nginx.conf中的代码:
+{ listen 80; server_name gevin.me; index index.html index.htm index.php; root /home/wwwroot; location ~ .*\.(php|php5)?$ { fastcgi_pass unix:/tmp/php-cgi.sock; fastcgi_index index.php; include fcgi.conf; } location /status { stub_status on; access_log off; } 替换成（增加了include wordpress.conf;）
+server { listen 80; server_name gevin.me; index index.html index.htm index.php; root /home/wwwroot; include wordpress.conf; location ~ .*\.(php|php5)?$ { fastcgi_pass unix:/tmp/php-cgi.sock; fastcgi_index index.php; include fcgi.conf; } location /status { stub_status on; access_log off; } 然后，重启lnmp即可." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2014/nginx-suppor-wp-regular-url/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2014-04-03T13:31:15+00:00" />
+<meta property="article:modified_time" content="2014-04-03T13:31:15+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="让Nginx支持WordPress的固定链接"/>
+<meta name="twitter:description" content="最近给博客搬了家，但是之前的固定链接打开全是404，造成了之前很多页面没法使用固定链接访问，虽然使用那个默认连接能够访问，但还是有些不方便，今天找了下解决方案，终于恢复了，解决方案如下：
+由于是使用lnmp一键安装包，所以要让nginx支持wordpress固定链接非常简单，因为安装后/usr/local/nginx/conf/目录下有一个wordpress.conf文件，将其包含进nginx.conf即可。
+具体的操作步骤如下：
+cd /usr/local/nginx/conf/ cp nginx.conf nginx.conf.bak // 将原配置文件备份一下 vi nginx.conf 将nginx.conf中的代码:
+{ listen 80; server_name gevin.me; index index.html index.htm index.php; root /home/wwwroot; location ~ .*\.(php|php5)?$ { fastcgi_pass unix:/tmp/php-cgi.sock; fastcgi_index index.php; include fcgi.conf; } location /status { stub_status on; access_log off; } 替换成（增加了include wordpress.conf;）
+server { listen 80; server_name gevin.me; index index.html index.htm index.php; root /home/wwwroot; include wordpress.conf; location ~ .*\.(php|php5)?$ { fastcgi_pass unix:/tmp/php-cgi.sock; fastcgi_index index.php; include fcgi.conf; } location /status { stub_status on; access_log off; } 然后，重启lnmp即可."/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">让Nginx支持WordPress的固定链接</h1>
+			<div class="meta">Posted on Apr 3, 2014</div>
+		</div>
+		
+
+		<section class="body">
+			<p>最近给博客搬了家，但是之前的固定链接打开全是404，造成了之前很多页面没法使用固定链接访问，虽然使用那个默认连接能够访问，但还是有些不方便，今天找了下解决方案，终于恢复了，解决方案如下：</p>
+<p>由于是使用lnmp一键安装包，所以要让nginx支持wordpress固定链接非常简单，因为安装后/usr/local/nginx/conf/目录下有一个wordpress.conf文件，将其包含进nginx.conf即可。</p>
+<p>具体的操作步骤如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd /usr/local/nginx/conf/
+
+cp nginx.conf nginx.conf.bak   // 将原配置文件备份一下
+
+vi nginx.conf
+</code></pre></div><p>将nginx.conf中的代码:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        <span style="color:#f92672">{</span>
+                listen       80;
+                server_name gevin.me;
+                index index.html index.htm index.php;
+                root  /home/wwwroot;
+                location ~ .*<span style="color:#ae81ff">\.</span><span style="color:#f92672">(</span>php|php5<span style="color:#f92672">)</span>?$
+                        <span style="color:#f92672">{</span>
+                                fastcgi_pass  unix:/tmp/php-cgi.sock;
+                                fastcgi_index index.php;
+                                include fcgi.conf;
+                        <span style="color:#f92672">}</span>
+
+                location /status <span style="color:#f92672">{</span>
+                        stub_status on;
+                        access_log   off;
+                <span style="color:#f92672">}</span>
+</code></pre></div><p>替换成（增加了include wordpress.conf;）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">server
+        <span style="color:#f92672">{</span>
+                listen       80;
+                server_name gevin.me;
+                index index.html index.htm index.php;
+                root  /home/wwwroot;
+                        include wordpress.conf;
+                location ~ .*<span style="color:#ae81ff">\.</span><span style="color:#f92672">(</span>php|php5<span style="color:#f92672">)</span>?$
+                        <span style="color:#f92672">{</span>
+                                fastcgi_pass  unix:/tmp/php-cgi.sock;
+                                fastcgi_index index.php;
+                                include fcgi.conf;
+                        <span style="color:#f92672">}</span>
+
+                location /status <span style="color:#f92672">{</span>
+                        stub_status on;
+                        access_log   off;
+                <span style="color:#f92672">}</span>
+
+</code></pre></div><p>然后，重启lnmp即可.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/root/lnmp restart
+</code></pre></div><p>最后附上lnmp一键安装包中自带的wordpress.conf的内容，假如你不想包含wordpress.conf，你也可以将wordpress.conf里面的内容拷到nginx.conf里面。<br>
+wordpress.conf内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">location / <span style="color:#f92672">{</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>-f $request_filename/index.html<span style="color:#f92672">){</span>
+                rewrite <span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span> $1/index.html break;
+        <span style="color:#f92672">}</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>-f $request_filename/index.php<span style="color:#f92672">){</span>
+                rewrite <span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span> $1/index.php;
+        <span style="color:#f92672">}</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>!-f $request_filename<span style="color:#f92672">){</span>
+                rewrite <span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span> /index.php;
+        <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>方案参考自：<a href="http://www.ctrol.cn/post/freesource/websys/11-04-ctrol-2292.html">http://www.ctrol.cn/post/freesource/websys/11-04-ctrol-2292.html</a></p>
+</blockquote>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/nginx">Nginx</a></li>
+					
+					<li><a href="/tags/wordpress">Wordpress</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

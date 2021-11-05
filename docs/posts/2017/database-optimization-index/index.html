@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>数据库性能优化(二)—索引的使用 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="当数据库查询越来越慢，或者涉及到大数据的查询时，除了 SQL 语句优化，索引也是数据库性能优化中最常见的手段之一。" />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="数据库性能优化(二)—索引的使用" />
+<meta property="og:description" content="当数据库查询越来越慢，或者涉及到大数据的查询时，除了 SQL 语句优化，索引也是数据库性能优化中最常见的手段之一。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2017/database-optimization-index/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-11-09T22:48:29+00:00" />
+<meta property="article:modified_time" content="2017-11-09T22:48:29+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据库性能优化(二)—索引的使用"/>
+<meta name="twitter:description" content="当数据库查询越来越慢，或者涉及到大数据的查询时，除了 SQL 语句优化，索引也是数据库性能优化中最常见的手段之一。"/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">数据库性能优化(二)—索引的使用</h1>
+			<div class="meta">Posted on Nov 9, 2017</div>
+		</div>
+		
+
+		<section class="body">
+			<p>当数据库查询越来越慢，或者涉及到大数据的查询时，除了 SQL 语句优化，索引也是数据库性能优化中最常见的手段之一。</p>
+<h3 id="什么是索引">什么是索引</h3>
+<p>索引是对数据库中一列或者几列的数据按照特定的数据结构进行排序保存的一种方式，使用索引可以加快数据库查询 或排序时的速度。</p>
+<h3 id="索引优点">索引优点</h3>
+<p>它主要有以下几点优点：</p>
+<ul>
+<li>可以大大提高数据查询的速度。</li>
+<li>在实现数据的参考完整性方面，可以加快表和表之间的连接。</li>
+<li>在分组和排序时，可以减少分组和排序的时间。</li>
+</ul>
+<h3 id="索引缺点">索引缺点</h3>
+<p>但是事务都是有两面性的，索引在使用过程中也会有一定的缺陷，比如：</p>
+<ul>
+<li>创建和维护索引需要耗费时间，数据量越大耗费时间也越长。</li>
+<li>索引需要占用额外的磁盘空间，如果数据量很大又有大量索引，那么索引文件大小增加很快。</li>
+<li>对表中数据改动的时候，索引需要动态维护，降低了数据操作的速度。</li>
+</ul>
+<h3 id="索引类型">索引类型</h3>
+<p>在PostgreSQL中提供了多种索引类型： B-tree、Hash、GiST、SP-GiST 、GIN 和 BRIN。每一种索引类型使用了一种不同的算法来适应不同类型的查询。默认情况下， pg 中 CREATE INDEX命令创建的索引都属于<strong>B-tree</strong> 索引。</p>
+<h3 id="索引方式">索引方式</h3>
+<p>在postgresql中索引有以下几种方式：</p>
+<ol>
+<li>
+<p>多列索引：多列索引指的是一个索引可以定义在表的多个列上。这个应该是最常见的，我们根据查询的条件，在某个列上或者多个列上添加索引。</p>
+</li>
+<li>
+<p>排序索引：除了简单的查找需要返回的行外，还可以按照指定的顺序将数据返回，这样就使得查询中的 order by 语句不需要独立的排序步骤。这个在什么地方用到了，就是我们查询分页的时候，order by 与 limit 联合使用时，如果有一个符合 order by 的排序索引，前n行将会被直接获取且根本不需要扫描剩下的数据。如果没有这个索引的话，解析器就会扫描全表的数据进行排序，然后返回指定页数的数据。所以如果有分页的表，可以试一下这个排序索引。</p>
+</li>
+<li>
+<p>组合索引：前面也讲了，一般在查询条件中只有使用 AND 才能使用单一索引，而使用 or 数据库会放弃使用索引而进行全表扫描。所以Postgresql 提供了组合多个索引的能力来处理查询条件使用 and 或者 or 的查询。也包括统一查询中多次使用同一个索引的能力。</p>
+<blockquote>
+<p>比如 WHERE x = 42 OR x = 47 OR x = 53 OR x = 99 和 WHERE x = 5 AND y = 6。</p>
+</blockquote>
+</li>
+<li>
+<p>唯一索引：唯一索引保证表不会有超过1行的相同值的行。创建唯一索引的有利的两个原因：数据完整和性能。在唯一索引上查找通常是非常快的。这就和我们平时使用的 key value 数据库，像 redis 和 nosql 数据库类似。PostgreSQL会自动为定义了主键的表创建一个唯一索引。所以一般不需要手工的在这种表上再来创建唯一索引。</p>
+</li>
+<li>
+<p>表达式索引：前面也讲了尽量不要where 语句中对字段进行函数操作，那样会使数据库放弃使用索引而进行全表扫描。如果需要这样查询的话就需要提前对该表达式建立表达式索引。例如大小写不明感的查询可以这样建立索引：SELECT * FROM test1 WHERE lower(col1) = &lsquo;value&rsquo;;CREATE INDEXtest1_lower_col1_idx ON test1 (lower(col1));但是索引表达式维护起来很麻烦，一般建议表很少更新的时候使用，我们一般也没有用到这个索引方式。</p>
+</li>
+<li>
+<p>部分索引：部分索引指的是对数据表某一列部分的值进行索引。比如说我们在数据库中保存网站的访问日志。有一部分来源于我们内网自己测试的访问日志，还有一部分来源于我们真实用户的访问日志。如果我们需要通过IP搜索统计真实用户的访问情况，我们就没有必要索引对应于我们自己测试内部的IP范围。这样我们就可以建里一个部分索引。</p>
+<blockquote>
+<p>例如：CREATE INDEX access_log_client_ip_ix ON access_log (client_ip) WHERENOT (client_ip &gt; inet &lsquo;192.168.100.0&rsquo; AND client_ip &lt; inet'192.168.100.255'); 这样局域网的 ip查询就不会使用索引，这个我们也用的很少。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="索引建立原则">索引建立原则</h3>
+<ol>
+<li>索引并不是越多越好，索引太多会影响insert,delete,update的性能，一般建议一张表不多于6个索引。</li>
+<li>对于经常查询的字段应该建立索引</li>
+<li>避免对经常更新的表进行过多的索引</li>
+<li>数据量很小的表最好不要使用索引，由于数据量少，扫描表的时间可能比查询索引时间要短，索引没有效果</li>
+<li>不要在不同值少的列上建立索引，例如表示性别的字段一般只有 ‘男’和‘女’两个不同值，如果建立索引会严重降低更新速度。</li>
+<li>在频繁进行排序或分组的列上建立索引时，如果待排序的列有多个，可在这些列上建立联合索引。</li>
+</ol>
+<blockquote>
+<p>索引类型参考自：<a href="http://www.postgres.cn/docs/9.6/indexes-types.html">http://www.postgres.cn/docs/9.6/indexes-types.html</a></p>
+<p>索引方式参考自：<a href="http://www.postgres.cn/docs/9.6/indexes.html">http://www.postgres.cn/docs/9.6/indexes.html</a></p>
+<p>索引原则详细请参考：<a href="http://blog.csdn.net/u013322876/article/details/52993639">http://blog.csdn.net/u013322876/article/details/52993639</a></p>
+</blockquote>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

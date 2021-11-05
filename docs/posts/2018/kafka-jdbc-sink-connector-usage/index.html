@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>JDBC sink connector 使用方法 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Kafka Connect 是在0.9版本之后增加的新特性,可以更方便的创建和管理数据流管道。它为Kafka和其它系统创建规模可扩展的、可信赖的流数据提供了一个简单的模型，通过connectors可以将大数据从其它系统导入到Kafka中，也可以从Kafka中导出到其它系统。" />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="JDBC sink connector 使用方法" />
+<meta property="og:description" content="Kafka Connect 是在0.9版本之后增加的新特性,可以更方便的创建和管理数据流管道。它为Kafka和其它系统创建规模可扩展的、可信赖的流数据提供了一个简单的模型，通过connectors可以将大数据从其它系统导入到Kafka中，也可以从Kafka中导出到其它系统。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2018/kafka-jdbc-sink-connector-usage/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-01-12T22:03:00+00:00" />
+<meta property="article:modified_time" content="2018-01-12T22:03:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JDBC sink connector 使用方法"/>
+<meta name="twitter:description" content="Kafka Connect 是在0.9版本之后增加的新特性,可以更方便的创建和管理数据流管道。它为Kafka和其它系统创建规模可扩展的、可信赖的流数据提供了一个简单的模型，通过connectors可以将大数据从其它系统导入到Kafka中，也可以从Kafka中导出到其它系统。"/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">JDBC sink connector 使用方法</h1>
+			<div class="meta">Posted on Jan 12, 2018</div>
+		</div>
+		
+
+		<section class="body">
+			<p>Kafka Connect 是在0.9版本之后增加的新特性,可以更方便的创建和管理数据流管道。</p>
+<p>它为Kafka和其它系统创建规模可扩展的、可信赖的流数据提供了一个简单的模型，通过connectors可以将大数据从其它系统导入到Kafka中，也可以从Kafka中导出到其它系统。</p>
+<p>Kafka Connect可以将完整的数据库注入到Kafka的Topic中，或者将服务器的系统监控指标注入到Kafka，然后像正常的Kafka流处理机制一样进行数据流处理。而导出工作则是将数据从Kafka Topic中导出到其它数据存储系统、查询系统或者离线分析系统等，比如数据库、Elastic Search、Apache Ignite等。</p>
+<p>下面以 Confluent platform 提供的 JDBC sink connector和社区提供的 mongodb sink connector 为例，介绍 connector 的用法。Confluent Platform 详细使用请看<a href="http://docs.confluent.io/3.2.0/platform.html">帮助文档</a></p>
+<h3 id="jdbc-sink-connector-使用步骤">JDBC sink connector 使用步骤</h3>
+<ol>
+<li>
+<p>下载 <a href="https://www.confluent.io/download/">Confluent Platform 3.2</a>,该版本使用的 Kafka 版本为 10.0.2.0。Confluent  platform需要在 linux 或者 osx 下使用，同时需要/var/lib目录的写权限，window 暂时支持的不好。</p>
+</li>
+<li>
+<p>下载安装 sqlite</p>
+</li>
+<li>
+<p>进入 Confluent platform 的的文件目录</p>
+</li>
+<li>
+<p>在单独的 terminal 中启动 Zookeeper</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties
+</code></pre></div></li>
+<li>
+<p>在单独的 terminal 中启动 kafka</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./bin/kafka-server-start ./etc/kafka/server.properties
+</code></pre></div></li>
+<li>
+<p>在单独的 terminal 中启动Schema Registry</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties
+</code></pre></div></li>
+<li>
+<p>修改 JDBC sink connector 配置文件，文件位于 <strong>./etc/kafka-connect-jdbc/sink-quickstart-sqlite.properties</strong>,测试可以使用默认配置即可，内容如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">name<span style="color:#f92672">=</span>test-sink
+connector.class<span style="color:#f92672">=</span>io.confluent.connect.jdbc.JdbcSinkConnector
+tasks.max<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+topics<span style="color:#f92672">=</span>orders
+connection.url<span style="color:#f92672">=</span>jdbc:sqlite:test.db
+auto.create<span style="color:#f92672">=</span>true
+</code></pre></div></li>
+<li>
+<p>以单机模式启动 connector</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ./bin/connect-standalone etc/schema-registry/connect-avro-standalone.properties etc/kafka-connect-jdbc/sink-quickstart-sqlite.properties
+</code></pre></div></li>
+<li>
+<p>使用kafka-avro-console-producer工具往 kafka topic 中推送数据，并且定义数据格式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ bin/kafka-avro-console-producer <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span> --broker-list localhost:9092 --topic orders <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span> --property value.schema<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{&#34;type&#34;:&#34;record&#34;,&#34;name&#34;:&#34;myrecord&#34;,&#34;fields&#34;:[{&#34;name&#34;:&#34;id&#34;,&#34;type&#34;:&#34;int&#34;},{&#34;name&#34;:&#34;product&#34;, &#34;type&#34;: &#34;string&#34;}, {&#34;name&#34;:&#34;quantity&#34;, &#34;type&#34;: &#34;int&#34;}, {&#34;name&#34;:&#34;price&#34;,
+</span><span style="color:#e6db74"> &#34;type&#34;: &#34;float&#34;}]}&#39;</span>
+</code></pre></div></li>
+<li>
+<p>继续在该窗口中推送需要保存在 sqlite 中的消息数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{<span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">999</span>, <span style="color:#e6db74">&#34;product&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;quantity&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;price&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">50</span>}
+</code></pre></div></li>
+<li>
+<p>检查 sqlite 中数据是否保存成功</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sqlite3 test.db
+sqlite&gt; <span style="color:#66d9ef">select</span> * from orders;
+foo|50.0|100|<span style="color:#ae81ff">999</span>
+</code></pre></div><p>​</p>
+</li>
+</ol>
+<blockquote>
+<p>详细步骤请查看<a href="http://docs.confluent.io/3.2.0/connect/connect-jdbc/docs/sink_connector.html">jdbc-sink-connector</a></p>
+</blockquote>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/kafka">Kafka</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

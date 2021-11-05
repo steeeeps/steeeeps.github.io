@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chrome Extension on steeeeps</title>
+    <link>https://steeeeps.github.io/tags/chrome-extension/</link>
+    <description>Recent content in Chrome Extension on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Fri, 11 Jul 2014 13:23:09 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/tags/chrome-extension/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>url filter 源码</title>
+      <link>https://steeeeps.github.io/posts/2014/url-filter-source/</link>
+      <pubDate>Fri, 11 Jul 2014 13:23:09 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/url-filter-source/</guid>
+      <description>由于新版本的chrome浏览器禁止使用非chrome webstore 的扩展程序，所以将源码放出，有兴趣的朋友可以使用开发者模式加载扩展程序。
+ 源码地址：https://gitlab.com/steeeeps/urlfilter
+ </description>
+    </item>
+    
+    <item>
+      <title>url filter</title>
+      <link>https://steeeeps.github.io/posts/2014/url-filter/</link>
+      <pubDate>Mon, 19 May 2014 13:28:25 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/url-filter/</guid>
+      <description>url filter 是我最近做的一款 chrome 插件，主要用于 在chrome 浏览器中过滤掉不想访问的网站，可以添加时间段来进行过滤。
+作为一个程序员，公司没有在上班时间禁网，是非常幸福的事情，但是，整天天面对着电脑，也避免不了自己偶尔weibo一下、tao下bao什么的，放松一下其实也挺好，但是长时间浏览的话，必定会影响工作效率和一天的工作状态。
+前几天，没什么工作状态，上班期间老是不由自主的走神，看着 IDE 却打开浏览器，刷刷 weibo 、上上 zhihu 。所以为了强制的管住自己，有了给自己禁网的一个想法。
+禁网的方式有很多种，因为我一般使用chrome浏览器，所以就采取了最简单编写chrome插件的方式。
+如果你和我一样，上班或学习时间管不住自己去浏览其他网址，你也可以试一试该插件。
+使用方法：
+  通过我的百度网盘下载 URLFilter.crx 文件。
+  打开chrome扩展程序窗口，安装插件。
+  插件安装完成之后，可以在浏览器的右上角看见插件图标，单击插件.
+  点击enable，使用和禁用插件。
+  点击选项，跳到插件设置页面，对需要过滤的域名和时间段进行设置.
+  当访问了被过滤的网站时，网页会自动跳转，提示你当前不能访问该网站.
+  自从使用了该插件，我再也不用担心自己在工作时间内管不住自己的手了！
+欢迎大家使用该插件，希望能给大家带来帮助。</description>
+    </item>
+    
+  </channel>
+</rss>

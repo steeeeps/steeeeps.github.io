@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>dom编程优化 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="在浏览器中，dom的实现和javascript的实现通常是保持相互独立的，比如chrome使用webKit渲染页面，而使用v8作为javascript引擎，firefox使用Gecko渲染页面，使用IonMonkey作为最新的javascript引擎。
+有一个非常形象的比如就是将dom和js分别看做两座岛屿，而两者之间以收费桥连接，当js访问dom时，就需要过桥，需要交过桥费，所以访问的次数越多，教的过桥费也就越多（摘自《High Performance Javascript》）。所以合理的处理好dom和js的交互，对页面的性能也有很大的提升。
+合理的操作dom主要包括访问和修改dom元素、注册dom元素事件、浏览器重绘与重排，前两者是最普遍的优化问题，也是最易优化的，但是理解重绘与重排对大型的web程序来说，是十分重要的。
+访问和修改dom元素 访问和修改dom多采用innerHTML和DocumentFragment，并注意尽量减少dom和javascript交互的次数。
+例如下面的代码创建多个节点：
+function CreateNodes(){ for(var i = 0;i &amp;lt; 10000;i&#43;&#43;){ var tmpNode = document.createElement(&#34;div&#34;); tmpNode.innerHTML = &#34;test&#34; &#43; i &#43; &#34; &amp;lt;br /&amp;gt;&#34;; document.body.appendChild(tmpNode); } } 就不如使用DocumentFragment或者innerHTML快速：
+function CreateFragments(){ var fragment = document.createDocumentFragment(); for(var i = 0;i &amp;lt; 10000;i&#43;&#43;){ var tmpNode = document.createElement(&#34;div&#34;); tmpNode.innerHTML = &#34;test&#34; &#43; i &#43; &#34;&amp;lt;br /&amp;gt;&#34;; fragment.appendChild(tmpNode); } document.body.appendChild(fragment); } 添加dom事件 利用javascript事件冒泡的特性，来最小化事件句柄数量。
+例如将下面给td标签注册事件的例子：
+function addTdEvent1(){ var table = document.getElementById(&#39;table&#39;); var tds = table." />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="dom编程优化" />
+<meta property="og:description" content="在浏览器中，dom的实现和javascript的实现通常是保持相互独立的，比如chrome使用webKit渲染页面，而使用v8作为javascript引擎，firefox使用Gecko渲染页面，使用IonMonkey作为最新的javascript引擎。
+有一个非常形象的比如就是将dom和js分别看做两座岛屿，而两者之间以收费桥连接，当js访问dom时，就需要过桥，需要交过桥费，所以访问的次数越多，教的过桥费也就越多（摘自《High Performance Javascript》）。所以合理的处理好dom和js的交互，对页面的性能也有很大的提升。
+合理的操作dom主要包括访问和修改dom元素、注册dom元素事件、浏览器重绘与重排，前两者是最普遍的优化问题，也是最易优化的，但是理解重绘与重排对大型的web程序来说，是十分重要的。
+访问和修改dom元素 访问和修改dom多采用innerHTML和DocumentFragment，并注意尽量减少dom和javascript交互的次数。
+例如下面的代码创建多个节点：
+function CreateNodes(){ for(var i = 0;i &amp;lt; 10000;i&#43;&#43;){ var tmpNode = document.createElement(&#34;div&#34;); tmpNode.innerHTML = &#34;test&#34; &#43; i &#43; &#34; &amp;lt;br /&amp;gt;&#34;; document.body.appendChild(tmpNode); } } 就不如使用DocumentFragment或者innerHTML快速：
+function CreateFragments(){ var fragment = document.createDocumentFragment(); for(var i = 0;i &amp;lt; 10000;i&#43;&#43;){ var tmpNode = document.createElement(&#34;div&#34;); tmpNode.innerHTML = &#34;test&#34; &#43; i &#43; &#34;&amp;lt;br /&amp;gt;&#34;; fragment.appendChild(tmpNode); } document.body.appendChild(fragment); } 添加dom事件 利用javascript事件冒泡的特性，来最小化事件句柄数量。
+例如将下面给td标签注册事件的例子：
+function addTdEvent1(){ var table = document.getElementById(&#39;table&#39;); var tds = table." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2013/dom-optimize/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2013-02-03T17:20:04+00:00" />
+<meta property="article:modified_time" content="2013-02-03T17:20:04+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="dom编程优化"/>
+<meta name="twitter:description" content="在浏览器中，dom的实现和javascript的实现通常是保持相互独立的，比如chrome使用webKit渲染页面，而使用v8作为javascript引擎，firefox使用Gecko渲染页面，使用IonMonkey作为最新的javascript引擎。
+有一个非常形象的比如就是将dom和js分别看做两座岛屿，而两者之间以收费桥连接，当js访问dom时，就需要过桥，需要交过桥费，所以访问的次数越多，教的过桥费也就越多（摘自《High Performance Javascript》）。所以合理的处理好dom和js的交互，对页面的性能也有很大的提升。
+合理的操作dom主要包括访问和修改dom元素、注册dom元素事件、浏览器重绘与重排，前两者是最普遍的优化问题，也是最易优化的，但是理解重绘与重排对大型的web程序来说，是十分重要的。
+访问和修改dom元素 访问和修改dom多采用innerHTML和DocumentFragment，并注意尽量减少dom和javascript交互的次数。
+例如下面的代码创建多个节点：
+function CreateNodes(){ for(var i = 0;i &amp;lt; 10000;i&#43;&#43;){ var tmpNode = document.createElement(&#34;div&#34;); tmpNode.innerHTML = &#34;test&#34; &#43; i &#43; &#34; &amp;lt;br /&amp;gt;&#34;; document.body.appendChild(tmpNode); } } 就不如使用DocumentFragment或者innerHTML快速：
+function CreateFragments(){ var fragment = document.createDocumentFragment(); for(var i = 0;i &amp;lt; 10000;i&#43;&#43;){ var tmpNode = document.createElement(&#34;div&#34;); tmpNode.innerHTML = &#34;test&#34; &#43; i &#43; &#34;&amp;lt;br /&amp;gt;&#34;; fragment.appendChild(tmpNode); } document.body.appendChild(fragment); } 添加dom事件 利用javascript事件冒泡的特性，来最小化事件句柄数量。
+例如将下面给td标签注册事件的例子：
+function addTdEvent1(){ var table = document.getElementById(&#39;table&#39;); var tds = table."/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">dom编程优化</h1>
+			<div class="meta">Posted on Feb 3, 2013</div>
+		</div>
+		
+
+		<section class="body">
+			<p>在浏览器中，dom的实现和javascript的实现通常是保持相互独立的，比如chrome使用webKit渲染页面，而使用v8作为javascript引擎，firefox使用Gecko渲染页面，使用IonMonkey作为最新的javascript引擎。</p>
+<p>有一个非常形象的比如就是将dom和js分别看做两座岛屿，而两者之间以收费桥连接，当js访问dom时，就需要过桥，需要交过桥费，所以访问的次数越多，教的过桥费也就越多（摘自<a href="http://www.amazon.com/Performance-JavaScript-Faster-Application-Interfaces/dp/059680279X" title="High Performance Javascript">《High Performance Javascript</a>》）。所以合理的处理好dom和js的交互，对页面的性能也有很大的提升。</p>
+<p>合理的操作dom主要包括访问和修改dom元素、注册dom元素事件、浏览器重绘与重排，前两者是最普遍的优化问题，也是最易优化的，但是理解重绘与重排对大型的web程序来说，是十分重要的。</p>
+<h3 id="访问和修改dom元素">访问和修改dom元素</h3>
+<p>访问和修改dom多采用innerHTML和DocumentFragment，并注意尽量减少dom和javascript交互的次数。</p>
+<p>例如下面的代码创建多个节点：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">CreateNodes</span>(){
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;<span style="color:#a6e22e">i</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">lt</span>; <span style="color:#ae81ff">10000</span>;<span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tmpNode</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#34;div&#34;</span>);
+        <span style="color:#a6e22e">tmpNode</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &amp;lt;br /&amp;gt;&#34;</span>;
+        document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">tmpNode</span>);
+    }
+}
+</code></pre></div><p>就不如使用DocumentFragment或者innerHTML快速：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">CreateFragments</span>(){
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">fragment</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createDocumentFragment</span>();
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;<span style="color:#a6e22e">i</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">lt</span>; <span style="color:#ae81ff">10000</span>;<span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tmpNode</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#34;div&#34;</span>);
+        <span style="color:#a6e22e">tmpNode</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&amp;lt;br /&amp;gt;&#34;</span>;
+        <span style="color:#a6e22e">fragment</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">tmpNode</span>);
+    }
+    document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">fragment</span>);
+}
+</code></pre></div><h3 id="添加dom事件">添加dom事件</h3>
+<p>利用javascript事件冒泡的特性，来最小化事件句柄数量。</p>
+<p>例如将下面给td标签注册事件的例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">addTdEvent1</span>(){
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">table</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;table&#39;</span>);
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tds</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">table</span>.<span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#34;td&#34;</span>);
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">len</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">tds</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">lt</span>; <span style="color:#a6e22e">len</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">td</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">tds</span>[<span style="color:#a6e22e">i</span>];
+        <span style="color:#a6e22e">td</span>.<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+            <span style="color:#a6e22e">alert</span>(<span style="color:#e6db74">&#34;单元格被点击了&#34;</span>);
+        };
+    }
+
+}
+</code></pre></div><p>稍作修改为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">addTdEvent2</span>(){
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">table</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;table&#39;</span>);
+    <span style="color:#a6e22e">table</span>.<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">evt</span>){
+        <span style="color:#a6e22e">evt</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">evt</span> <span style="color:#f92672">||</span> window.<span style="color:#a6e22e">event</span>;
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">target</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">evt</span>.<span style="color:#a6e22e">target</span>;
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">tagName</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;TD&#34;</span>) {
+            <span style="color:#a6e22e">alert</span>(<span style="color:#e6db74">&#34;单元格被点击了&#34;</span>);
+        }
+    }
+}
+</code></pre></div><p>就能减少很多事件句柄数量。</p>
+<h3 id="修改dom样式造成重绘与重排">修改dom样式造成重绘与重排</h3>
+<p>当浏览器下载完页面所有html标记、javascript、css、和图片之后，会解析html文件并创建两个内部数据结构：一个用来表示页面结构的dom树，另一个是表示节点如何显示的渲染树。渲染树中每个需要显示的dom树节点存放至少一个节点（隐藏的dom元素在渲染树中没有对应的节点），一旦dom树和渲染树构造完毕，浏览器就根据渲染树上的节点样式绘制出页面。由于浏览器的流布局，对渲染树的计算通常只需要遍历一次就可以完成。但是table及其内部元素除外，他可能需要更多次计算才能确定好其在渲染树中节点的属性，通常需要花费3倍的时间（所以不推荐使用table布局）。</p>
+<p>重绘是指一个元素外观的改变所引起浏览器的行为，比如改变visibility(改变display属于重排，因为display为none的时候渲染树是没有这个节点的)，背景色等属性。浏览器会根据元素的新属性重新绘制，因为不会带来重新的布局，所以不会触发重排。</p>
+<p>重排主要是针对当元素的几何属性(比如宽和高)受到修改了、或者在段落中添加了文字，浏览器需要重新计算元素的几何属性时。浏览器需要重构渲染树，这个过程称为重排。</p>
+<p>以下几点是常见的触发重排的操作：</p>
+<ol>
+<li>添加或删除可见的dom元素，修改dom元素display样式所造成的dom树结构的变化。</li>
+<li>通过修改dom元素的位置、宽、高，或者由于添加文字或背景变成不同尺寸的图片所造成的几何属性的变化。</li>
+<li>最初的页面渲染、浏览器窗口改变尺寸、滚动条的出现。</li>
+<li>当某一个dom元素的几何属性高改变引起浏览器对页面进行重排的时候，有可能会引起其他兄弟元素、子元素、父元素的重排和重绘，甚至整个文档的重排与重绘，性能的消耗是非常大的，所以在现在的浏览器引擎中，都会通过队列来批量操作来优化重排的过程，但是如果访问以下属性的话，浏览器就会强迫队列刷新所有需要重排的部分来获取最新的信息：  <em>offsetTop、offsetLeft、 offsetWidth、offsetHeight、scrollTop、scrollLeft、scrollWidth、scrollHeight、clientTop、clientLeft、clientWidth、clientHeight、getComputedStyle() (currentStyle in IE)</em></li>
+</ol>
+<p>所以，在多次使用这些值时应进行缓存。</p>
+<h3 id="如何减少重排次数">如何减少重排次数</h3>
+<ol>
+<li>将多次改变样式的操作合并为修改cssText或者css(推荐后者，方便做到html、css、js分离)。</li>
+<li>当需要多次操作dom元素时，将dom元素从文档流中拿出（使用documentFragment或者隐藏该节点），多次操作完成后再放回文档中。</li>
+<li>在需要经常获取那些引起浏览器重排的属性值时，比如offsetTop等，将值缓存为局部变量。</li>
+</ol>
+<blockquote>
+<p>参考自<a href="http://www.amazon.com/Performance-JavaScript-Faster-Application-Interfaces/dp/059680279X" title="High Performance Javascript">《High Performance Javascript》</a></p>
+</blockquote>
+<blockquote>
+<p>参考自<a href="http://kb.cnblogs.com/page/169820/" title="浏览器的重绘与重排">浏览器的重绘与重排</a></p>
+</blockquote>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/javascript">JavaScript</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

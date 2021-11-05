@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>c# 执行sql脚本文件 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="在工作中，之前遇见过这种情况：
+需要通过sql脚本在多个服务器上创建数据库，比如在oracle中创建一个数据库并导入数据，我之前是这样做的：
+  打开PlSql 打开创建表空间sql脚本，执行。 打开创建用户sql脚本，执行。 打开创建表结构sql脚本，执行。 打开初始数据sql脚本，执行。   然后要创建多个数据库的话，同上同上….
+然后根据不同的用户需求，我不仅要装oracle，还得装sqlserver和postgresql。反复的手工操作是很苦逼的。
+为了简化手工操作，便使用c# 写了这样一个工具，主要功能在于：
+ 手动选择数据库类型，oracle、sqlserver、postgresql。 手动配置需要执行的sql脚本与执行顺序。 根据配置的sql脚本顺序执行，并返回执行结果。  以oracle数据库为例，sql脚本配置如下：
+ create_tablespace.sql create_user.sql create_tables.sql import_data.sql
+ 其实使用c#来操作这三大主流数据库是非常简单的，网上有很多例子，我只是简单的封装了一下，在完成的过程中主要注意以下几点：
+ 工具需要即拿即用，不需要安装oracle客户端即可使用，所以需要下载操作相关dll，注意下载时需要根据实际需求区分64、32位版本。在此提供我用到的oracle11g_64位dll。 操作postgresql需要下载Npgsql.dll。 虽说是执行sql脚本文件，其实本质还是执行的一条条sql语句，不同的数据库平台语句分割方式不一样，oracle和postgresql使用“;”而sqlserver使用 “GO”，这一点可以在导出的sql脚本中查看。 oracle创建表空间时需要先创建表空间目录，所以推荐在创建表空间脚本中不写创建路径，系统会自动将表空间创建于默认目录，路径为：[ORACLE_INSTALL_DIR]\product\11.1.0\db_1\database。 postgresql创建表空间需要在数据库安装路径中手动创建表空间文件夹，该路径为[POSTGRESQL_INSTALL_DIR]\tablespace\，并且将新建的表空间文件夹的写权限赋予TrustedInstaller 和 user 用户。或者也可以选择使用默认表空间来导入数据。  主要调用代码如下：
+DBModel model = new DBModel(&#34;Oracle&#34;, &#34;127.0.0.1&#34;, &#34;1521&#34;, &#34;sys&#34;, &#34;admin&#34;, &#34;&#34;, &#34;orcl&#34;); string filepath = &#34;test.sql&#34;; IDBOperate dboperate = null; if (model.Type == &#34;Oracle&#34;) { dboperate = new OraceDBOperate(); } else if (model." />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="c# 执行sql脚本文件" />
+<meta property="og:description" content="在工作中，之前遇见过这种情况：
+需要通过sql脚本在多个服务器上创建数据库，比如在oracle中创建一个数据库并导入数据，我之前是这样做的：
+  打开PlSql 打开创建表空间sql脚本，执行。 打开创建用户sql脚本，执行。 打开创建表结构sql脚本，执行。 打开初始数据sql脚本，执行。   然后要创建多个数据库的话，同上同上….
+然后根据不同的用户需求，我不仅要装oracle，还得装sqlserver和postgresql。反复的手工操作是很苦逼的。
+为了简化手工操作，便使用c# 写了这样一个工具，主要功能在于：
+ 手动选择数据库类型，oracle、sqlserver、postgresql。 手动配置需要执行的sql脚本与执行顺序。 根据配置的sql脚本顺序执行，并返回执行结果。  以oracle数据库为例，sql脚本配置如下：
+ create_tablespace.sql create_user.sql create_tables.sql import_data.sql
+ 其实使用c#来操作这三大主流数据库是非常简单的，网上有很多例子，我只是简单的封装了一下，在完成的过程中主要注意以下几点：
+ 工具需要即拿即用，不需要安装oracle客户端即可使用，所以需要下载操作相关dll，注意下载时需要根据实际需求区分64、32位版本。在此提供我用到的oracle11g_64位dll。 操作postgresql需要下载Npgsql.dll。 虽说是执行sql脚本文件，其实本质还是执行的一条条sql语句，不同的数据库平台语句分割方式不一样，oracle和postgresql使用“;”而sqlserver使用 “GO”，这一点可以在导出的sql脚本中查看。 oracle创建表空间时需要先创建表空间目录，所以推荐在创建表空间脚本中不写创建路径，系统会自动将表空间创建于默认目录，路径为：[ORACLE_INSTALL_DIR]\product\11.1.0\db_1\database。 postgresql创建表空间需要在数据库安装路径中手动创建表空间文件夹，该路径为[POSTGRESQL_INSTALL_DIR]\tablespace\，并且将新建的表空间文件夹的写权限赋予TrustedInstaller 和 user 用户。或者也可以选择使用默认表空间来导入数据。  主要调用代码如下：
+DBModel model = new DBModel(&#34;Oracle&#34;, &#34;127.0.0.1&#34;, &#34;1521&#34;, &#34;sys&#34;, &#34;admin&#34;, &#34;&#34;, &#34;orcl&#34;); string filepath = &#34;test.sql&#34;; IDBOperate dboperate = null; if (model.Type == &#34;Oracle&#34;) { dboperate = new OraceDBOperate(); } else if (model." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2015/csharp-excute-sql-file/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-03-07T23:16:39+00:00" />
+<meta property="article:modified_time" content="2015-03-07T23:16:39+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="c# 执行sql脚本文件"/>
+<meta name="twitter:description" content="在工作中，之前遇见过这种情况：
+需要通过sql脚本在多个服务器上创建数据库，比如在oracle中创建一个数据库并导入数据，我之前是这样做的：
+  打开PlSql 打开创建表空间sql脚本，执行。 打开创建用户sql脚本，执行。 打开创建表结构sql脚本，执行。 打开初始数据sql脚本，执行。   然后要创建多个数据库的话，同上同上….
+然后根据不同的用户需求，我不仅要装oracle，还得装sqlserver和postgresql。反复的手工操作是很苦逼的。
+为了简化手工操作，便使用c# 写了这样一个工具，主要功能在于：
+ 手动选择数据库类型，oracle、sqlserver、postgresql。 手动配置需要执行的sql脚本与执行顺序。 根据配置的sql脚本顺序执行，并返回执行结果。  以oracle数据库为例，sql脚本配置如下：
+ create_tablespace.sql create_user.sql create_tables.sql import_data.sql
+ 其实使用c#来操作这三大主流数据库是非常简单的，网上有很多例子，我只是简单的封装了一下，在完成的过程中主要注意以下几点：
+ 工具需要即拿即用，不需要安装oracle客户端即可使用，所以需要下载操作相关dll，注意下载时需要根据实际需求区分64、32位版本。在此提供我用到的oracle11g_64位dll。 操作postgresql需要下载Npgsql.dll。 虽说是执行sql脚本文件，其实本质还是执行的一条条sql语句，不同的数据库平台语句分割方式不一样，oracle和postgresql使用“;”而sqlserver使用 “GO”，这一点可以在导出的sql脚本中查看。 oracle创建表空间时需要先创建表空间目录，所以推荐在创建表空间脚本中不写创建路径，系统会自动将表空间创建于默认目录，路径为：[ORACLE_INSTALL_DIR]\product\11.1.0\db_1\database。 postgresql创建表空间需要在数据库安装路径中手动创建表空间文件夹，该路径为[POSTGRESQL_INSTALL_DIR]\tablespace\，并且将新建的表空间文件夹的写权限赋予TrustedInstaller 和 user 用户。或者也可以选择使用默认表空间来导入数据。  主要调用代码如下：
+DBModel model = new DBModel(&#34;Oracle&#34;, &#34;127.0.0.1&#34;, &#34;1521&#34;, &#34;sys&#34;, &#34;admin&#34;, &#34;&#34;, &#34;orcl&#34;); string filepath = &#34;test.sql&#34;; IDBOperate dboperate = null; if (model.Type == &#34;Oracle&#34;) { dboperate = new OraceDBOperate(); } else if (model."/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">c# 执行sql脚本文件</h1>
+			<div class="meta">Posted on Mar 7, 2015</div>
+		</div>
+		
+
+		<section class="body">
+			<p>在工作中，之前遇见过这种情况：</p>
+<p>需要通过sql脚本在多个服务器上创建数据库，比如在oracle中创建一个数据库并导入数据，我之前是这样做的：</p>
+<blockquote>
+<ol>
+<li>打开PlSql</li>
+<li>打开创建表空间sql脚本，执行。</li>
+<li>打开创建用户sql脚本，执行。</li>
+<li>打开创建表结构sql脚本，执行。</li>
+<li>打开初始数据sql脚本，执行。</li>
+</ol>
+</blockquote>
+<p>然后要创建多个数据库的话，同上同上….</p>
+<p>然后根据不同的用户需求，我不仅要装oracle，还得装sqlserver和postgresql。反复的手工操作是很苦逼的。</p>
+<p>为了简化手工操作，便使用c# 写了这样一个工具，主要功能在于：</p>
+<ol>
+<li>手动选择数据库类型，oracle、sqlserver、postgresql。</li>
+<li>手动配置需要执行的sql脚本与执行顺序。</li>
+<li>根据配置的sql脚本顺序执行，并返回执行结果。</li>
+</ol>
+<p>以oracle数据库为例，sql脚本配置如下：</p>
+<blockquote>
+<p>create_tablespace.sql
+create_user.sql
+create_tables.sql
+import_data.sql</p>
+</blockquote>
+<p>其实使用c#来操作这三大主流数据库是非常简单的，网上有很多例子，我只是简单的封装了一下，在完成的过程中主要注意以下几点：</p>
+<ol>
+<li>工具需要即拿即用，不需要安装oracle客户端即可使用，所以需要下载操作相关dll，注意下载时需要根据实际需求区分64、32位版本。在此提供我用到的<a href="http://pan.baidu.com/s/1c0jKrYg" title="oracle11g_64_dll">oracle11g_64位dll</a>。</li>
+<li>操作postgresql需要下载<a href="http://npgsql.projects.pgfoundry.org/">Npgsql.dll</a>。</li>
+<li>虽说是执行sql脚本文件，其实本质还是执行的一条条sql语句，不同的数据库平台语句分割方式不一样，oracle和postgresql使用“;”而sqlserver使用 “GO”，这一点可以在导出的sql脚本中查看。</li>
+<li>oracle创建表空间时需要先创建表空间目录，所以推荐在创建表空间脚本中不写创建路径，系统会自动将表空间创建于默认目录，路径为：[ORACLE_INSTALL_DIR]\product\11.1.0\db_1\database。</li>
+<li>postgresql创建表空间需要在数据库安装路径中手动创建表空间文件夹，该路径为[POSTGRESQL_INSTALL_DIR]\tablespace\，并且将新建的表空间文件夹的写权限赋予TrustedInstaller 和 user 用户。或者也可以选择使用默认表空间来导入数据。</li>
+</ol>
+<p>主要调用代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">DBModel model = <span style="color:#66d9ef">new</span> DBModel(<span style="color:#e6db74">&#34;Oracle&#34;</span>, <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>, <span style="color:#e6db74">&#34;1521&#34;</span>, <span style="color:#e6db74">&#34;sys&#34;</span>, <span style="color:#e6db74">&#34;admin&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;orcl&#34;</span>);
+            <span style="color:#66d9ef">string</span> filepath = <span style="color:#e6db74">&#34;test.sql&#34;</span>;
+            IDBOperate dboperate = <span style="color:#66d9ef">null</span>;
+            <span style="color:#66d9ef">if</span> (model.Type == <span style="color:#e6db74">&#34;Oracle&#34;</span>)
+            {
+                dboperate = <span style="color:#66d9ef">new</span> OraceDBOperate();
+            }
+            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (model.Type == <span style="color:#e6db74">&#34;Postgresql&#34;</span>)
+            {
+                dboperate = <span style="color:#66d9ef">new</span> PostgreSqlDBOperate();
+            }
+            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (model.Type == <span style="color:#e6db74">&#34;Sqlserver&#34;</span>)
+            {
+                dboperate = <span style="color:#66d9ef">new</span> SqlServerDBOperate();
+            }
+            <span style="color:#66d9ef">try</span>
+            {
+                dboperate.OpenConnection(model);
+                dboperate.ExecuteCmdFile(filepath);
+                dboperate.CloseConnection();
+            }
+            <span style="color:#66d9ef">catch</span> (Exception ex)
+            {
+                <span style="color:#66d9ef">throw</span> (ex);
+            }
+
+</code></pre></div><p>该工具数据库操作代码，有需要的朋友请查看源码：<a href="https://github.com/steeeeps/DBManager" title="源码">DBManager</a>.</p>
+<p><strong>此文与代码中有任何错误的地方，欢迎交流指正</strong>。</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/c">C#</a></li>
+					
+					<li><a href="/tags/sql">SQL</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

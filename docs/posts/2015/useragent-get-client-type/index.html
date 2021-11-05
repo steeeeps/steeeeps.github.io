@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>使用userAgent区分客户端类型 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="前段时间做了个小网站，需要在区别移动端和pc端显示效果。由于功能需求比较简单，所以就没有使用响应式设计，而是使用传统方式分别做了移动端和pc端两个页面。
+一般使用userAgent来区分移动端和pc端还是相对容易的事情，但是我的需求是pc端和pad端都需要显示pc端页面，而在手机端显示移动端页面。
+由于整个程序都是静态页面，就选择了使用javascript&#43;正则表达式的方式，如下：
+if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || /MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|Nexus|ZTE/.test(navigator.userAgent)) {	try { //微信内嵌浏览器 	if(/MicroMessenger/i.test(navigator.userAgent)){ //显示mobile页面  } //ipad  else if (/iPad/i.test(navigator.userAgent)) { //显示pc端页面  } //Nexus  else if(/Nexus/i.test(navigator.userAgent)){ var nexusVersion=navigator.userAgent.match(/Nexus ([\d.]&#43;)/)[1]; //Nexus 7以上的平板  if(parseInt(nexusVersion)&amp;gt;=7){ //显示pc端页面  }else{ //显示mobile页面  } } else if (/Android|webOS|iPhone|iPod|BlackBerry|BB/i.test(navigator.userAgent)) { //显示mobile页面  } else { //显示pc端页面  } } catch (e) {} }else{ //显示pc端页面  } 当然，这段代码稍作修改放在服务器端处理那是最好不过的了。
+这个处理方式使用chrome 开发者工具，模拟手机和平板测试基本是没有问题的。
+目前知道的bug为：无法获取可以判断为三星平板和小米平板的userAgent，所以这两个平板目前都显示为mobile页面。
+因为不同的设备发送的userAgent都有特殊的标识，这是chrome开发者工具无法模拟的。例如小米3电信版中就含有MI3C字样，所以，如果您有兴趣的话，可以使用这段代码试试。" />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="使用userAgent区分客户端类型" />
+<meta property="og:description" content="前段时间做了个小网站，需要在区别移动端和pc端显示效果。由于功能需求比较简单，所以就没有使用响应式设计，而是使用传统方式分别做了移动端和pc端两个页面。
+一般使用userAgent来区分移动端和pc端还是相对容易的事情，但是我的需求是pc端和pad端都需要显示pc端页面，而在手机端显示移动端页面。
+由于整个程序都是静态页面，就选择了使用javascript&#43;正则表达式的方式，如下：
+if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || /MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|Nexus|ZTE/.test(navigator.userAgent)) {	try { //微信内嵌浏览器 	if(/MicroMessenger/i.test(navigator.userAgent)){ //显示mobile页面  } //ipad  else if (/iPad/i.test(navigator.userAgent)) { //显示pc端页面  } //Nexus  else if(/Nexus/i.test(navigator.userAgent)){ var nexusVersion=navigator.userAgent.match(/Nexus ([\d.]&#43;)/)[1]; //Nexus 7以上的平板  if(parseInt(nexusVersion)&amp;gt;=7){ //显示pc端页面  }else{ //显示mobile页面  } } else if (/Android|webOS|iPhone|iPod|BlackBerry|BB/i.test(navigator.userAgent)) { //显示mobile页面  } else { //显示pc端页面  } } catch (e) {} }else{ //显示pc端页面  } 当然，这段代码稍作修改放在服务器端处理那是最好不过的了。
+这个处理方式使用chrome 开发者工具，模拟手机和平板测试基本是没有问题的。
+目前知道的bug为：无法获取可以判断为三星平板和小米平板的userAgent，所以这两个平板目前都显示为mobile页面。
+因为不同的设备发送的userAgent都有特殊的标识，这是chrome开发者工具无法模拟的。例如小米3电信版中就含有MI3C字样，所以，如果您有兴趣的话，可以使用这段代码试试。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2015/useragent-get-client-type/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-01-14T23:23:38+00:00" />
+<meta property="article:modified_time" content="2015-01-14T23:23:38+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用userAgent区分客户端类型"/>
+<meta name="twitter:description" content="前段时间做了个小网站，需要在区别移动端和pc端显示效果。由于功能需求比较简单，所以就没有使用响应式设计，而是使用传统方式分别做了移动端和pc端两个页面。
+一般使用userAgent来区分移动端和pc端还是相对容易的事情，但是我的需求是pc端和pad端都需要显示pc端页面，而在手机端显示移动端页面。
+由于整个程序都是静态页面，就选择了使用javascript&#43;正则表达式的方式，如下：
+if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || /MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|Nexus|ZTE/.test(navigator.userAgent)) {	try { //微信内嵌浏览器 	if(/MicroMessenger/i.test(navigator.userAgent)){ //显示mobile页面  } //ipad  else if (/iPad/i.test(navigator.userAgent)) { //显示pc端页面  } //Nexus  else if(/Nexus/i.test(navigator.userAgent)){ var nexusVersion=navigator.userAgent.match(/Nexus ([\d.]&#43;)/)[1]; //Nexus 7以上的平板  if(parseInt(nexusVersion)&amp;gt;=7){ //显示pc端页面  }else{ //显示mobile页面  } } else if (/Android|webOS|iPhone|iPod|BlackBerry|BB/i.test(navigator.userAgent)) { //显示mobile页面  } else { //显示pc端页面  } } catch (e) {} }else{ //显示pc端页面  } 当然，这段代码稍作修改放在服务器端处理那是最好不过的了。
+这个处理方式使用chrome 开发者工具，模拟手机和平板测试基本是没有问题的。
+目前知道的bug为：无法获取可以判断为三星平板和小米平板的userAgent，所以这两个平板目前都显示为mobile页面。
+因为不同的设备发送的userAgent都有特殊的标识，这是chrome开发者工具无法模拟的。例如小米3电信版中就含有MI3C字样，所以，如果您有兴趣的话，可以使用这段代码试试。"/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">使用userAgent区分客户端类型</h1>
+			<div class="meta">Posted on Jan 14, 2015</div>
+		</div>
+		
+
+		<section class="body">
+			<p>前段时间做了个小网站，需要在区别移动端和pc端显示效果。由于功能需求比较简单，所以就没有使用响应式设计，而是使用传统方式分别做了移动端和pc端两个页面。</p>
+<p>一般使用userAgent来区分移动端和pc端还是相对容易的事情，但是我的需求是pc端和pad端都需要显示pc端页面，而在手机端显示移动端页面。</p>
+<p>由于整个程序都是静态页面，就选择了使用javascript+正则表达式的方式，如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">if</span> (<span style="color:#e6db74">/AppleWebKit.*Mobile/i</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">navigator</span>.<span style="color:#a6e22e">userAgent</span>) <span style="color:#f92672">||</span> <span style="color:#e6db74">/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|Nexus|ZTE/</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">navigator</span>.<span style="color:#a6e22e">userAgent</span>)) {	
+
+	<span style="color:#66d9ef">try</span> {
+    		<span style="color:#75715e">//微信内嵌浏览器
+</span><span style="color:#75715e"></span>		    <span style="color:#66d9ef">if</span>(<span style="color:#e6db74">/MicroMessenger/i</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">navigator</span>.<span style="color:#a6e22e">userAgent</span>)){
+       			<span style="color:#75715e">//显示mobile页面
+</span><span style="color:#75715e"></span>    }
+    <span style="color:#75715e">//ipad
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#e6db74">/iPad/i</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">navigator</span>.<span style="color:#a6e22e">userAgent</span>)) {
+            <span style="color:#75715e">//显示pc端页面
+</span><span style="color:#75715e"></span>    }
+    <span style="color:#75715e">//Nexus 
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#e6db74">/Nexus/i</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">navigator</span>.<span style="color:#a6e22e">userAgent</span>)){
+          <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">nexusVersion</span><span style="color:#f92672">=</span><span style="color:#a6e22e">navigator</span>.<span style="color:#a6e22e">userAgent</span>.<span style="color:#a6e22e">match</span>(<span style="color:#e6db74">/Nexus ([\d.]+)/</span>)[<span style="color:#ae81ff">1</span>];
+          <span style="color:#75715e">//Nexus 7以上的平板
+</span><span style="color:#75715e"></span>         <span style="color:#66d9ef">if</span>(parseInt(<span style="color:#a6e22e">nexusVersion</span>)<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">gt</span>;<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span>){
+             <span style="color:#75715e">//显示pc端页面
+</span><span style="color:#75715e"></span>         }<span style="color:#66d9ef">else</span>{
+            		<span style="color:#75715e">//显示mobile页面
+</span><span style="color:#75715e"></span>         	}
+    }           	
+    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#e6db74">/Android|webOS|iPhone|iPod|BlackBerry|BB/i</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">navigator</span>.<span style="color:#a6e22e">userAgent</span>)) {
+            	<span style="color:#75715e">//显示mobile页面
+</span><span style="color:#75715e"></span>     } <span style="color:#66d9ef">else</span> {
+               <span style="color:#75715e">//显示pc端页面
+</span><span style="color:#75715e"></span>     }
+    } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">e</span>) {}
+   }<span style="color:#66d9ef">else</span>{
+   	 <span style="color:#75715e">//显示pc端页面
+</span><span style="color:#75715e"></span>   }
+</code></pre></div><p>当然，这段代码稍作修改放在服务器端处理那是最好不过的了。</p>
+<p>这个处理方式使用chrome 开发者工具，模拟手机和平板测试基本是没有问题的。</p>
+<p>目前知道的bug为：<strong>无法获取可以判断为三星平板和小米平板的userAgent，所以这两个平板目前都显示为mobile页面。</strong></p>
+<p>因为不同的设备发送的userAgent都有特殊的标识，这是chrome开发者工具无法模拟的。例如小米3电信版中就含有MI3C字样，所以，如果您有兴趣的话，可以使用这段代码试试。</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/useragent">userAgent</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

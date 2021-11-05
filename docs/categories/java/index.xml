@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on steeeeps</title>
+    <link>https://steeeeps.github.io/categories/java/</link>
+    <description>Recent content in Java on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Wed, 07 Jan 2015 23:27:57 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在java中执行javascript代码</title>
+      <link>https://steeeeps.github.io/posts/2015/java-run-javascript/</link>
+      <pubDate>Wed, 07 Jan 2015 23:27:57 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/java-run-javascript/</guid>
+      <description>JavaScript 相对Java来说，在某些方面是比较方便的，之前项目某个需要验证的功能，没有使用正则表达式，而是使用一堆数字和运算符来验证，在Java中实现就稍微复杂了一些。但是JavaScript实现是比较简单的。
+好在JDK1.6之后新增了ScriptEngine类，允许Java程序直接调用javascript代码。简单的使用例子：
+import javax.script.ScriptEngine; import javax.script.ScriptEngineManager; import javax.script.ScriptException; public class ScriptEngineDemo { /** * @param args */ public static void main(String[] args) { // TODO Auto-generated method stub ScriptEngineManager mgr = new ScriptEngineManager(); ScriptEngine engine = mgr.getEngineByName(&amp;#34;JavaScript&amp;#34;); try { String script=&amp;#34; 1 === true &amp;#34;; boolean result = Boolean.valueOf(engine.eval(script).toString()); System.out.println(result);//输出为 ：false } catch (ScriptException e) { // TODO Auto-generated catch block e.printStackTrace(); } } } </description>
+    </item>
+    
+    <item>
+      <title>eclipse 跳至ThreadPoolExecutor.class 解决方法</title>
+      <link>https://steeeeps.github.io/posts/2014/eclips-threadpoolexecutor-class/</link>
+      <pubDate>Wed, 10 Dec 2014 13:17:04 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/eclips-threadpoolexecutor-class/</guid>
+      <description>在eclipse里面编写java代码时，经常遇见这样一个情况，在tomcat启动后，保存更新后的java文件，代码经常跳转至 ThreadPoolExecutor.class，停留在workerDone(this)一行代码.
+解决方法：
+在eclipse中，进入window-&amp;gt;preferences-&amp;gt;java-&amp;gt;Debug，将Suspend execution on uncaught exceptions 前的复选框去掉。
+ 解决方法参考至：http://stackoverflow.com/questions/6290470/eclipse-debugger-always-blocks-on-threadpoolexecutor-without-any-obvious-excepti
+ </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>logstash 使用配置纪录 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="logstash是Elastic stack中最主要的数据获取、转换工作。主要记录一下日常使用中的配置信息。" />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="logstash 使用配置纪录" />
+<meta property="og:description" content="logstash是Elastic stack中最主要的数据获取、转换工作。主要记录一下日常使用中的配置信息。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2017/logstash-useage/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-12-26T22:02:27+00:00" />
+<meta property="article:modified_time" content="2017-12-26T22:02:27+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="logstash 使用配置纪录"/>
+<meta name="twitter:description" content="logstash是Elastic stack中最主要的数据获取、转换工作。主要记录一下日常使用中的配置信息。"/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">logstash 使用配置纪录</h1>
+			<div class="meta">Posted on Dec 26, 2017</div>
+		</div>
+		
+
+		<section class="body">
+			<p>logstash是Elastic stack中最主要的数据获取、转换工作。主要记录一下日常使用中的配置信息。</p>
+<h3 id="导入带有地理位置的-csv文件到-es-中">导入带有地理位置的 csv文件到 ES 中</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">input
+<span style="color:#f92672">{</span>
+      file
+        <span style="color:#f92672">{</span>
+           path <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;/home/steeeeps/workspace/es_datas/csv/sicuan.csv&#34;</span>
+           <span style="color:#75715e"># type =&gt; &#34;testeFile_lite&#34;</span>
+           start_position <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;beginning&#34;</span>
+           sincedb_path <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;/home/steeeeps/workspace/es_datas/logs&#34;</span>
+        <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+filter
+<span style="color:#f92672">{</span>
+    csv<span style="color:#f92672">{</span>
+           columns <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;poiid&#39;</span>, <span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#e6db74">&#39;address&#39;</span>,<span style="color:#e6db74">&#39;lon&#39;</span>,<span style="color:#e6db74">&#39;lat&#39;</span>,<span style="color:#e6db74">&#39;city&#39;</span>,<span style="color:#e6db74">&#39;category_name&#39;</span>,<span style="color:#e6db74">&#39;checkun_num&#39;</span>,<span style="color:#e6db74">&#39;photo_num&#39;</span><span style="color:#f92672">]</span>
+           separator <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;,&#34;</span>
+      <span style="color:#f92672">}</span>
+
+     mutate <span style="color:#f92672">{</span>
+         add_field <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">{</span> <span style="color:#e6db74">&#34;[location][lat]&#34;</span> <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;%{lat}&#34;</span> <span style="color:#f92672">}</span>
+         add_field <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">{</span> <span style="color:#e6db74">&#34;[location][lon]&#34;</span> <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;%{lon}&#34;</span> <span style="color:#f92672">}</span>
+     <span style="color:#f92672">}</span>
+
+     mutate <span style="color:#f92672">{</span>
+         convert <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">{</span>
+           <span style="color:#e6db74">&#34;[location][lat]&#34;</span> <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;float&#34;</span>
+           <span style="color:#e6db74">&#34;[location][lon]&#34;</span> <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;float&#34;</span>
+        <span style="color:#f92672">}</span>
+     <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+output
+<span style="color:#f92672">{</span>
+    elasticsearch
+    <span style="color:#f92672">{</span>
+       <span style="color:#75715e"># action =&gt; &#34;index&#34;</span>
+       hosts <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;http://172.16.167.188:9200&#34;</span><span style="color:#f92672">]</span>
+       index <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;weibo&#34;</span>
+       document_type <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;checkin&#34;</span>
+
+       <span style="color:#75715e"># cluster =&gt; &#34;SIC_UTAD&#34;</span>
+    <span style="color:#f92672">}</span>
+
+    stdout <span style="color:#f92672">{}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="导入多边形json数据到-es-中">导入多边形Json数据到 ES 中</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">input
+<span style="color:#f92672">{</span>
+      file
+        <span style="color:#f92672">{</span>
+           path <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;/home/steeeeps/workspace/es_datas/json/sheetpolygon_10000_0.json&#34;</span>
+           start_position <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;beginning&#34;</span>
+           sincedb_path <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;/home/steeeeps/workspace/es_datas/json_logsssss&#34;</span>
+        <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+filter
+<span style="color:#f92672">{</span>
+    json <span style="color:#f92672">{</span>
+        source <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;message&#34;</span>
+    <span style="color:#f92672">}</span>
+
+    mutate <span style="color:#f92672">{</span>
+        rename <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">{</span> <span style="color:#e6db74">&#34;location_group&#34;</span> <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;location&#34;</span> <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+ 
+    mutate <span style="color:#f92672">{</span>
+        remove_field <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;message&#34;</span> <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+
+	
+
+<span style="color:#f92672">}</span>
+output
+<span style="color:#f92672">{</span>
+   elasticsearch
+    <span style="color:#f92672">{</span>
+       <span style="color:#75715e">#action =&gt; &#34;index&#34;</span>
+      hosts <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;http://172.16.167.188:9200&#34;</span><span style="color:#f92672">]</span>
+       index <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;geoshape&#34;</span>
+       document_type <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;polygons&#34;</span>
+
+       <span style="color:#75715e">#cluster =&gt; &#34;SIC_UTAD&#34;</span>
+    <span style="color:#f92672">}</span>
+
+    stdout <span style="color:#f92672">{}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="导入-kafka-topic-中的数据到-es-和-mongodb-中">导入 kafka topic 中的数据到 ES 和 Mongodb 中</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">input<span style="color:#f92672">{</span>
+
+  kafka <span style="color:#f92672">{</span>
+    bootstrap_servers <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;localhost:9092&#34;</span>
+    group_id <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;test-consumer-group&#34;</span>
+    topics <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;logstashData&#34;</span>,<span style="color:#e6db74">&#34;logstashData2&#34;</span><span style="color:#f92672">]</span>
+    decorate_events <span style="color:#f92672">=</span>&gt; true
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+filter
+<span style="color:#f92672">{</span>
+   <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span>kafka<span style="color:#f92672">][</span>topic<span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;logstashData&#34;</span> <span style="color:#f92672">{</span>
+      mutate <span style="color:#f92672">{</span>
+         add_field <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;[@metadata][index]&#34;</span> <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;logstashdata&#34;</span><span style="color:#f92672">}</span>
+      <span style="color:#f92672">}</span>
+   <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+      mutate <span style="color:#f92672">{</span>
+         add_field <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;[@metadata][index]&#34;</span> <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;logstashdata2&#34;</span><span style="color:#f92672">}</span>
+      <span style="color:#f92672">}</span>
+   <span style="color:#f92672">}</span>
+   <span style="color:#75715e"># remove the field containing the decorations, unless you want them to land into ES</span>
+   mutate <span style="color:#f92672">{</span>
+      remove_field <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;kafka&#34;</span><span style="color:#f92672">]</span>
+   <span style="color:#f92672">}</span>
+   
+	json <span style="color:#f92672">{</span>
+        source <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;message&#34;</span>
+    <span style="color:#f92672">}</span>
+  
+	mutate <span style="color:#f92672">{</span>
+        remove_field <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;message&#34;</span> <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+output<span style="color:#f92672">{</span>
+  stdout<span style="color:#f92672">{}</span>
+  elasticsearch <span style="color:#f92672">{</span>
+    action <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;index&#34;</span>    
+    hosts  <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;192.168.80.3:9200&#34;</span>   
+    index  <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;kafka-%{[@metadata][index]}&#34;</span>
+    flush_size <span style="color:#f92672">=</span>&gt; <span style="color:#ae81ff">50000</span>
+    idle_flush_time <span style="color:#f92672">=</span>&gt; <span style="color:#ae81ff">10</span>
+  <span style="color:#f92672">}</span>
+  mongodb <span style="color:#f92672">{</span>
+      bulk <span style="color:#f92672">=</span>&gt; true
+      bulk_interval <span style="color:#f92672">=</span>&gt; <span style="color:#ae81ff">2</span>
+      collection <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;%{[@metadata][index]}&#34;</span>
+      database <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;kafkaconnect&#34;</span>
+      <span style="color:#75715e"># generateId =&gt; true</span>
+    codec <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;json&#34;</span> 
+    uri <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;mongodb://192.168.90.61:27017&#34;</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="基于-kafka-的-topic-名称构建-es-索引">基于 kafka 的 topic 名称构建 es 索引</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">input<span style="color:#f92672">{</span>
+
+  kafka <span style="color:#f92672">{</span>
+    bootstrap_servers <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;localhost:9092&#34;</span>
+    group_id <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;test-consumer-group&#34;</span>
+    topics <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;topic_monitor_sys&#34;</span><span style="color:#f92672">]</span>
+    decorate_events <span style="color:#f92672">=</span>&gt; true
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+filter
+<span style="color:#f92672">{</span>
+   
+   
+   mutate <span style="color:#f92672">{</span>
+        add_field <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;[@metadata][index]&#34;</span> <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;%{[kafka][topic]}&#34;</span><span style="color:#f92672">}</span>
+   <span style="color:#f92672">}</span>
+   
+   mutate <span style="color:#f92672">{</span>
+    gsub <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span>
+     
+      <span style="color:#e6db74">&#34;[@metadata][index]&#34;</span>, <span style="color:#e6db74">&#34;topic&#34;</span>, <span style="color:#e6db74">&#34;index&#34;</span>
+    <span style="color:#f92672">]</span>
+  <span style="color:#f92672">}</span>
+   <span style="color:#75715e"># remove the field containing the decorations, unless you want them to land into ES</span>
+   mutate <span style="color:#f92672">{</span>
+      remove_field <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;kafka&#34;</span><span style="color:#f92672">]</span>
+   <span style="color:#f92672">}</span>
+   
+	json <span style="color:#f92672">{</span>
+        source <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;message&#34;</span>
+    <span style="color:#f92672">}</span>
+  
+	mutate <span style="color:#f92672">{</span>
+        remove_field <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;message&#34;</span> <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+output<span style="color:#f92672">{</span>
+  stdout<span style="color:#f92672">{}</span>
+  elasticsearch <span style="color:#f92672">{</span>
+    action <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;index&#34;</span>    
+    hosts  <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;192.168.80.3:9200&#34;</span>   
+    index <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;%{[@metadata][index]}_%{+YYYY.MM.dd}&#34;</span>
+    flush_size <span style="color:#f92672">=</span>&gt; <span style="color:#ae81ff">50000</span>
+    idle_flush_time <span style="color:#f92672">=</span>&gt; <span style="color:#ae81ff">10</span>
+  <span style="color:#f92672">}</span>
+  <span style="color:#75715e"># mongodb {</span>
+  <span style="color:#75715e">#    bulk =&gt; true</span>
+  <span style="color:#75715e">#    bulk_interval =&gt; 2</span>
+  <span style="color:#75715e">#    collection =&gt; &#34;%{[@metadata][index]}&#34;</span>
+  <span style="color:#75715e">#    database =&gt; &#34;kafkaconnect&#34;</span>
+  <span style="color:#75715e">#    # generateId =&gt; true</span>
+  <span style="color:#75715e">#  codec =&gt; &#34;json&#34; </span>
+  <span style="color:#75715e">#  uri =&gt; &#34;mongodb://192.168.90.61:27017&#34;</span>
+  <span style="color:#75715e">#}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/elk">ELK</a></li>
+					
+					<li><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE">大数据</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

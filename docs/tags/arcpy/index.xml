@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>arcpy on steeeeps</title>
+    <link>https://steeeeps.github.io/tags/arcpy/</link>
+    <description>Recent content in arcpy on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Tue, 24 Nov 2015 17:53:54 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/tags/arcpy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Undefined-variable-from-import-BuildPyramidsAndStatistics_management</title>
+      <link>https://steeeeps.github.io/posts/2015/undefined-variable-from-import-buildpyramidsandstatistics-management/</link>
+      <pubDate>Tue, 24 Nov 2015 17:53:54 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/undefined-variable-from-import-buildpyramidsandstatistics-management/</guid>
+      <description>使用arcpy.BuildPyramidsAndStatistics_management ()构建栅格数据金字塔和做统计值时，提示该方法为定义:
+ Undefined variable from import: BuildPyramidsAndStatistics_management.
+ 查看arcpy源码发现，时帮助文档中单词拼写出现了问题，正确的写法应该是:
+arcpy.BuildPyramidsandStatistics_management() </description>
+    </item>
+    
+  </channel>
+</rss>

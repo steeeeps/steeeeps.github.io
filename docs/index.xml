@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>steeeeps</title>
+    <link>https://steeeeps.github.io/</link>
+    <description>Recent content on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Fri, 12 Jan 2018 22:17:00 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mongodb sink connector 使用方法</title>
+      <link>https://steeeeps.github.io/posts/2018/kafka-mongodb-sink-connector-usage/</link>
+      <pubDate>Fri, 12 Jan 2018 22:17:00 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2018/kafka-mongodb-sink-connector-usage/</guid>
+      <description>mongodb sink connector 大致用法与 jdbc sink connector 相似。只是 jdbc sink connector 是 Confluent 官方提供。
+mongodb sink connector 是开源社区提供，我选择是的hpgrahsl/kafka-connect-mongodb。
+mongodb sink connector 使用步骤   下载上述 kafka connector mongodb,执行 mvn clean package 对工程打包。
+  将打包后的jar 包注册到java CLASSPATH 中，或者将打包后的kafka-connect-mongodb-1.0-SNAPSHOT-jar-with-dependencies.jar 文件拷贝至Confluent platform安装目录/share/java/confluent-common 中，我选择的是后者。
+  在Confluent 安装目录/etc/ 目录下创建 mongodb 文件夹，将 kafka-connect-mongodb目录/config/MongoDbSinkConnector.properties 文件拷贝于此。关于此文件的配置信息请参考mongodb-sink-connector-configuration
+  下载并安装 mongodb
+  开启三个 terminal，分别执行
+1) $ ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties 2) $ ./bin/kafka-server-start ./etc/kafka/server.properties 3) $ ./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties   以单机模式启动 connector</description>
+    </item>
+    
+    <item>
+      <title>JDBC sink connector 使用方法</title>
+      <link>https://steeeeps.github.io/posts/2018/kafka-jdbc-sink-connector-usage/</link>
+      <pubDate>Fri, 12 Jan 2018 22:03:00 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2018/kafka-jdbc-sink-connector-usage/</guid>
+      <description>Kafka Connect 是在0.9版本之后增加的新特性,可以更方便的创建和管理数据流管道。
+它为Kafka和其它系统创建规模可扩展的、可信赖的流数据提供了一个简单的模型，通过connectors可以将大数据从其它系统导入到Kafka中，也可以从Kafka中导出到其它系统。
+Kafka Connect可以将完整的数据库注入到Kafka的Topic中，或者将服务器的系统监控指标注入到Kafka，然后像正常的Kafka流处理机制一样进行数据流处理。而导出工作则是将数据从Kafka Topic中导出到其它数据存储系统、查询系统或者离线分析系统等，比如数据库、Elastic Search、Apache Ignite等。
+下面以 Confluent platform 提供的 JDBC sink connector和社区提供的 mongodb sink connector 为例，介绍 connector 的用法。Confluent Platform 详细使用请看帮助文档
+JDBC sink connector 使用步骤   下载 Confluent Platform 3.2,该版本使用的 Kafka 版本为 10.0.2.0。Confluent platform需要在 linux 或者 osx 下使用，同时需要/var/lib目录的写权限，window 暂时支持的不好。
+  下载安装 sqlite
+  进入 Confluent platform 的的文件目录
+  在单独的 terminal 中启动 Zookeeper
+$ ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties   在单独的 terminal 中启动 kafka
+$ ./bin/kafka-server-start .</description>
+    </item>
+    
+    <item>
+      <title>logstash 插件安装方式</title>
+      <link>https://steeeeps.github.io/posts/2017/logstash-install-plugin/</link>
+      <pubDate>Tue, 26 Dec 2017 22:10:49 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2017/logstash-install-plugin/</guid>
+      <description>logstash提供了很多filter、input、output插件，但是有些是需要自己安装的，以logstash-output-mongodb为例，纪录安装插件的方法。
+在线安装 以下两个操作需要联网，并确保能访问https://rubygems.org/,如果不能访问可以使用代理或者修改logstash 安装目录下的 gemfile文件中的源为淘宝镜像https://ruby.taobao.org/。
+直接安装   进入logstash安装目录，输入以下代码进行安装
+bin/logstash-plugin install   源码安装   下载插件源码logstash-output-mongodb,并解压。
+  打开解压目录，打开 gemfile文件并找到或者添加如下配置：
+gem &amp;#34;logstash-output-mongodb&amp;#34;, :path =&amp;gt; &amp;#34;file:///C:/soft/logstash-output-mongodb-3.1.1&amp;#34;   执行代码
+bin/logstash-plugin install --no-verify   安装成功
+   这一步网上介绍的都是属于离线安装模式，但是在实际操作中还是 需要联网
+ 离线安装 生产环境很多服务器无法联网，无法安装插件，可以先在能够联网的服务器上使用以上两种方式进行安装，然后使用以下两种方式将插件拷贝至无法联网的服务器。
+直接拷贝  拷贝 [logstash安装目录]/vender/bundle/jruby/1.9/gems/ 下面的你要的插件整个文件夹到目标机器同目录下。 拷贝 [logstash安装目录]/vendor/bundle/jruby/1.9/specifications/ 下面对应的声明文件到目标机器同目录下。 手动修改[logstash安装目录]/Gemfile 文件，加入插件行如：gem &amp;ldquo;logstash-output-mongodb&amp;rdquo;   这种方法我测试了，安装无效， 不推荐继续使用。
+ 离线打包 使用官方推荐的离线插件管理方法进行安装
+  进入logstash安装目录，运行以下命令，对插件打包。
+bin\logstash-plugin prepare-offline-pack --output logstash-output-mongodb.zip logstash-output-mongodb   将运行结果生成的logstash-output-mongodb.</description>
+    </item>
+    
+    <item>
+      <title>logstash 使用配置纪录</title>
+      <link>https://steeeeps.github.io/posts/2017/logstash-useage/</link>
+      <pubDate>Tue, 26 Dec 2017 22:02:27 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2017/logstash-useage/</guid>
+      <description>logstash是Elastic stack中最主要的数据获取、转换工作。主要记录一下日常使用中的配置信息。
+导入带有地理位置的 csv文件到 ES 中 input { file { path =&amp;gt; &amp;#34;/home/steeeeps/workspace/es_datas/csv/sicuan.csv&amp;#34; # type =&amp;gt; &amp;#34;testeFile_lite&amp;#34; start_position =&amp;gt; &amp;#34;beginning&amp;#34; sincedb_path =&amp;gt; &amp;#34;/home/steeeeps/workspace/es_datas/logs&amp;#34; } } filter { csv{ columns =&amp;gt; [&amp;#39;poiid&amp;#39;, &amp;#39;title&amp;#39;, &amp;#39;address&amp;#39;,&amp;#39;lon&amp;#39;,&amp;#39;lat&amp;#39;,&amp;#39;city&amp;#39;,&amp;#39;category_name&amp;#39;,&amp;#39;checkun_num&amp;#39;,&amp;#39;photo_num&amp;#39;] separator =&amp;gt; &amp;#34;,&amp;#34; } mutate { add_field =&amp;gt; { &amp;#34;[location][lat]&amp;#34; =&amp;gt; &amp;#34;%{lat}&amp;#34; } add_field =&amp;gt; { &amp;#34;[location][lon]&amp;#34; =&amp;gt; &amp;#34;%{lon}&amp;#34; } } mutate { convert =&amp;gt; { &amp;#34;[location][lat]&amp;#34; =&amp;gt; &amp;#34;float&amp;#34; &amp;#34;[location][lon]&amp;#34; =&amp;gt; &amp;#34;float&amp;#34; } } } output { elasticsearch { # action =&amp;gt; &amp;#34;index&amp;#34; hosts =&amp;gt; [&amp;#34;http://172.</description>
+    </item>
+    
+    <item>
+      <title>高可用数据库架构设计</title>
+      <link>https://steeeeps.github.io/posts/2017/ha-database/</link>
+      <pubDate>Thu, 09 Nov 2017 23:08:29 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2017/ha-database/</guid>
+      <description>高可用性这个名词可能做 web 开发的同学听的也比较多。
+一般 web 系统的高可用性可以通过集群部署加负载均衡的技术来实现。但是由于数据库的特殊性，除了使用集群部署和负载均衡的技术之外，更重要的是如何保持数据库之间的数据统一性。
+数据库同步机制有很多种，用较多的就是主从流复制机制。
+主从流复制机制 Postgresql 在9.0之后引入了主从的流复制机制，包含一个主库和从库，所谓流复制，就是从库通过 tcp 流从主库同步相应的数据，主要有以下特点：
+ 从服务器通过TCP流从主服务器中实时同步相应的数据。这样当主服务器数据丢失时从服务器中仍有备份。 PostgreSQL流复制默认是异步的。 在主服务器上提交事务和从服务器上变化可见之间有一个小的延迟，这个延迟远小于基于文件日志传送，通常1秒能完成。如果主服务器突然崩溃，可能会有少量数据丢失。 主服务器支持读写，插入数据或删除数据，在从服务器上能看到相应的变化。但从服务器上只能读，不能写。  postgres 自带的主从流复制机制虽然实现了数据的同步与备份，确保了数据的统一性，但是没有提供负载均衡能力，所以还是没有实现数据库的高可用性。要实现数据库的高可用性，还需要引入第三方框架 pgpool。
+Pgpool pgpool 是一个位于 postgresql 服务器和客户端之间的中间件，是 pg 集群开源实现中比较成功的项目之一。它主要提供下面几个功能：
+ 连接池：pgpool-II 保持已经连接到 PostgreSQL 服务器的连接， 并在使用相同参数（例如：用户名，数据库，协议版本） 连接进来时重用它们。 它减少了连接开销，并增加了系统的总体吞吐量。 复制：pgpool-II 可以管理多个 PostgreSQL 服务器。 激活复制功能并使在2台或者更多 PostgreSQL 节点中建立一个实时备份成为可能， 这样，如果其中一台节点失效，服务可以不被中断继续运行。 负载均衡：如果数据库进行了复制（可能运行在复制模式或者主备模式下）， 则在任何一台服务器中执行一个 SELECT 查询将返回相同的结果。 pgpool-II 利用了复制的功能以降低每台 PostgreSQL 服务器的负载。 它通过分发 SELECT 查询到所有可用的服务器中，增强了系统的整体吞吐量。在理想的情况下，读性能应该和 PostgreSQL 服务器的数量成正比。 负载均衡功能在有大量用户同时执行很多只读查询的场景中工作的效果最好。 限制超过限度的连接：PostgreSQL 会限制当前的最大连接数，当到达这个数量时，新的连接将被拒绝。增加这个最大连接数会增加资源消耗并且对系统的全局性能有一定的负面影响。 pgpoo-II 也支持限制最大连接数，但它的做法是将连接放入队列，而不是立即返回一个错误。 并行查询：使用并行查询时，数据可以被分割到多台服务器上， 所以一个查询可以在多台服务器上同时执行，以减少总体执行时间。并行查询在查询大规模数据的时候非常有效。  这样就可以通过在PG自身提供的流复制机制的搭建主从结构集群上，使用Pgpool提供的连接池、负载均衡、自动故障切换等功能，来实现数据库的高可用性架构能力。
+当然负载均衡只针对读操作，写操作只发生在主节点上。为了避免单点故障，Pgpool自身也可以配置为主从结构，对外提供虚拟IP地址，当主节点故障后，从节点提升为新的主节点并接管虚拟IP。
+架构图  参考自：</description>
+    </item>
+    
+    <item>
+      <title>数据库性能优化(三)—数据库表分区</title>
+      <link>https://steeeeps.github.io/posts/2017/database-optimization-table-partition/</link>
+      <pubDate>Thu, 09 Nov 2017 22:58:29 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2017/database-optimization-table-partition/</guid>
+      <description>当对 sql 语句也做了优化，同事对数据表也建立了相应的索引后，数据库的整体查询性能能提高不少。但是随着系统的运行我们又会遇见其他问题。
+我相信大家在开发过程中也都遇见过这种场景：随着使用时间的增加，数据库中的数据量也不断增加，因此数据库查询越来越慢。而且许多数据是历史数据并且随着时间的推移它们的重要性逐渐降低，可能很少会用到，但是这些数据又不能删除，所以如果能找到一个办法将这些可能不太重要的数据隐藏，数据库查询速度将会大幅提高。
+比如说我们的系统运行日志，还有车辆轨迹监控数据。都存在这种问题。因此，就需要一个高效的把历史数据从当前查询中隐藏起来并且不造成数据丢失的方法。而数据库表分区就能达到这样的效果。
+数据库表分区含义 数据库表分区指的是把大的物理表分成若干个小的物理表，并使得这些小物理表在逻辑上可以被当成一张表来使用。
+分区表有一张主表和若干子表组成，主表是正常的普通表，但正常情况下并不存储任何数据，子表继承并属于主表，用来存储具体的数据。如下图所示：
+数据库表分区优势  在特定场景下，查询性能极大提高，尤其是当大部分经常访问的数据记录在一个或少数几个分区表上时。表分区减小了索引的大小，并使得常访问的分区表的索引更容易保存于内存中。 当查询或者更新访问一个或少数几个分区表中的大部分数据时，可以通过顺序扫描该分区表而非使用大表索引来提高性能。 可通过添加或移除分区表来高效的批量增删数据。如可使用ALTERTABLE NO INHERIT可将特定分区从主逻辑表中移除（该表依然存在，并可单独使用，只是与主表不再有继承关系并无法再通过主表访问该分区表），或使用DROPTABLE直接将该分区表删除。这两种方式完全避免了使用DELETE时所需的VACUUM额外代价。 很少使用的数据可被迁移到便宜些的慢些的存储介质中   数据库表分区详细内容与具体实现，参考http://www.jasongj.com/2015/12/13/SQL3_partition/
+ </description>
+    </item>
+    
+    <item>
+      <title>数据库性能优化(二)—索引的使用</title>
+      <link>https://steeeeps.github.io/posts/2017/database-optimization-index/</link>
+      <pubDate>Thu, 09 Nov 2017 22:48:29 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2017/database-optimization-index/</guid>
+      <description>当数据库查询越来越慢，或者涉及到大数据的查询时，除了 SQL 语句优化，索引也是数据库性能优化中最常见的手段之一。
+什么是索引 索引是对数据库中一列或者几列的数据按照特定的数据结构进行排序保存的一种方式，使用索引可以加快数据库查询 或排序时的速度。
+索引优点 它主要有以下几点优点：
+ 可以大大提高数据查询的速度。 在实现数据的参考完整性方面，可以加快表和表之间的连接。 在分组和排序时，可以减少分组和排序的时间。  索引缺点 但是事务都是有两面性的，索引在使用过程中也会有一定的缺陷，比如：
+ 创建和维护索引需要耗费时间，数据量越大耗费时间也越长。 索引需要占用额外的磁盘空间，如果数据量很大又有大量索引，那么索引文件大小增加很快。 对表中数据改动的时候，索引需要动态维护，降低了数据操作的速度。  索引类型 在PostgreSQL中提供了多种索引类型： B-tree、Hash、GiST、SP-GiST 、GIN 和 BRIN。每一种索引类型使用了一种不同的算法来适应不同类型的查询。默认情况下， pg 中 CREATE INDEX命令创建的索引都属于B-tree 索引。
+索引方式 在postgresql中索引有以下几种方式：
+  多列索引：多列索引指的是一个索引可以定义在表的多个列上。这个应该是最常见的，我们根据查询的条件，在某个列上或者多个列上添加索引。
+  排序索引：除了简单的查找需要返回的行外，还可以按照指定的顺序将数据返回，这样就使得查询中的 order by 语句不需要独立的排序步骤。这个在什么地方用到了，就是我们查询分页的时候，order by 与 limit 联合使用时，如果有一个符合 order by 的排序索引，前n行将会被直接获取且根本不需要扫描剩下的数据。如果没有这个索引的话，解析器就会扫描全表的数据进行排序，然后返回指定页数的数据。所以如果有分页的表，可以试一下这个排序索引。
+  组合索引：前面也讲了，一般在查询条件中只有使用 AND 才能使用单一索引，而使用 or 数据库会放弃使用索引而进行全表扫描。所以Postgresql 提供了组合多个索引的能力来处理查询条件使用 and 或者 or 的查询。也包括统一查询中多次使用同一个索引的能力。
+ 比如 WHERE x = 42 OR x = 47 OR x = 53 OR x = 99 和 WHERE x = 5 AND y = 6。</description>
+    </item>
+    
+    <item>
+      <title>数据库性能优化(一)—SQL 语句优化</title>
+      <link>https://steeeeps.github.io/posts/2017/database-optimization-sql/</link>
+      <pubDate>Thu, 09 Nov 2017 22:38:29 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2017/database-optimization-sql/</guid>
+      <description>SQL 语句优化 在系统开发和系统运行过程中，随着数据库中数据量越来越大的时候，应用程序与数据库查询越来越慢，这时候我们通常都会首先想到去做一些数据库的性能优化相关的工作，而这方面的工作首先想到也最最容易做的就是SQL 语句优化。
+sql 语句优化总结了最常见的下面这几条，虽然说是 sql 语句的优化，但是 sql 查询和索引是分不开的，所以这些优化的建议很多也是建立在索引的基础上的。
+主要包括一下几点：
+  对查询进行优化，应尽量避免全表扫描，首先应考虑在where 及 order by涉及的列上建立索引。
+  应尽量避免在where子句中使用!=或&amp;lt;&amp;gt;操作符，否则引擎将放弃使用索引而进行全表扫描。
+ (因为SQL只对&amp;lt;，&amp;lt;=，=，&amp;gt;，&amp;gt;=，BETWEEN，IN，以及某些时候的LIKE才会使用索引)
+   应尽量避免在where 子句中对字段进行 null值判断，否则将导致引擎放弃使用索引而进行全表扫描。
+ 如： select id from t where num isnull 可以在num上设置默认值0，确保表中num列没有null值，然后这样查询： select id from t wherenum=0
+   应尽量避免在where 子句中使用 or来连接条件，否则将导致引擎放弃使用索引而进行全表扫描。
+ 如： select id from t where num=10 ornum=20 可以这样查询： select id from t wherenum=10 union all select id from t where num=20</description>
+    </item>
+    
+    <item>
+      <title>将python程序注册为windows服务</title>
+      <link>https://steeeeps.github.io/posts/2015/regist-python-as-windows-service/</link>
+      <pubDate>Mon, 14 Dec 2015 16:56:18 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/regist-python-as-windows-service/</guid>
+      <description>根据项目需求，需要将python写的程序，注册成windows服务，方便用户启动、停止与管理。
+注册方法如下：
+ 下载并安装Windows Resource Kit，默认安装目录 ：C:\Program Files\Windows Resource Kits\ 。注册服务只使用srvany.exe文件，可将该文件单独拷出。 打开cmd，输入如下命令创建服务：  sc create &amp;#34;[YourService]&amp;#34; binPath= &amp;#34;C:\Program Files\Windows Resource Kits\srvany.exe&amp;#34; 打开注册表，在HKEY_LOCAL_MACHINE &amp;gt; SYSTEM &amp;gt; CurrentControlSet &amp;gt; Services项中找到刚才创建的服务。 右键服务名&amp;gt;新建&amp;gt;项,将新项重命名为Parameters。 在刚才创建的Parameters上右键&amp;gt;新建&amp;gt;字符串值，将新值重命名为Application，双击Application，修改数据为[python安装目录]\python.exe [你的python程序].py。    参考：http://stackoverflow.com/questions/8666373/start-python-py-as-a-service-in-windows
+ </description>
+    </item>
+    
+    <item>
+      <title>Undefined-variable-from-import-BuildPyramidsAndStatistics_management</title>
+      <link>https://steeeeps.github.io/posts/2015/undefined-variable-from-import-buildpyramidsandstatistics-management/</link>
+      <pubDate>Tue, 24 Nov 2015 17:53:54 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/undefined-variable-from-import-buildpyramidsandstatistics-management/</guid>
+      <description>使用arcpy.BuildPyramidsAndStatistics_management ()构建栅格数据金字塔和做统计值时，提示该方法为定义:
+ Undefined variable from import: BuildPyramidsAndStatistics_management.
+ 查看arcpy源码发现，时帮助文档中单词拼写出现了问题，正确的写法应该是:
+arcpy.BuildPyramidsandStatistics_management() </description>
+    </item>
+    
+    <item>
+      <title>log4net自定义日志内容入库</title>
+      <link>https://steeeeps.github.io/posts/2015/log4net-store-log-in-db/</link>
+      <pubDate>Wed, 28 Oct 2015 17:58:17 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/log4net-store-log-in-db/</guid>
+      <description>在系统开发中，日志记录是最基本的功能，良好的日志记录习惯与记录格式，对开发调试、错误定位有很大的帮助。
+log4net是在.net开发中使用的最多的日志框架，使用很方便，只需要简单的配置，就能够将日志信息输出到文本文件中。其实log4net也支持将用户自定义的日志类型直接输出到各类型数据库中。这样就更方便的在程序中以表格或其他方式对日志进行展示。
+以sqlite数据库为例，展示log4net使用反射机制将自定义日志内容存入数据库中。
+具体步骤 1.在数据库中创建日志表 CREATE TABLE LOG (logtime timestamp,message varchar,user varchar) 2.创建自定义日志类 using System; using System.Collections.Generic; using System.Linq; using System.Text; namespace Loglite { class LogModel { public string User { get; set; } public DateTime LogTime { get; set; } public string Message { get; set; } public LogModel(string user, string message) { this.User = user; this.Message = message; this.LogTime = DateTime.Now; } } } 3.自定义视图转换器 using log4net.Layout.Pattern; using System; using System.</description>
+    </item>
+    
+    <item>
+      <title>拥抱 ArcGIS API for JavaScript 4.0</title>
+      <link>https://steeeeps.github.io/posts/2015/arcgis-js-api-4-0-coming/</link>
+      <pubDate>Sun, 16 Aug 2015 22:38:29 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/arcgis-js-api-4-0-coming/</guid>
+      <description>2015年7月，ESRI 推出了 ArcGIS API for JavaScript 3.14 和 ArcGIS API for JavaScript 4.0 Beta 1 两个 API 版本。
+前者是常规版本的一次更新，包含了对3.13bug的修改以及功能类和小部件的增加。
+而4.0则是ArcGIS API for JavaScript的一次重大变革。除了新添加对万众瞩目的 Web 3D 的支持，API自身的变化和对最新的HTML5、CSS3元素的支持使API变的更简洁、强大、灵活、高效。
+4.0的变革，主要体现在：
+  使用 ES5 Accessors API 代替使用事件来监控属性值的变化。查看详情。 绘图逻辑修改，增加MapView和SceneView来分别绘制2D、3D地图。 模块与包名的改变，使API变的更简洁，例如使用 ArcGISTiledLayer 替换 ArcGISTiledMapServiceLayer。 只支持使用 AMD 规范来定义、加载模块。 使用promise来解决事件监听带来的无限回调，让代码更简洁、优雅。 对现代浏览器的依赖，例如3D需要IE11。中国的工程师可能需要逐步引导用户由IE8 升级至新版本IE或Chrome、Firefox、Safari。   更多内容与用法，请点击查看:ArcGIS API for JavaScript Guide</description>
+    </item>
+    
+    <item>
+      <title>外面的世界很精彩</title>
+      <link>https://steeeeps.github.io/posts/2015/fuck-gfw/</link>
+      <pubDate>Thu, 16 Jul 2015 22:48:14 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/fuck-gfw/</guid>
+      <description>博客一直搭建在digitalocean提供的vps上，5$一月，很便宜，之前一直使用免费vpn，但是每小时需要更换密码，不方便。
+反正vps闲着也是闲着，就搭建了一个vpn，方便工作时google用。
+在网上找了一个CentOS 6一键安装PPTP VPN脚本，还挺简单，如果有朋友需要，可以试一试。
+环境  CentOS 6.x 32位/64位 XEN/KVM/OpenVZ
+ 安装步骤  依次运行以下代码  cd /root wget http://www.huangjiexing.com/wp-content/uploads/sh/pptpd.sh chmod +x pptpd.sh ./pptpd.sh 稍等片刻后，将返回以下信息表示成功  VPN service installed successfully, your VPN username is vpn, VPN password is XXXXXX 这是预设账号，运行以下命令添加帐户，按格式在新的一行写入你需要的账号和密码。  vi /etc/ppp/chap-secrets 安装成功。  如果需求不大，可以使用1小时vpn账号。 如果没有vps，推荐购买海贝vpn，同事一直在用，说还不错。
+如果需要购买vps，推荐使用digitalocean，性价比较高，现在注册充值5美元送10美元，相当于5美元使用3个月,点击购买
+技术转载自：CentOS 6一键安装PPTP VPN脚本</description>
+    </item>
+    
+    <item>
+      <title>当我们在谈论 ArcGIS 前端工程师时，工程师们在谈论什么</title>
+      <link>https://steeeeps.github.io/posts/2015/what-arcgis-fe-talk-about/</link>
+      <pubDate>Mon, 06 Jul 2015 22:55:41 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/what-arcgis-fe-talk-about/</guid>
+      <description>随着HTML5的火热，不管是在校的GIS学生、马上进入工作岗位的GIS毕业生，还是有几年其他ArcGIS 开发框架开发经验的开发人员，看着ESRI停止对Flex 和 Silverlight API的更新，大力推荐开发者使用 ArcGIS API for JavaScript 来构建应用系统时，是不是都会感觉有一点小激动，小心脏扑通扑通的？都在想着能不能借HTML5的东风实现自己当上CTO、迎娶白富美、走上人生巅峰的梦想？
+那么当我们在谈论 ArcGIS 前端工程师时，工程师们在谈论什么呢？
+这个技能图参考了前两年网上流传的一张“前端工程师技能”图。看了这张图之后，你有什么感想？是不是觉得村里的小芳也挺不错的，长得好看又善良，一双美丽的大眼睛，辫子粗又长。
+其实相比于互联网行业的前端工程师所需要掌握的技能，ArcGIS 前端工程师已经很幸福了。
+面对这么多技能，作为新手，都需要怎样的一步一步去学习这些知识呢？
+ArcGIS 前端工程师入门 作为入门ArcGIS 前端工程师，无论你是学生还是有其他框架开发经验的工作人员。我假设你是刚开始接触前端开发和 ArcGIS API for JavaScript，那么你首先需要去学习以下几点：
+  学习HTML、CSS、JavaScript基础知识。
+  学习Dojo基本知识，包括但不限于AMD规范、dojo基础架构、dojoConfig配置、dojo面向对象、dijit 使用等。
+  学会使用web inspector或firebug对浏览器兼容性调试与修改。对于很多企事业单位都是用IE或360浏览器（老版本360安全浏览器。新版的360安全浏览器和极速都使用chromium内核），那么，也应该学会在IE8下对浏览器兼容性问题进行调试与修改。学会使用IETester对网站在个版本IE下的显示效果进行查看与调试。
+  学会JSON的使用。
+  学习ArcGIS API for JavaScript基本知识，包括但不限于下载并离线部署、代理配置。学会使用并理解ArcGIS 基本对象模型(如果有AO、AE、Flex等开发经验，很容易理解)，Map、Graphic、符号化、Task、Geoprocessor。
+  选择合适的开发工具，如果单纯的前端开发，推荐使用sublime text。当然，这种情况比较少，因为大多数情况下你需要和后台开发人员协同工作或者你也会涉及到后台代码编写，那根据实际情况选择visual studio、eclipse、myeclipse或其他IDE。
+  如果你学习并在实际开发中运用到了以上几点，恭喜你，你需要开始进入苦逼的进阶阶段去涉猎更多开发时需要用到的知识了。
+ArcGIS 前端工程师进阶   去学习HTML5，CSS3的知识， 在系统中做更炫、功能更丰富的应用。
+  学习JavaScript 模块化开发知识，深入学习Dojo框架及AMD规范的使用，学习自定义dojo 小部件。
+  深入学习ArcGIS API for JavaScript 框架，</description>
+    </item>
+    
+    <item>
+      <title>arcgis json to geojson</title>
+      <link>https://steeeeps.github.io/posts/2015/arcgis-json-to-geojson/</link>
+      <pubDate>Wed, 25 Mar 2015 23:09:01 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/arcgis-json-to-geojson/</guid>
+      <description>arcmap 有个feature to json 工具可以将feature转换为json，但是如果需要geojson格式的话，需要再次转换。
+可以使用下面工具将arcgis json 转为 geojson：
+arcgis json to geojson</description>
+    </item>
+    
+    <item>
+      <title>我该有正义感吗</title>
+      <link>https://steeeeps.github.io/posts/2015/i-wanna-be-a-hero/</link>
+      <pubDate>Fri, 13 Mar 2015 23:12:43 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/i-wanna-be-a-hero/</guid>
+      <description>首先说明的是，对人不对事，此文没有任何歧视、贬低、污蔑彝族同胞的意思。但是我在成都见到的彝族人，的确给我留下了很不好的印象。
+2013年9月，苹果刚发布iphone5s，我趁着优惠买了一个4s合约机。作为一个程序员，通过手机利用碎片时间是非常流行的，在公交上、地铁里一般都会拿着手机看一些订阅消息、听听音乐，当然在等待交通工具的时间里做这些事是也是必然的了。
+国庆前的一个下午，我向往常一样，在公交站台带着耳机，看着文章。当公交靠站的时候，将手机塞进裤兜，放下我的斯文外表，与男女老少，用劲往里。当然，就挤公交、地铁而言，我还是比较在行的，毕竟在北京呆过两年嘛。
+当我一只脚跨上公交时，突然感觉到放手机的裤兜被什么碰了一下，处于警觉，我右手一把抓住裤兜，摸了一下，手机还在，但慌乱之中，手好像碰着了另外一只手，我一下子就意识到了可能遇见了小偷。当我上车之后，回头往外看的时候，一个提着黑色手提包的矮个子男子从车门往后走了，这时，一个女生过来提醒我刚才有小偷摸我的包。我更加确定刚才碰着的就是那第三只手。
+我感谢那位女生，也十分庆幸自己的警觉。
+从小到大，我一直认为自己是一个有正义感的人，小时候还梦想当一名警察叔叔呢，令人高兴的是，梦想已完成了一半。
+有了这一次被偷未遂的经历，为了避免了让自己受到经济上的损失，同时也出于内心的正义感，从此在等公交时，我又多了一向业余爱好：**观察小偷。**通过不断地观察与总结，从这次事件之后到昨天，一年半的时间里，我一共发现小偷十余个，被我成功阻止偷窃行为的有四个。
+第一个被我阻止的，是14年春节前上班最后一天。公交上挤满了回家的乘客。车刚开不久，车厢里就重复播放了好几次“请各位乘客保管好随身财物”的广播。过了一会。我发现我斜前方的一个小女生一直把我盯着，似乎想对我说着什么，并努力的用眼神把我的注意力引到站在他身边的一位老爷爷身上，经她多次引导，我发现老爷爷后面站着一位大肚男子，行为很是诡异。原来是小女孩发现了他的偷窃行为，但出于害怕，不敢出声，一直用眼神提示我寻求帮助。但是由于人多，我不敢确定他一定就是小偷，于是就一直盯着中年男子。小女孩似乎也明白了我的意思。也鼓足勇气和我一起用双眼盯着，就这样，大概过了两站，中年男子也察觉到了我们。知道不好在作案，于是就走到了后门处。在下一站下了车，等他下车后，后门处一位时髦女士就叫了起来，新买的三星手机刚打完电话一塞进外衣口袋中就被偷了。
+这次虽然成功阻止了小偷对老爷爷的偷窃行为，可却还是让他作案成功了。那位小女生大概只有16、7岁的样子，我觉得他十分勇敢而且很有智慧。
+阻止的第二个小偷，大约是在14年4月。早上上班刚出地铁走上天府广场。看见一个中年男子拿着一个女士包从马路对面狂奔过来，后面跟着两个警察，在后面是一个带着安全帽的中年妇女，他们边跑边叫喊着“抓小偷，别跑”。作为院队的主力中后卫，我一下子想起了队长的战术安排：人过球不过，球过人不过。于是，当“前锋”带着“球”跑到我的身边时，我迅速的伸出了我的左脚。他自然的摔倒在了我的面前。两位警察一蹴而就，趴在了小偷的身上，中年妇女拿回了自己的包，一再的向我表达谢意。周围的树立的人群们也用力鼓掌，竖着大拇指。叫喊着:小伙子，好样的。
+我得意的看着阳光晒在对面毛主席的身上，他向我挥了挥手，好像说着：同志们，你们还看个屁的热闹啊，快要迟到了。
+第三次阻止小偷是在14年11月份的样子，我快到公交站台时，我前面的少数民族小伙突然一个转身往回走，差点撞进我的怀抱。在躲让他的时候，我发现他将一个白色手机快速装进了自己衣服里面的口袋。我犹豫了一下，快步的走向前面正在聊天的一对男女，告诉那位女士，让他检查一下手机是否丢了。女士惊讶的摸了下自己的大衣口袋，发现自己的的三星手机已无踪影。旁边几位女生也开始指着刚才差点撞着我的少数民族小伙，指证他就是偷女士手机的人。所幸的是，小偷不熟悉地形，走进了死胡同，当我坐上公交的时候，女士和他的男同伴已要回了被盗手机。
+第四次阻止小偷就在昨天。和往常一样，在等公交时我都会四处观望看有没有少数民族同胞或者眼神有异于常人的乘客，当然，也趁此机会看看美女啥的。
+公交车来了，我走在挤公交人群的最后一位时，发现前面有一位少数民族小伙紧跟着前面一个女生，而且手也伺机往女生大衣兜里塞。当他的手刚塞进大衣口袋那一刻，我用我的胸膛狠狠的撞击了他的后背。他缩回了肮脏的手，回头看了看我，我也回头看了看后面，叫嚷着：你们挤什么啊。可是，后面空无一人。然后他默默的退出了人群。
+上车以后，听见旁边几个男女在议论他们看见小偷的事情，我挺了挺胸膛，对他们说：我也看见了，被我撞开了。
+那个小偷被我撞开了，虽然我没有厚实的胸肌，但是我相信他也能感受到我排骨的坚硬和男人内心的力量。
+下了公交，我环顾四周，看见另一个少数民族小伙，捏着自己的大衣口袋，进了一家手机配件店。我觉得这只是巧合。
+我再次环顾四周，捏紧着自己放手机的裤兜，快步地消失在人群。
+除开偷我的小偷，在我发现这个十余个小偷里面，一共就2个汉族人，其余的全是少数民族。虽然成都有很多彝族和藏族同胞，但从肤色和面部轮廓来判断，我基本能确定，看见的这些少数民族都是彝族人。我并没有歧视彝族同胞的意思，我在泸沽湖旅游时，当地友好的彝族人民也给我流下过很深的印象。
+其实，每次在公交站台发现小偷时，我都在想，我究竟应该怎么做，这样做后会给我带来什么样的后果呢？
+  假如我直接将发现的小偷抱上公交，让司机开车去公安局，那这样如果在车上没有人证物证的话，我会被反咬一口吗？ 我当面指出小偷，然后给大家现场直播我被揍的狗血淋头？。 我紧捏着自己的裤兜，事不关己高高坐起？   晚上回到家，向老婆说了今天的英雄事迹，她紧张的问我：难道你不怕报复吗？
+是啊，我有血有肉，我怎么能不怕呢？那我究竟应该有正义感吗？
+ 最后，给大家介绍几点我在成都同一公交站总结的识别小偷和防窃方法，避免在挤公交时经济收到损失：
+  等公交时注意周围是否有彝族同胞(彝族同胞，对不起，我没有贬低意思，我只想做好自我保护，希望你们能理解)。
+  注意观察是否有眼神随着人流一直晃动的人，并且眼睛注视的部位多在大衣口袋和裤兜处。
+  注意上车时，是否有人用力往里挤了但最后却不上车往回走的人。
+  女士不要将手机装在不贴身的大衣口袋里，特别是无拉链的口袋。
+  女士不要将手机装在屁股兜里，特别是还露出一半在外面。
+  上公交时，不要带耳机，带上耳机手机被盗的概率很大，我就差点因为带耳机被偷。
+  人多时，尽量将贵重手机放在兜里，并且空出一只手一直放在兜口。或者一直用手拿着手机。
+  在公交上，如果没有座位，尽量将放贵重物品的口袋放在靠座位的一侧。
+  如果公交车上重复播放”请各位乘客保管好随身财物“等类似的广播时，说明车上是有小偷的，这时必须要提高警觉。一般公交司机和售票员对这条线路上的小偷都是知道的，但是他们没有权利阻止任何人上公交，前段时间售票员阻止惯偷上公交遭掌掴，全车无人伸援手的新闻大家应该都是知道的。
+  如果上车后发现被偷，立马报警、下车回到你刚才上车的地方。也许小偷还在那等待再次下手的机会。不用让司机将车停在中途，等待警察到来，一般情况下，小偷是不会上公交，更不会长时间在公交上停留。我就遭遇了两次，司机关着门在中途等着，最久的一次，等了接近半个小时，最后警察来了，也不了了之。
+  大概就这些，如果你有更好的方法，欢迎留言补充。</description>
+    </item>
+    
+    <item>
+      <title>c# 执行sql脚本文件</title>
+      <link>https://steeeeps.github.io/posts/2015/csharp-excute-sql-file/</link>
+      <pubDate>Sat, 07 Mar 2015 23:16:39 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/csharp-excute-sql-file/</guid>
+      <description>在工作中，之前遇见过这种情况：
+需要通过sql脚本在多个服务器上创建数据库，比如在oracle中创建一个数据库并导入数据，我之前是这样做的：
+  打开PlSql 打开创建表空间sql脚本，执行。 打开创建用户sql脚本，执行。 打开创建表结构sql脚本，执行。 打开初始数据sql脚本，执行。   然后要创建多个数据库的话，同上同上….
+然后根据不同的用户需求，我不仅要装oracle，还得装sqlserver和postgresql。反复的手工操作是很苦逼的。
+为了简化手工操作，便使用c# 写了这样一个工具，主要功能在于：
+ 手动选择数据库类型，oracle、sqlserver、postgresql。 手动配置需要执行的sql脚本与执行顺序。 根据配置的sql脚本顺序执行，并返回执行结果。  以oracle数据库为例，sql脚本配置如下：
+ create_tablespace.sql create_user.sql create_tables.sql import_data.sql
+ 其实使用c#来操作这三大主流数据库是非常简单的，网上有很多例子，我只是简单的封装了一下，在完成的过程中主要注意以下几点：
+ 工具需要即拿即用，不需要安装oracle客户端即可使用，所以需要下载操作相关dll，注意下载时需要根据实际需求区分64、32位版本。在此提供我用到的oracle11g_64位dll。 操作postgresql需要下载Npgsql.dll。 虽说是执行sql脚本文件，其实本质还是执行的一条条sql语句，不同的数据库平台语句分割方式不一样，oracle和postgresql使用“;”而sqlserver使用 “GO”，这一点可以在导出的sql脚本中查看。 oracle创建表空间时需要先创建表空间目录，所以推荐在创建表空间脚本中不写创建路径，系统会自动将表空间创建于默认目录，路径为：[ORACLE_INSTALL_DIR]\product\11.1.0\db_1\database。 postgresql创建表空间需要在数据库安装路径中手动创建表空间文件夹，该路径为[POSTGRESQL_INSTALL_DIR]\tablespace\，并且将新建的表空间文件夹的写权限赋予TrustedInstaller 和 user 用户。或者也可以选择使用默认表空间来导入数据。  主要调用代码如下：
+DBModel model = new DBModel(&amp;#34;Oracle&amp;#34;, &amp;#34;127.0.0.1&amp;#34;, &amp;#34;1521&amp;#34;, &amp;#34;sys&amp;#34;, &amp;#34;admin&amp;#34;, &amp;#34;&amp;#34;, &amp;#34;orcl&amp;#34;); string filepath = &amp;#34;test.sql&amp;#34;; IDBOperate dboperate = null; if (model.Type == &amp;#34;Oracle&amp;#34;) { dboperate = new OraceDBOperate(); } else if (model.</description>
+    </item>
+    
+    <item>
+      <title>使用userAgent区分客户端类型</title>
+      <link>https://steeeeps.github.io/posts/2015/useragent-get-client-type/</link>
+      <pubDate>Wed, 14 Jan 2015 23:23:38 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/useragent-get-client-type/</guid>
+      <description>前段时间做了个小网站，需要在区别移动端和pc端显示效果。由于功能需求比较简单，所以就没有使用响应式设计，而是使用传统方式分别做了移动端和pc端两个页面。
+一般使用userAgent来区分移动端和pc端还是相对容易的事情，但是我的需求是pc端和pad端都需要显示pc端页面，而在手机端显示移动端页面。
+由于整个程序都是静态页面，就选择了使用javascript+正则表达式的方式，如下：
+if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || /MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|Nexus|ZTE/.test(navigator.userAgent)) {	try { //微信内嵌浏览器 	if(/MicroMessenger/i.test(navigator.userAgent)){ //显示mobile页面  } //ipad  else if (/iPad/i.test(navigator.userAgent)) { //显示pc端页面  } //Nexus  else if(/Nexus/i.test(navigator.userAgent)){ var nexusVersion=navigator.userAgent.match(/Nexus ([\d.]+)/)[1]; //Nexus 7以上的平板  if(parseInt(nexusVersion)&amp;amp;gt;=7){ //显示pc端页面  }else{ //显示mobile页面  } } else if (/Android|webOS|iPhone|iPod|BlackBerry|BB/i.test(navigator.userAgent)) { //显示mobile页面  } else { //显示pc端页面  } } catch (e) {} }else{ //显示pc端页面  } 当然，这段代码稍作修改放在服务器端处理那是最好不过的了。
+这个处理方式使用chrome 开发者工具，模拟手机和平板测试基本是没有问题的。
+目前知道的bug为：无法获取可以判断为三星平板和小米平板的userAgent，所以这两个平板目前都显示为mobile页面。
+因为不同的设备发送的userAgent都有特殊的标识，这是chrome开发者工具无法模拟的。例如小米3电信版中就含有MI3C字样，所以，如果您有兴趣的话，可以使用这段代码试试。</description>
+    </item>
+    
+    <item>
+      <title>在java中执行javascript代码</title>
+      <link>https://steeeeps.github.io/posts/2015/java-run-javascript/</link>
+      <pubDate>Wed, 07 Jan 2015 23:27:57 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/java-run-javascript/</guid>
+      <description>JavaScript 相对Java来说，在某些方面是比较方便的，之前项目某个需要验证的功能，没有使用正则表达式，而是使用一堆数字和运算符来验证，在Java中实现就稍微复杂了一些。但是JavaScript实现是比较简单的。
+好在JDK1.6之后新增了ScriptEngine类，允许Java程序直接调用javascript代码。简单的使用例子：
+import javax.script.ScriptEngine; import javax.script.ScriptEngineManager; import javax.script.ScriptException; public class ScriptEngineDemo { /** * @param args */ public static void main(String[] args) { // TODO Auto-generated method stub ScriptEngineManager mgr = new ScriptEngineManager(); ScriptEngine engine = mgr.getEngineByName(&amp;#34;JavaScript&amp;#34;); try { String script=&amp;#34; 1 === true &amp;#34;; boolean result = Boolean.valueOf(engine.eval(script).toString()); System.out.println(result);//输出为 ：false } catch (ScriptException e) { // TODO Auto-generated catch block e.printStackTrace(); } } } </description>
+    </item>
+    
+    <item>
+      <title>javascript 操作 shapefile</title>
+      <link>https://steeeeps.github.io/posts/2015/javascript-parse-shapefile/</link>
+      <pubDate>Mon, 05 Jan 2015 23:31:20 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/javascript-parse-shapefile/</guid>
+      <description> ESRI Shapefile（shp），或简称shapefile，是美国环境系统研究所公司（ESRI）开发的一种空间数据开放格式。[1]目前，该文件格式已经成为了地理信息软件界的一个开放标准，这表明ESRI公司在全球的地理信息系统市场的重要性。Shapefile也是一种重要的交换格式，它能够在ESRI与其他公司的产品之间进行数据互操作。
+ 目前有很多读取shapefile的开源库，随着HTML5的发展，使用javascript在客户端直接读取shapefile文件也成了现实。这里介绍一个javascript开源库，使用html5在客户端将shapefile转为geojson。
+有兴趣的朋友可以研究一下：
+ 项目地址：js-shapefile-to-geojson demo地址 ：js-shapefile-to-geojson demo  </description>
+    </item>
+    
+    <item>
+      <title>eclipse 跳至ThreadPoolExecutor.class 解决方法</title>
+      <link>https://steeeeps.github.io/posts/2014/eclips-threadpoolexecutor-class/</link>
+      <pubDate>Wed, 10 Dec 2014 13:17:04 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/eclips-threadpoolexecutor-class/</guid>
+      <description>在eclipse里面编写java代码时，经常遇见这样一个情况，在tomcat启动后，保存更新后的java文件，代码经常跳转至 ThreadPoolExecutor.class，停留在workerDone(this)一行代码.
+解决方法：
+在eclipse中，进入window-&amp;gt;preferences-&amp;gt;java-&amp;gt;Debug，将Suspend execution on uncaught exceptions 前的复选框去掉。
+ 解决方法参考至：http://stackoverflow.com/questions/6290470/eclipse-debugger-always-blocks-on-threadpoolexecutor-without-any-obvious-excepti
+ </description>
+    </item>
+    
+    <item>
+      <title>url filter 源码</title>
+      <link>https://steeeeps.github.io/posts/2014/url-filter-source/</link>
+      <pubDate>Fri, 11 Jul 2014 13:23:09 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/url-filter-source/</guid>
+      <description>由于新版本的chrome浏览器禁止使用非chrome webstore 的扩展程序，所以将源码放出，有兴趣的朋友可以使用开发者模式加载扩展程序。
+ 源码地址：https://gitlab.com/steeeeps/urlfilter
+ </description>
+    </item>
+    
+    <item>
+      <title>毛竹</title>
+      <link>https://steeeeps.github.io/posts/2014/bamboo/</link>
+      <pubDate>Sat, 31 May 2014 13:25:25 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/bamboo/</guid>
+      <description>进入六月，除了街上美女衣服越来越少之外，毕业季也跟着来了。
+本来毕业季与我这种社会人士是没有什么关系的，但由于住在大学附近，每次去学校运动时，都会看见三五好友，或拍照留念、或街边摆地摊、或路灯下喝的通红的脸，相互依偎，相互感叹。也让我时不时想起自己毕业时那些熟悉的画面和青春的身影，还有天各一方的豪情壮志，不知现在都怎么样了?
+感谢微博、朋友圈时不时传来大学同学研究生毕业的消息，让我更是身临其境，顿时觉得六月我也在毕业一样。
+最近在微博上看见了毛竹图片，是关于毛竹的生长过程的，可能你们也看过，但是我看了之后特别想作为毕业季的礼物分享给即将毕业的朋友们，我觉得无论你们是步入社会工作，还是继续读博深造，这张图片对于你们来说都有着很深的意义，对我自己更是如此。
+好了，说说我吧，工作三年了，混的也不算好，但比上不足比下有余，秉着”诚朴勇毅”的心态，继续追求着自己的梦想。
+祝愿明天的自己和朋友们，无论天气阴晴，莫忘初衷！</description>
+    </item>
+    
+    <item>
+      <title>url filter</title>
+      <link>https://steeeeps.github.io/posts/2014/url-filter/</link>
+      <pubDate>Mon, 19 May 2014 13:28:25 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/url-filter/</guid>
+      <description>url filter 是我最近做的一款 chrome 插件，主要用于 在chrome 浏览器中过滤掉不想访问的网站，可以添加时间段来进行过滤。
+作为一个程序员，公司没有在上班时间禁网，是非常幸福的事情，但是，整天天面对着电脑，也避免不了自己偶尔weibo一下、tao下bao什么的，放松一下其实也挺好，但是长时间浏览的话，必定会影响工作效率和一天的工作状态。
+前几天，没什么工作状态，上班期间老是不由自主的走神，看着 IDE 却打开浏览器，刷刷 weibo 、上上 zhihu 。所以为了强制的管住自己，有了给自己禁网的一个想法。
+禁网的方式有很多种，因为我一般使用chrome浏览器，所以就采取了最简单编写chrome插件的方式。
+如果你和我一样，上班或学习时间管不住自己去浏览其他网址，你也可以试一试该插件。
+使用方法：
+  通过我的百度网盘下载 URLFilter.crx 文件。
+  打开chrome扩展程序窗口，安装插件。
+  插件安装完成之后，可以在浏览器的右上角看见插件图标，单击插件.
+  点击enable，使用和禁用插件。
+  点击选项，跳到插件设置页面，对需要过滤的域名和时间段进行设置.
+  当访问了被过滤的网站时，网页会自动跳转，提示你当前不能访问该网站.
+  自从使用了该插件，我再也不用担心自己在工作时间内管不住自己的手了！
+欢迎大家使用该插件，希望能给大家带来帮助。</description>
+    </item>
+    
+    <item>
+      <title>让Nginx支持WordPress的固定链接</title>
+      <link>https://steeeeps.github.io/posts/2014/nginx-suppor-wp-regular-url/</link>
+      <pubDate>Thu, 03 Apr 2014 13:31:15 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/nginx-suppor-wp-regular-url/</guid>
+      <description>最近给博客搬了家，但是之前的固定链接打开全是404，造成了之前很多页面没法使用固定链接访问，虽然使用那个默认连接能够访问，但还是有些不方便，今天找了下解决方案，终于恢复了，解决方案如下：
+由于是使用lnmp一键安装包，所以要让nginx支持wordpress固定链接非常简单，因为安装后/usr/local/nginx/conf/目录下有一个wordpress.conf文件，将其包含进nginx.conf即可。
+具体的操作步骤如下：
+cd /usr/local/nginx/conf/ cp nginx.conf nginx.conf.bak // 将原配置文件备份一下 vi nginx.conf 将nginx.conf中的代码:
+{ listen 80; server_name gevin.me; index index.html index.htm index.php; root /home/wwwroot; location ~ .*\.(php|php5)?$ { fastcgi_pass unix:/tmp/php-cgi.sock; fastcgi_index index.php; include fcgi.conf; } location /status { stub_status on; access_log off; } 替换成（增加了include wordpress.conf;）
+server { listen 80; server_name gevin.me; index index.html index.htm index.php; root /home/wwwroot; include wordpress.conf; location ~ .*\.(php|php5)?$ { fastcgi_pass unix:/tmp/php-cgi.sock; fastcgi_index index.php; include fcgi.conf; } location /status { stub_status on; access_log off; } 然后，重启lnmp即可.</description>
+    </item>
+    
+    <item>
+      <title>AMD规范交流</title>
+      <link>https://steeeeps.github.io/posts/2014/simple-amd-ppt/</link>
+      <pubDate>Fri, 28 Feb 2014 13:38:19 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/simple-amd-ppt/</guid>
+      <description>在dojo1.7版本之后，已经全部使用amd规范来定义模块，arcgis javascript api基于dojo之上，从3.0版本开始使用dojo1.7，也全面支持AMD规范。
+AMD规范极大地改善了代码的可维护性，应用的性能、互用性。
+下面的ppt主要从what、why、how三个方面对AMD规范知识做了一个整理，帮助dojo和arcgis javascript api初学者学习AMD规范，内容中有错误的地方，希望大家指正、交流!
+ ppt地址：http://pan.baidu.com/s/1sj6llOp
+ </description>
+    </item>
+    
+    <item>
+      <title>dojo 基础交流</title>
+      <link>https://steeeeps.github.io/posts/2014/simple-dojo-ppt/</link>
+      <pubDate>Fri, 28 Feb 2014 13:36:55 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/simple-dojo-ppt/</guid>
+      <description>随着富 Internet 应用的不断兴起，各种 JavaScript 开发工具包的功能也在不断增强，Dojo 正是其中的佼佼者。Dojo 提供了一套完整的开发解决方案，包括核心的 JavaScript 库、简单易用的小部件（Widget）等。
+作为arcgis javascript api 的底层框架，很多初学者在学习使用arcgis javascript api时，对于dojo的理解都不够，造成了“dojo 入门难、ags javascript api开发门槛高”等误解。
+下面的ppt主要针对dojo基础，对dojo的基础知识做一个梳理，使大家在学习使用arcgis javascript api之前学习dojo有一个比较清晰的线路。降低学习难度。
+内容中如有错误的地方，希望大家指正、交流!
+ ppt地址：http://pan.baidu.com/s/1jGkKMqU
+ </description>
+    </item>
+    
+    <item>
+      <title>web前端开发交流</title>
+      <link>https://steeeeps.github.io/posts/2014/simple-fed-ppt/</link>
+      <pubDate>Wed, 12 Feb 2014 13:39:44 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/simple-fed-ppt/</guid>
+      <description>这周给同事做了一个关于web前端开发知识的交流，内容主要包含了前端知识体系、javascript特性、dojo基础内容、AMD规范以及开发调试工具。没有太多的语法、api细节。
+内容比较基础，主要目的在于为web开发入门梳理一下杂乱的知识点，提供一个学习的结构。为之后学习、使用arcgis javascript api做一些基础性知识的准备工作。
+交流对象主要针对有其他语言开发经验、对web前端开发有一点了解并希望系统性学习web前端开发、希望快速上手arcgis javascript api的朋友。
+ppt的备注中有一些相关网址，内容都不错，有兴趣的朋友可以点开学习学习。
+ ppt下载地址：http://pan.baidu.com/s/1kTgDol5
+ </description>
+    </item>
+    
+    <item>
+      <title>2014，给自己许个愿吧！</title>
+      <link>https://steeeeps.github.io/posts/2014/welcome-2014/</link>
+      <pubDate>Wed, 01 Jan 2014 13:42:24 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/welcome-2014/</guid>
+      <description>时间过得真快，一直觉得北京书桌上摆满的金莲花颗粒和头孢克污药盒还是昨天去医院买的，但是自己已在成都工作了半年，日历也不经意间翻进了2014。
+上一周写年终总结时，发现2013年除了工作啥也没干成，年初搭建的blog一月一篇的文章也没有保障，10月搭建的GIS Radio直接疏于管理而被删掉了。有时想想走过的2013，工作之余除了对着电脑上上zhihu、startup news 、weibo、然后就是玩实况了，手机上的时间也全贡献给网易云阅读了，今年买的书，基本上就签了个名也就甩那了。有时周末去踢踢球，基本跑两圈就上气不接下气。台球杆也一年多没好好摸过了。2013，我为了”亲爱的小肚腩“背弃了所有，只剩桌面右键刷新。
+好了，2014了，还是给自己许个愿吧！
+  工作之余远离电脑与手机，多抽时间看书、锻炼身体。    上半年尽量将2013年所买书籍看完，多看些非技术书籍,多读书，读好书。    坚持自己喜欢的事情，踢踢足球、玩玩台球。    出去旅行一次，看看外面的世界,张张见识。   2014，开启一个全新的、健康的生活模式吧！</description>
+    </item>
+    
+    <item>
+      <title>当你有能力帮助他人的时候，想想曾经帮助过你的人</title>
+      <link>https://steeeeps.github.io/posts/2013/make-world-better/</link>
+      <pubDate>Sat, 02 Nov 2013 13:44:34 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/make-world-better/</guid>
+      <description>昨天晚上吃饭的时候，女友看电视剧，自己也跟着看了两眼，虽然剧情、逻辑等有很多不合理的地方，但是有一个片段给我留下了很深的印象，让我今天思考了一天。
+大致剧情是这样的：1980年两个同父异母的兄弟偷渡到香港，来找哥哥的父亲，想留在香港，但是到了香港才发现曾经住的房子已多次易主，父亲没找到，而且生无分文，还时刻面临着被逮捕遣返大陆的风险。哥哥无意间发现当天晚上12点香港政府即将取消抵垒政策，所以在12点之前，两兄弟如果不到入境处登记登记的话，就只有被遣返了，由于时间紧迫，兄弟两无奈，只有选择乘坐出租车去登记处，但是在登记处的前一个路口，司机发现了兄弟两无钱付路费，于是把车停住，要求先付路费再继续开车，兄弟两只有选择逃跑，可惜最后弟弟为了替哥哥引开司机而被捉，但哥哥不知情，跑到了登记处门口等待弟弟。
+弟弟被捉住了之后，司机非得要弟弟付车钱，不然就报警，这时，来了另外一辆出租车，司机下来后得知了事情原委，替弟弟把钱付了，并对他说到：你想想十几年前我们不也是在别人帮助下才到入境处登记，避免被遣返的吗？司机嘟嚷了几句，拿了钱，放了弟弟，不过可惜，最终弟弟还是未能按时进入入境处。
+正是司机的这句话，让我想起了许多。
+记得刚上大三时，正处于读研还是工作的选择迷茫阶段，对学习、未来毫无头绪，esri西安办事处成立的时候，我跟着老师去围观，午餐时碰见了一位西北大学的研究生，简短寒暄之后厚着脸皮问别人要了个qq号码，后来回到学校，每当迷茫的时候就会去请教他，而他总是不厌其烦的给我解说，关于就业、考研、学习、gis的发展。每当我感谢他时，他总会说：我也是在最迷茫的时候，师兄们给他指引了方向。
+记得刚到北京时，除了在同学那里蹭吃蹭喝之外，合租的二房东也帮助了我不少，每每聊天时，他也会回忆说：谁刚来北京的时候都会有困难，如果不是别人帮助的话，他也未必受得了地下室的第一个冬天。
+11年的一个下午，一个陌生的qq加我，备注说是我的学生，我很好奇，于加为好友之后和他聊了起来，原来他是我大一时在陕西白河支教过的学生，当时支教时我带低年级，而他当时应该是初中生，在暑假期间回到母校听我们讲课的，所以他记得住我，而我却对他没有一丝印象了。他说他在今年高考考上了我的大学，特地给之前支教的老师报喜，他还说，他进入学校之后，也要参加我们的爱心社，去给需要帮助的人尽一份自己的力量。听了这些话，真的，是一种无以言表的欣喜…
+每个人都会遇见困难，当你困难的时候，对帮助过你的人说声感谢；当你有能力帮助他人的时候，想一想曾经帮助过你的人，将这一份精神延续下去!</description>
+    </item>
+    
+    <item>
+      <title>老北京豆汁</title>
+      <link>https://steeeeps.github.io/posts/2013/fermented-bean-drink/</link>
+      <pubDate>Tue, 08 Oct 2013 13:48:16 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/fermented-bean-drink/</guid>
+      <description>今年五一，我还在北京工作，女友第一次来北京玩，虽然我在北京工作接近两年了，但是北京的很多景点和名小吃却没有去游玩和品尝过，所以在女友来临之际还特地去v2ex上发帖，向网友支招北京的名小吃。热心的网友推荐了很多好吃的、历史悠久的小吃，也包括老北京豆汁，于是，五一的某一天，带着女友专门跑到后海附近的护国寺小吃，看着夕阳的余晖洒在各式各样的小吃上，宅男也能感受到丝丝浪漫的感觉。但是这一切美好很快的结束于那一小碗豆汁，那犹如泔水般的气味，犹如臭豆腐，闻着是臭的，喝着TM也是臭的…
+于是，我怀着对网友的万匹“草泥马”，匆匆的吃完了除豆汁以外的小吃。晚上回到住的地方，我第一时间打开电脑，找到那位网友的帖子，像狠狠地把心中的“草泥马”放出来，但是仔细看帖子时，我傻了，因为楼主在下面已经说过了首次喝豆汁的“恶心”之处，建议外地人不要轻易尝试。于是，这件事就这么过了，我也很快的淡忘了.
+六月时，同事对我说，产品中获取arcgis 10.1服务详情和运行状态时特别缓慢，让我抽时间看看。我看了下同事的代码，使用新出的ArcGIS Server REST API获取服务详情和状态，这点没有问题，但是该接口一次只能获取一个服务，于是同事采取了遍历arcgis server服务目录中所有服务一次次的调用该接口去获取详情和状态的方式，由于rest方式的所消耗的时间再加上服务的数量，即使在局域网内，这所花的时间也很难让客户满意，问题的所在之处总算被发现了。
+于是，我就开始寻找解决方法，任何人看到这一步肯定都知道，要是能够一次获取所有服务的详情的话，减少rest请求，那么消耗的时间肯定能降下来。是的，但是我就在想，那位同事是一位非常有经验的开发者，为什么他没有想到这个解决方法呢？是rest api没有提供这个接口？还是实现有难度？
+我打开rest api文档，大致查看了一下相关的接口，好像是没有发现一次获取所有服务详情的接口。于是我就想着是否可以通过soe或者gp服务的方式自己写个接口，方便以后使用。
+但是转念一想，我这水平的二次开发者都能想到使用第三方方法来扩展server，arcgis的工程师想不到？
+我觉得：作为一个成熟产品的二次开发者，我们遇见的一般问题，都是能通过查阅api或者相关文档来得到解决的；如果api提供的方式都不能解决我们的问题，我想该产品的工程师也暂时没有好的解决方法，我们就可以把这个问题放一放了，或者绕过该产品，寻找其他层面的解决方案。
+于是，我又打开rest api的帮助文档，经过耐心、仔细查找，终于找到了一次获取所有服务的接口，成功的将该问题所消耗的时间降低到原来的十分之一。同事们都夸我，觉得我老牛了，可是我心中只有那碗老北京豆汁…
+其实，那碗豆汁在我心中留下的映像出了那个臭味就没有什么了，但是经过这件事之后，我却发现，我会去买这碗豆汁和产品中出现的这个问题都有同一个原因：不认真看api和sdk文档。
+我常年隐身于ArcGIS 4 Javascript 的两个QQ群(打个广告：191807454,68665515)，随着html5和javascript的火热，arcgis javascript api也越来越受开发者们的喜爱，也有更多的开发者加入这两个QQ群中，进行交流和学习。
+在群里，每天都有很多新手提出各式的问题，但是很多问题都是很基础、重复，在api中不会花费太多时间和精力就能查找的，虽然有些问题可能没有直观的介绍，但是在实例页面也能找到类似的解决方法。每次提示这些同学去查查api，他们总会说，时间急没时间看api或者api查不到。是的，在时间急的时候在群里提问寻求答案是解决问题最佳的方法，但是一个开发人员，特别是二次开发人员，只有静下心来仔细查看api，才会更快的成长。仔细查看api除了能解决燃眉之急，更重要的是能够在查找解决方法的同时熟悉其他知识点，也许第一次查找起来费劲，但是熟能生巧，以后解决问题查找api是就越来越熟练。而且arcgis 几套api，javascript、flex、silverlight，甚至是ios api，其实大致结构都是类似的，对一套api文档的熟悉程度，也会对查阅其他平台的开发文档有帮助的。
+所以，如果你不想冒昧去喝一碗“泔水般”的豆汁，请学会使用api文档。
+文章中关于豆汁只是我的一点经历，毫无贬低豆汁这一历史悠久的小吃之意。</description>
+    </item>
+    
+    <item>
+      <title>程序员的困境</title>
+      <link>https://steeeeps.github.io/posts/2013/programmers-dilemma/</link>
+      <pubDate>Tue, 20 Aug 2013 10:58:03 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/programmers-dilemma/</guid>
+      <description>最近我面试了十位应聘内核工程师的求职者，这些求职者都是来自于以芯片或嵌入式系统
+闻名的大的、有名气的公司。他们中大多数都声称自己在内核开发方面有至少10年的工作经验。他们的简历看起来也相当漂亮——各种相关的项目经验,流行词汇和奖项…
+但是他们中的大多数都不能回答一个相当基础的问题：**当我们访问一个标准的内存分配函数时，在内核中发生了什么？ **
+不要感到惊讶。当我叫其中一个应聘者基于glib哈希函数写一个简单的LRU缓存框架时，他首先声称他自己从未使用过glib，然后我打开glib的api页面，详细的给他解释了这些api，差不多一个小时之后，他仅仅写了几行乱七八糟的代码。
+我不知道在其他国家是否也有相似的情况，但是在中国，或者更明确一点，在北京，这是非常真实的，在大的、著名的外企有多年工作经验的”高级“程序员在简单的，基础问题上都不能证明自己。
+**为什么会发生这种情况? **
+我越是思考这件事，就越觉得这种情况不仅是有他们自己造成的，而且还和他们工作的公司有关。这些公司通常都能提供更固定的代码，通常多年都不会有显著的变化。这些代码需要的技术包含了职员需要掌握的技能，所以他们只需要按照现有的方式固步自封，而不是勇于创新。如果你一旦长时间的照着这样的代码工作而很少与外界交流，最终你会发现自己处于一个可怜的位置—在团队或者公司里，大家称呼你为“专家”，然而不幸的是，你不能在市场上找到一个同样好的工作。
+这就是所谓的“专家陷阱”，我们程序员天天都梦想着能成为团队或公司里的专家，但是当梦想成真的时候我们却将自己困了起来。对现有代码专研的越深，我们也陷的越深。我们逐渐失去了从零开始完成一个完整项目的能力，因为现有的代码是非常稳定(如此大的结构/如此大的效益)的.更糟糕的是，如果我们主要的工作仅仅是维护现有的代码和小功能的开发，过不了多久，我们会发现，无论我们阅读、学习了多少代码，我们会发现我们就连像毕业生作业般简单的代码都不会写。这就是程序员困境：我们依靠代码为生，但所在的大公司却常常摧毁我们求生的能力。
+如何避免这种困境？
+对程序员而言
+首先，做自己的项目。你需要不间断地自我提升。如果工作不能帮助你完成这一点，找出你想要征服的难点并使用你私人时间来完成。通过这样做,你很可能会学到新的知识。如果你发布个人项目，例如发布到github上，你就有机会认识能够带你脱离困境的朋友。
+不要在同一团队超过两年。强制自己做出改变，即使在同一部门、同一公司，你也能够面临新的挑战和新的技术。试着每18个月参加一些面试。你不需要换工作，但是你能够了解市场需求以及如何适应。
+对团队/公司而言
+给职员压力和挑战。循环团队的任务，使“专家”有机会拓宽他们的技能，启动新的项目，让大家充满竞争感。
+定期举行黑客马拉松。这样有助于建立一种拥抱创新和创造的文化。大家会相互激发积极性——“我靠，那个大牛能在24小时内写出如此漂亮的框架，我必须得努力了”。
+ 本文翻译自：Programmer’s dilemma
+ </description>
+    </item>
+    
+    <item>
+      <title>不要节省敲打引号的时间</title>
+      <link>https://steeeeps.github.io/posts/2013/code-in-standard/</link>
+      <pubDate>Mon, 03 Jun 2013 11:02:36 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/code-in-standard/</guid>
+      <description>上周五准备下班的时候，系统在chrome下运行点击某一个按钮没反应，查看控制台，发现抛出这样一个错误：
+ Uncaught SyntaxError: Unexpected token ILLEGAL
+ 以前遇见过，感觉也就是标点符号一类的输入不正确，于是开着eclipse开始查看这个页面以及和这个页面相关的js代码，但是一看这几个页面的svn提交日期居然都是3月20多号，而且自己也隐约能够记得，周四检验功能的时候，系统的确是没有问题的。
+我的脑海中开始浮现程序员常说的话：
+  昨天还好好的 我好几个星期都没碰这块代码了！ … …   我开始思考用哪句话来面对这个突如其来的难题…
+虽然如此，但是在产品等着发布的压力之下，我也只有硬着头皮开始一步一步的查看同事休假遗留下来的代码。从html到javascript，一行代码一行代码的仔细检查，均没有发现问题。
+于是我又开始使用chrome开发者工具一点一点分析页面解析过的代码，终于发现了一段类似于这样的代码：
+&amp;lt;div onclick=&amp;#34;alert(&amp;#39;错误&amp;#34; 用法&amp;#39;)&amp;gt;错误用法&amp;lt;/div&amp;gt; 而**原文件中的代码**是这样的:``` html&amp;lt;div onclick=alert(&#39;错误 用法&#39;)&amp;gt;错误用法&amp;lt;/div&amp;gt;``` 现在已经很明显了，问题就出在源码里onclick事件调用alert函数传入一个带空格的参数，并且注册onclick事件时没有加引号所引起的。
+但是，在HTML5中，对于标签的属性的确是可以不用加引号的，浏览器会自动解析并且添加引号，这一点是没有错的。主要错误的原因就是：传递给函数的参数是程序通过ajax请求，从数据库中获取的，比如参数a，然后再将a作为参数传入函数中。当a为一个不包含空格的词时，整个程序运行perfect。但是当a中间包含一个或多个空格时，并且注册事件没有使用引号，这时按照浏览器的解析原则，就出现了文中所描述的错误。
+我想，当时编写这个代码的同事，在检验功能时，数据库返回的参数a应该是没有空格的，当自己根据HTML5中这个规则添加属性时，肯定还在偷着乐，HTML5真方便…
+很多程序员都想用最短的时间敲最多的代码、完成最多的功能，包括我。所以很多时候我们都会去忽略一些规范，比如最简单的命名规范，从而达到快速。当然，忽略命名规范是肯定不会出现文中这个错误。但是为了程序的健壮性，为了对以后维护代码的程序员负责，不要节省敲打引号的时间，不要轻易的忽略编程的规范性。
+突然想起一句话：码农何必为难码农!</description>
+    </item>
+    
+    <item>
+      <title>dijit Tree 浮动菜单</title>
+      <link>https://steeeeps.github.io/posts/2013/dijit-tree-float-menu/</link>
+      <pubDate>Mon, 15 Apr 2013 11:06:32 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/dijit-tree-float-menu/</guid>
+      <description>使用dijit树控件时，对于额外的操作一般都会以添加右键菜单的方式来完成。但是对于用户而言，如果没有特别的提示，就有可能不知道该控件是否提供了右键操作菜单，所以，添加浮动菜单对用户体验而言是有一定增进效果的。
+源码下载
+用法  引入css  &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; type=&amp;#34;text/css&amp;#34; href=&amp;#34;../treeFloatMenu.css&amp;#34;&amp;gt;  引入js文件。(我使用的dojo1.7，并且使用AMD规范定义treeFloatMenu.js扩展模块) require([&amp;#34;dojo/ready&amp;#34;, &amp;#34;dojo/_base/window&amp;#34;, &amp;#34;dojo/store/Memory&amp;#34;, &amp;#34;dijit/tree/ObjectStoreModel&amp;#34;, &amp;#34;dijit/Tree&amp;#34;, &amp;#34;treeFloatMenu&amp;#34;], function(ready, win, Memory, ObjectStoreModel, Tree){...})  调用扩展方法显示菜单并添加菜单操作项。(tree为实例化后的Tree控件) tree.floatMenu([{ node: &amp;#39;&amp;lt;span class=&amp;#34;dijitTree-float-menu-del&amp;#34; title=&amp;#34;删除节点&amp;#34;&amp;gt;&amp;lt;/span&amp;gt;&amp;#39;, onClick: function(event){ console.log(event.floatNode); console.log(event.tree); var name = event.floatNode.item.name; alert(name); }, onTreeNodeMouseOver: function(event){ var type = event.floatNode.item.type; if (type == &amp;#39;planet&amp;#39;) { event.floatItem.style.display = &amp;#34;none&amp;#34;; } else { event.floatItem.style.display = &amp;#34;inline-block&amp;#34;; } }   }]); ```
+api说明 tree.floatMenu() 传入菜单操作项对象(floatItem，例如上面语句中的删除节点项)或对象数组。
+floatItem  node:操作项dom节点对象或html字符串。 onClick:操作项点击事件，通过event.</description>
+    </item>
+    
+    <item>
+      <title>自定义dojo主题</title>
+      <link>https://steeeeps.github.io/posts/2013/custom-dojo-theme/</link>
+      <pubDate>Sun, 14 Apr 2013 11:10:07 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/custom-dojo-theme/</guid>
+      <description>到现在的dojo1.8.3版本中，dojo框架提供了四个主题，nihilo、tundra、soria和claro，我个人是非常喜欢claro主题的风格，淡淡的蓝，用了一些css3的效果，整个体验都很不错,但是谁也不喜欢自己做的系统主题样式和别人一致，就像不喜欢和别人撞衫一样，所以在平时开发中也会想尽一切办法来改变dojo主题。下面就分享两个自定义dojo主题的方法。
+重写样式 这个方法可能是使用起来最简单，适用面最广的一种方法，用浏览器调试工具找出dijit的样式，修改为自己的想要的样式，比如我想修改dojo的Dialog的样式，我只需要找到Dialog对应的css样式，修改为以下css代码：
+/*------------对话框-----------*/ .steeeeps .dijitDialog { border: 1px solid #bec0e1; -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25); -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25); box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25); -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; } /*对话框标题栏*/ .steeeeps .dijitDialogTitleBar { background: rgb(248, 248, 248); /* Old browsers */ background: -moz-linear-gradient(top, rgba(248, 248, 248, 1) 0%, rgba(229, 229, 229, 1) 100%); /* FF3.6+ */ background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,248,248,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */ background:-webkit-linear-gradient(top,rgba(248, 248, 248, 1) 0%, rgba(229, 229, 229, 1) 100%); /* Chrome10+,Safari5.</description>
+    </item>
+    
+    <item>
+      <title>基于nodejs的js、css压缩打包程序</title>
+      <link>https://steeeeps.github.io/posts/2013/compress-by-nodejs/</link>
+      <pubDate>Sun, 10 Mar 2013 17:07:53 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/compress-by-nodejs/</guid>
+      <description>之前在项目中一直想再上线之前将js、css文件进行打包压缩处理，由于js代码基本上都是用的dojo框架，dojo虽然提供了一个build功能，但是处于当时对这个功能的使用不是很明白，于是就想到了yui提供的yuicompressor功能，再加上一直对nodejs比较感兴趣，所以自己使用yuicompressor和nodejs编写了一套压缩打包的程序。
+虽然说yuicompressor是使用nodejs来调用的，但是其本质还是是调用的java。不过结合着nodejs的异步操作，使用起来还是不错的。
+对于nodejs，nodejs使用事件轮询机制来实现异步，真的是相当不错的，大量的js文件压缩，使用异步操作，效率是非常高的。不过在使用nodejs过程中，如何控制异步操作的流程，是必须要好好考虑的，不过所幸，github上有很多关于控制异步的框架可以拿来使用学习。
+使用说明：   安装nodejs
+  打开config.json,修改需要打包的配置信息。
+  运行 node pack.js 进行打包合并处理。
+  运行 node compress.js 进行压缩处理。
+  配置说明 { &amp;#34;baseDir&amp;#34;:&amp;#34;H:\\cbtest\\from&amp;#34;, &amp;#34;targetDir&amp;#34;:&amp;#34;H:\\cbtest\\to&amp;#34;, &amp;#34;layers&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;a.js&amp;#34;, &amp;#34;compress&amp;#34;:true, &amp;#34;depends&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;applications.js&amp;#34;, &amp;#34;depends&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;effects.js&amp;#34;, &amp;#34;depends&amp;#34;: [] },{ &amp;#34;name&amp;#34;:&amp;#34;mgr\\util.js&amp;#34;, &amp;#34;depends&amp;#34;:[] } ] },{ &amp;#34;name&amp;#34;:&amp;#34;portal/message.js&amp;#34;, &amp;#34;depends&amp;#34;:[] } ] }, { &amp;#34;name&amp;#34;: &amp;#34;b.js&amp;#34;, &amp;#34;compress&amp;#34;:false, &amp;#34;depends&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;applications.js&amp;#34;, &amp;#34;depends&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;effects.</description>
+    </item>
+    
+    <item>
+      <title>可动态添加的TabContainer</title>
+      <link>https://steeeeps.github.io/posts/2013/dynamic-tabs/</link>
+      <pubDate>Sat, 09 Mar 2013 17:14:38 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/dynamic-tabs/</guid>
+      <description>公司产品新的安装包需要使用一个TabContainer，由于整个安装包大小不大，所以使用js框架不太适合，于是使用原生javascript完成了一个。
+所有js压缩后不到6kb，还算满足要求。
+包含一个dom.js,lang.js,tabContainer.js。tabContainer.min.js为前面三个js文件的压缩文件。
+TabContainer的样式参考了http:tympanus.net/codrops/2012/04/12/animated-content-tabs-with-css3/
+api介绍： window.dom(dom)介绍 dom.hasClass(/*String (&amp;#39;a&amp;#39;)*/classStr, /*node*/node) dom.removeClass(/*String (&amp;#39;a&amp;#39; or &amp;#39;a b&amp;#39;)*/classStrs, /*node*/node) dom.addClass(/*String (&amp;#39;a&amp;#39; or &amp;#39;a b&amp;#39;)*/classStrs, /*node*/node) dom.getDom(/*String (name:&amp;#39;name&amp;#39; or class:&amp;#39;.class&amp;#39;)*/param, /*node*/root, /*String (&amp;#39;div&amp;#39;)*/tag) dom.createDom(/*String (&amp;#39;div&amp;#39;)*/tag,/*Object*/ opts,/*domNode*/parentNode) dom.getFirstElementChild(/*domNode*/node) window.lang(lang)介绍 lang.trim(/*String*/str) lang.stopPropagation(/*Event*/event) lang.srcElement(/*Event*/event) lang.isFunction(it); lang.isString(str); lang.isIp(ip); lang.isNull(str); lang.isLinuxPath(str); lang.isWinPath(str); lang.isNum(str); lang.hasChinese(str); String.toFirstCharUpperCase(); window.TabContainer(TabContainer)介绍 var tabContainer = new TabContainer(/*domNode*/node); tabContainer.addTab({ title: &amp;#34;title&amp;#34;, content: &amp;#34;&amp;amp;lt;p&amp;amp;gt;tab内容&amp;amp;lt;/p&amp;amp;gt;&amp;#34;, closable: false }); tabContainer.addTabBtn.onclick = function(){ tabContainer.addTab({ title: &amp;#34;title&amp;#34;, content: &amp;#34;&amp;amp;lt;p&amp;amp;gt;tab内容&amp;amp;lt;/p&amp;amp;gt;&amp;#34;, closable: false }); }; var selected=tabContainer.</description>
+    </item>
+    
+    <item>
+      <title>我的理想是做一名科学家</title>
+      <link>https://steeeeps.github.io/posts/2013/my-ideals/</link>
+      <pubDate>Sat, 09 Mar 2013 17:12:09 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/my-ideals/</guid>
+      <description>网上一直都在评论说数学之美是一本难得的好书，作者吴军用深入浅出、通俗易懂的语言，让读者领略了数学的魅力.有幸身边的同事购买了一本，自己借阅了一下，自己用一句话概括就是：看不懂的的确是好书。
+的确，在阅读数学之美的过程中，除了前几章介绍的神话故事自己还能看得比较入神之外，后面的章节，对于我来说，很多部分是比较难以理解的。但是对于这本书来说，我最希望是我读初中、高中的时候来阅读，或许那时候我看不懂的地方更多，或者对于我来说就是一本科幻读物，但是他会让我提前知道“数学之美”，让我在今天有能力读懂这本《数学之美》。
+这就像Looper里最后一句台词：
+ 我看到了。我看到一个母亲可以为了孩子去死，一个男人可以为了妻子杀人。一个男孩满心孤独与黑暗，踏上了旅程……这就是宿命，环环相扣。
+ 仔细想想，其实从小学开始，我的数学成绩貌似就不是特别出众的。现在有时和父母聊天时，他们总会感叹我小学时：该错的不错，不该错的全错了，困难的应用题都能做对，简单的计算却全是错误，其实我也不是特别明白，因为现在读小学的妹妹也同样是这个毛病。但是我更不明白的是，那时的我理想居然还是当一名科学家，其实我小时候的理想很多，科学家只是其中一种，我现在大大的怀疑，那是因为当时班上想当科学家的人太多了，我跟风的…
+其实不只是小学，就连初中、高中、甚至到了大学里“差点将我挂死的那颗很高的树”，我都不是很明白，学的数学有什么作用，当时脑子里知道的用处可能就只有加减乘除、几何运算、考试得分以及挂在墙壁上的:
+ 读史使人明智，读诗使人灵秀，数学使人周密，科学使人深刻，伦理使人庄重，逻辑使人善辩。
+ 这句至理名言。其实到了大学我本有机会明白的，但是那时我已没有认真学习的心了,呵呵…
+其实看了这本书之后，我算是明白了，为什么我和妹妹在小学时都会犯同样的错误，是的，对于一个小学生来说，应用题虽难，但是他能让人懂得计算的目的，计算题虽简单，但是它枯燥得提不起一点计算的兴趣。
+非常感谢作者花了这么大的篇幅来介绍了许多信息与搜索领域的科学家的故事，以及他们如何使用数学来改变我们世界的故事。他让我找到了我为什么没有实现当一名科学家理想的原因：
+ 要成为科学家，你必须知道科学家是做什么的。
+ 如果人生能够loop的话，我愿意带着这本《数学之美》回到我的小学，帮助那些梦想着成为科学家的祖国的花朵，当然也包括我自己，绽放自己的人生。
+当然，作为一名it从业者，我觉得我还会再仔细品味“数学之美”得。</description>
+    </item>
+    
+    <item>
+      <title>javascript 作用域的工作原理</title>
+      <link>https://steeeeps.github.io/posts/2013/javascript-scope/</link>
+      <pubDate>Sun, 03 Feb 2013 17:27:08 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/javascript-scope/</guid>
+      <description>函数作用域
+每一个javascript函数都是一个对象，拥有一系列可被访问和仅能被javascript引擎访问的内部属性，其中一个内部属性就是函数的作用域。当一个函数创建的时候。Javascript引擎就会创建这个函数的作用域并且用一些对象来填充，这些对象代表创建这个函数的环境中可以访问的数据，比如创建一个全局函数，他的作用域中就填入了一个单独的可变对象，这个全局对象代表了所有全局范围定义的变量，比如说window、location、document之类的对象。如果创建的函数是一个嵌套的函数（闭包），此作用域上还会加上父函数中定义的对象。
+例如：
+function add (num1 , num2 ) { var sum=num1+num2; return sum; } 当该函数被调用时,例如 var total=add(5,10);会建立另一个内部对象，称作“运行时上下文”,一个运行时上下文定义了一个函数运行时的环境，函数每次被调用都会产生一个独立的上下文，直到函数执行完毕，运行时上下文就被销毁。
+当上下文被创建时，它会使用函数作用域中所包含的对象来产生自己的作用域链，并且将函数作用域中的对象按照他们在函数中出现的顺序复制到上下文作用域的前端，比如说将函数的所有局部变量、命名参数、参数集合以及this关键字。当上下文销毁时。这个作用域也会被销毁。
+所以在函数的运行过程中，每遇到一个变量，解析器都会在作用域链中去查找与变量相对应的标识符，比如说上面函数中的sum，这个搜索过程会从第一个作用域前端一直查找，直到查找到了对应的标识符将其返回，或者直到作用域链的末端也未找到的话则返回undefined。所以在函数中，对于局部变量和全局变量的访问，由于全局变量存在更深的位置，所以它的读写速度就会比局部变量慢一些。
+所以当你多次访问一个存储位置较深的变量时。可以将这个变量保存为局部变量，来重复使用，比如说下面这个例子：
+function initUI(){ var bd = document.body, links = document.getElementsByTagName(&amp;#34;a&amp;#34;), i = 0, len = links.length; while (i &amp;lt; len) { update(links[i++]); } document.getElementById(&amp;#34;go-btn&amp;#34;).onclick = function(){ start(); }; bd.className = &amp;#34;active&amp;#34;; } 可以将其改为这个：
+function initUI(){ var doc = document, bd = doc.body, links = doc.getElementsByTagName(&amp;#34;a&amp;#34;), i= 0, len = links.length; while(i &amp;lt; len){ update(links[i++]); } doc.</description>
+    </item>
+    
+    <item>
+      <title>dom编程优化</title>
+      <link>https://steeeeps.github.io/posts/2013/dom-optimize/</link>
+      <pubDate>Sun, 03 Feb 2013 17:20:04 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/dom-optimize/</guid>
+      <description>在浏览器中，dom的实现和javascript的实现通常是保持相互独立的，比如chrome使用webKit渲染页面，而使用v8作为javascript引擎，firefox使用Gecko渲染页面，使用IonMonkey作为最新的javascript引擎。
+有一个非常形象的比如就是将dom和js分别看做两座岛屿，而两者之间以收费桥连接，当js访问dom时，就需要过桥，需要交过桥费，所以访问的次数越多，教的过桥费也就越多（摘自《High Performance Javascript》）。所以合理的处理好dom和js的交互，对页面的性能也有很大的提升。
+合理的操作dom主要包括访问和修改dom元素、注册dom元素事件、浏览器重绘与重排，前两者是最普遍的优化问题，也是最易优化的，但是理解重绘与重排对大型的web程序来说，是十分重要的。
+访问和修改dom元素 访问和修改dom多采用innerHTML和DocumentFragment，并注意尽量减少dom和javascript交互的次数。
+例如下面的代码创建多个节点：
+function CreateNodes(){ for(var i = 0;i &amp;amp;lt; 10000;i++){ var tmpNode = document.createElement(&amp;#34;div&amp;#34;); tmpNode.innerHTML = &amp;#34;test&amp;#34; + i + &amp;#34; &amp;amp;lt;br /&amp;amp;gt;&amp;#34;; document.body.appendChild(tmpNode); } } 就不如使用DocumentFragment或者innerHTML快速：
+function CreateFragments(){ var fragment = document.createDocumentFragment(); for(var i = 0;i &amp;amp;lt; 10000;i++){ var tmpNode = document.createElement(&amp;#34;div&amp;#34;); tmpNode.innerHTML = &amp;#34;test&amp;#34; + i + &amp;#34;&amp;amp;lt;br /&amp;amp;gt;&amp;#34;; fragment.appendChild(tmpNode); } document.body.appendChild(fragment); } 添加dom事件 利用javascript事件冒泡的特性，来最小化事件句柄数量。
+例如将下面给td标签注册事件的例子：
+function addTdEvent1(){ var table = document.getElementById(&amp;#39;table&amp;#39;); var tds = table.</description>
+    </item>
+    
+    <item>
+      <title>javascript引入页面方式</title>
+      <link>https://steeeeps.github.io/posts/2012/javascript-import-types/</link>
+      <pubDate>Sat, 15 Dec 2012 17:34:04 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2012/javascript-import-types/</guid>
+      <description>这一周开始学习大师 Nicholas C. Zakas 所著的High Performance JavaScript，第一次尝试阅读英文原版，感觉难度也不是想象中的那么大，遇见不懂得单词直接“有道”。对于有一定javascript基础的开发人员来说，我觉得读一点英文原版的技术书籍，对技术的理解还是会有很大的帮助。所以也希望自己能继续坚持下来。
+在学习了第一章Loading and Execution(javascript的加载与执行)后，自己感触也挺深的，结合自己这两个月时间所做的项目，对javascript的加载与执行进行一次总结，希望对以后的工作有所帮助。
+关于javascript在浏览器中的加载，其实有点经验的开发人员大都知道，由于浏览器使用单进程来处理UI的更新和javascript的加载与执行，所以，当浏览器自上而下解析html页面时，遇上script标签的时候，浏览器就会去下载script标签中引入的外部javascript文件和执行内联或下载完成以后的javascript代码，而造成页面的等待，即使现在的主流浏览器都允许并行下载javascript，来节省下载js所用的时间，但是javascript下载的过程中也会影响其他的资源下载，比如说图片，而且，浏览器仍然会等待所有的javascript下载完成并执行完成以后才会继续解析页面，所以javascript的阻塞性质仍然存在。引用书中的一张图片来说明：
+所以针对javascript加载的方式，书中提到了以下几点方法来优化：
+ 1、将script放在页面底部，紧邻&amp;amp;lt;/body&amp;amp;gt;标签，这一方法也是最简单，用的最多的。 2、减少script标签，将所使用的外部js文件组合成一个js文件(组合的时候需要注意不同js文件间的依赖关系，以及变量的命名冲突),为了降低文件大小，也可以选择将组合后的js代码进行压缩。当然这一点对于少量页面的网站来说可能还比较适用，但是对于大型网站来说，这样组合js的方式，就比较麻烦了。yahoo在其CDN上就使用了在服务器合并js的方法：  例如： http://l.yimg.com/zz/combo?cv/eng/externals/yfpad/combo/120416/a/yfpadobject.js&amp;amp;cv/eng/externals/yfpad/combo/120416/a/yfpad_useragent.js，这是在yahoo官网上使用到的部分js文件，他在后台多个js文件合并成一个返回给前台使用。
+当然，上面两种方式只能减轻js加载对页面解析的影响，而不能做到真正的无阻塞加载 。
+关于无阻塞加载js， Nicholas C. Zakas介绍了以下几种方式：
+ 1、使用script标签的defer属性，不过这个属性只有IE和Firefox支持，对于跨浏览器的解决方案不是很好，所以可能用到的也比较少。 2、动态创建script标签，添加到页面。比如：  这种方式的最大好处就是在于，无论在哪里执行这段脚本，js文件的下载与执行都不会阻塞其他页面的处理。然而，这种处理方式也有一点弊端，就是不能很好地处理不同js文件之间的依赖关系，除了在firefox和opera中，浏览器会按照你添加js文件的顺序去下载js文件，然后按照顺序执行js，在其他的浏览器中，会立即执行服务器返回的js，这个执行顺序全取决于服务器返回js文件的顺序，所以对于存在js依赖关系的js文件，就容易产生错误。
+ 3、使用ajax获取javascript脚本，然后通过动态添加script标签的方式，将获取的javascript代码作为内联的javascript代码添加到页面。这样做的优点在于，获取到的javascript脚本不会立即执行，我们可以自己控制加载到页面的顺序和执行的顺序，来解决js文件之间的依赖关系。当然，这样做最大的缺点就在于，不能够获取跨域的js文件。  这上面就是书中作者提到的几种解决加载javascript阻塞页面的方法。
+对于上面提到的无阻塞加载的js方式中，如何解决js文件之间的依赖关系，是每一个方法都必须注意得一点，所以作者在最后推荐的无阻塞加载方式中也提到了两个轻量级的js框架，lazyload和labjs，这两个框架很好的处理了js加载中不同js文件的依赖关系。关于这两个js框架我也没怎么使用过，有兴趣的朋友可以去官网上下载源码研究。
+除了这两个框架之外，我还想向大家推荐两种异步加载js的方式：
+ 1、基于AMD规范的RequireJS。 2、基于CMD规范的SeaJS。  前者是国外支持AMD规范比较好的js框架，后者是支付宝大牛玉伯所开发的。关于AMD规范和CMD规范以及两者的区别请点击http://www.zhihu.com/question/20351507/answer/14859415查看。
+由于公司一直都是AMD规范另一实现者dojo的追随者，所以在学习dojo AMD模块加载机制中，对requirejs也有了一定的了解，而SeaJS我也没有具体使用过，但是对两者一起努力推广javascript模块化开发的思想，是十分敬佩的！
+其实从我个人而言，我是推崇使用AMD规范来进行javascript模块化开发和加载(我没用过CMD规范，CMD规范的追随者别喷我…)，因为随着web应用的升温，现在的javascript再也不是以前开发者口中的“玩具式语言”，所以对于javascript开发的规范性和易用性，现在要求越来越高，而使用AMD模块化开发，能够极大地改善代码的可维护性，应用的性能和互用性。我们可以不再为臃肿的js文件而烦恼，也不需要去担心过度的对js文件细粒度划分带来的js加载问题。我们只需要按照AMD规范来定义模块，来编写我们的逻辑、业务层的代码，对于我们的开发效率也会有很大的提升。
+另外，对于ArcGIS Javascript Api的使用者来说，在3.0版本后已经开始使用dojo1.7版本，所以我也推荐在3.0及后续版本中使用AMD规范来进行ArcGIS Javascript Api的开发。
+以上便是我学习High Performance JavaScript 第一章后对js加载的一些心得与总结，这其中可能有些理解和用词欠妥，如果你有更好的理解，欢迎批评指正。</description>
+    </item>
+    
+    <item>
+      <title>javascript引入页面方式</title>
+      <link>https://steeeeps.github.io/posts/2013/javascript-import-types/</link>
+      <pubDate>Sat, 15 Dec 2012 17:34:04 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/javascript-import-types/</guid>
+      <description>这一周开始学习大师 Nicholas C. Zakas 所著的High Performance JavaScript，第一次尝试阅读英文原版，感觉难度也不是想象中的那么大，遇见不懂得单词直接“有道”。对于有一定javascript基础的开发人员来说，我觉得读一点英文原版的技术书籍，对技术的理解还是会有很大的帮助。所以也希望自己能继续坚持下来。
+在学习了第一章Loading and Execution(javascript的加载与执行)后，自己感触也挺深的，结合自己这两个月时间所做的项目，对javascript的加载与执行进行一次总结，希望对以后的工作有所帮助。
+关于javascript在浏览器中的加载，其实有点经验的开发人员大都知道，由于浏览器使用单进程来处理UI的更新和javascript的加载与执行，所以，当浏览器自上而下解析html页面时，遇上script标签的时候，浏览器就会去下载script标签中引入的外部javascript文件和执行内联或下载完成以后的javascript代码，而造成页面的等待，即使现在的主流浏览器都允许并行下载javascript，来节省下载js所用的时间，但是javascript下载的过程中也会影响其他的资源下载，比如说图片，而且，浏览器仍然会等待所有的javascript下载完成并执行完成以后才会继续解析页面，所以javascript的阻塞性质仍然存在。引用书中的一张图片来说明：
+所以针对javascript加载的方式，书中提到了以下几点方法来优化：
+ 1、将script放在页面底部，紧邻&amp;amp;lt;/body&amp;amp;gt;标签，这一方法也是最简单，用的最多的。 2、减少script标签，将所使用的外部js文件组合成一个js文件(组合的时候需要注意不同js文件间的依赖关系，以及变量的命名冲突),为了降低文件大小，也可以选择将组合后的js代码进行压缩。当然这一点对于少量页面的网站来说可能还比较适用，但是对于大型网站来说，这样组合js的方式，就比较麻烦了。yahoo在其CDN上就使用了在服务器合并js的方法：  例如： http://l.yimg.com/zz/combo?cv/eng/externals/yfpad/combo/120416/a/yfpadobject.js&amp;amp;cv/eng/externals/yfpad/combo/120416/a/yfpad_useragent.js，这是在yahoo官网上使用到的部分js文件，他在后台多个js文件合并成一个返回给前台使用。
+当然，上面两种方式只能减轻js加载对页面解析的影响，而不能做到真正的无阻塞加载 。
+关于无阻塞加载js， Nicholas C. Zakas介绍了以下几种方式：
+ 1、使用script标签的defer属性，不过这个属性只有IE和Firefox支持，对于跨浏览器的解决方案不是很好，所以可能用到的也比较少。 2、动态创建script标签，添加到页面。比如：  这种方式的最大好处就是在于，无论在哪里执行这段脚本，js文件的下载与执行都不会阻塞其他页面的处理。然而，这种处理方式也有一点弊端，就是不能很好地处理不同js文件之间的依赖关系，除了在firefox和opera中，浏览器会按照你添加js文件的顺序去下载js文件，然后按照顺序执行js，在其他的浏览器中，会立即执行服务器返回的js，这个执行顺序全取决于服务器返回js文件的顺序，所以对于存在js依赖关系的js文件，就容易产生错误。
+ 3、使用ajax获取javascript脚本，然后通过动态添加script标签的方式，将获取的javascript代码作为内联的javascript代码添加到页面。这样做的优点在于，获取到的javascript脚本不会立即执行，我们可以自己控制加载到页面的顺序和执行的顺序，来解决js文件之间的依赖关系。当然，这样做最大的缺点就在于，不能够获取跨域的js文件。  这上面就是书中作者提到的几种解决加载javascript阻塞页面的方法。
+对于上面提到的无阻塞加载的js方式中，如何解决js文件之间的依赖关系，是每一个方法都必须注意得一点，所以作者在最后推荐的无阻塞加载方式中也提到了两个轻量级的js框架，lazyload和labjs，这两个框架很好的处理了js加载中不同js文件的依赖关系。关于这两个js框架我也没怎么使用过，有兴趣的朋友可以去官网上下载源码研究。
+除了这两个框架之外，我还想向大家推荐两种异步加载js的方式：
+ 1、基于AMD规范的RequireJS。 2、基于CMD规范的SeaJS。  前者是国外支持AMD规范比较好的js框架，后者是支付宝大牛玉伯所开发的。关于AMD规范和CMD规范以及两者的区别请点击http://www.zhihu.com/question/20351507/answer/14859415查看。
+由于公司一直都是AMD规范另一实现者dojo的追随者，所以在学习dojo AMD模块加载机制中，对requirejs也有了一定的了解，而SeaJS我也没有具体使用过，但是对两者一起努力推广javascript模块化开发的思想，是十分敬佩的！
+其实从我个人而言，我是推崇使用AMD规范来进行javascript模块化开发和加载(我没用过CMD规范，CMD规范的追随者别喷我…)，因为随着web应用的升温，现在的javascript再也不是以前开发者口中的“玩具式语言”，所以对于javascript开发的规范性和易用性，现在要求越来越高，而使用AMD模块化开发，能够极大地改善代码的可维护性，应用的性能和互用性。我们可以不再为臃肿的js文件而烦恼，也不需要去担心过度的对js文件细粒度划分带来的js加载问题。我们只需要按照AMD规范来定义模块，来编写我们的逻辑、业务层的代码，对于我们的开发效率也会有很大的提升。
+另外，对于ArcGIS Javascript Api的使用者来说，在3.0版本后已经开始使用dojo1.7版本，所以我也推荐在3.0及后续版本中使用AMD规范来进行ArcGIS Javascript Api的开发。
+以上便是我学习High Performance JavaScript 第一章后对js加载的一些心得与总结，这其中可能有些理解和用词欠妥，如果你有更好的理解，欢迎批评指正。</description>
+    </item>
+    
+    <item>
+      <title>分享两个arcgis javascript api 小工程</title>
+      <link>https://steeeeps.github.io/posts/2012/two-js-project/</link>
+      <pubDate>Wed, 05 Dec 2012 17:39:23 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2012/two-js-project/</guid>
+      <description>不知是不是传说中“世界末日”的原因，感觉今年北京的冬天比去年冷多了。转眼间一年过去了，自己写javascript也整整一年了，在这一年里也学到了不少web开发的东西。虽然一年内一直在和javascript打交道，但是自己还是感觉像一个初学者一样。感觉javascript看上去仍像是一个平静的湖面，当你脚插进去才感觉深似海啊！
+在这一年内其实很少写有关于arcgis javascript api(以下简称ags api)的代码的。但是由于自己有一些AO开发的基础，加上自己这一年来一直在编写javascript和使用dojo框架，所以对于QQ群里或者论坛上的一些关于ags api的提问，我都会去关注一下，或者查查ags api samples，所以这一年下来对ags api的使用也有一些了解。自己大致估算了一下这一年内问的最多的问题差不多都是和下面几点相关的：
+1、如何部署ags api
+2、如何设置proxy
+3、如何解决跨域问题
+当然这两个都不是这篇文章讲的重点，上面几点的解决方案，网上有很多不错的文章来介绍，还请百度。如果细心一点的同学，会很快解决的。
+回到主题吧，写这篇文章主要目的是想通过这一年来我使用ags api写的两个小工程，来分享一下我学习ags api的一点经验。一个是我去年到公司刚开始学习javascript和ags api的时候写的一个小demo(别名checkData)，另一个是我今年6、7月份写的一个ags api 聚类展示的代码（别名cluster），其实具体啥时候写的我不记得了，我就记得我写出来的第二周ags api3.0就推出了，而且在这个版本中也加入了聚类展示的功能。所以后来也就放在那了。
+checkData是一个入门级的demo，当时主要是用来入门练习ags api，主要的练习的功能点就只包括：
+1、点数据的展示、添加(没有保存)、属性编辑
+2、编程的方式创建dojo小部件
+3、自定义小部件
+ 下载源码
+ cluster的难度相比于上一个demo，难度就要偏高一些了，用过flex clsuter的同学们肯定都对flex那种让人眼花的绚丽流连忘返呢，所以很多使用ags api的同学都在问，为什么ags api迟迟不推出cluster功能呢，其实在这之前国外一个大牛，自己也写了一个，但是那个版本的扩展性貌似不是太好，所以我在写clsuter的时候也参照了不少他里面的代码以及百度地图cluster的思想。当然与后面esri官方推出的cluster版本来说，我还是推荐使用官方的版本，毕竟整个ags api的稳定性还是挺高的。而我分享的这个，主要目的还是为了交流，希望能够给使用ags api的新手们一些帮助。在这这个demo里面，我当时主要学习到的包括：
+1、dojo类的继承
+2、简单的点抽希的思想.（其实关于点抽希的思想我还是理解的不够透彻，有比较了解的朋友还请多多交流）
+在cluster里面，我并没有加入像flex中对聚合的点华丽的展示方式，而是将聚合点通过鼠标上浮或点击事件传回，方便开发者自定义显示，比如下图中我就使用一个网上开源的js标签云的方式来显示聚合点的信息。这个实例的地图和数据都是使用舌尖上的中国上面的。当然我这个和它相比，就比较逊色呢，呵呵
+ 下载源码
+ 这两个demo从易到难，有兴趣的同学可以下载源码看一下，当然可能由于书写代码的时候的对javascript、dojo和ags api的某些知识点的理解不够准确，代码中可能还或多或少有些问题，还请你指出、交流。
+关于一些ags api学习的经验，其实说到经验我又不知道怎么说了，因为我本身写ags api的代码也比较少，但是我经常在群里看大家问的一些问题，其实很多问题的定位都不应该是在ags api这一层的，但大家上来就问ags api里该怎么解决。所以我建议大家有时间的话可以多花点时间在dojo框架和原生的javascript的学习上。而对于ags api的一些问题，ags api samples上的例子什么的只要你仔细、耐心的查找，90%是能找到解决方法的。
+最后，预祝大家都能够安安全全、欢欢乐乐的进入2013。</description>
+    </item>
+    
+    <item>
+      <title>IE 清空file input值</title>
+      <link>https://steeeeps.github.io/posts/2012/ie-clear-file-input/</link>
+      <pubDate>Wed, 10 Oct 2012 21:38:32 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2012/ie-clear-file-input/</guid>
+      <description>在web 页面使用file input 控件进行上传操作时，有时会需要在上传完成后对file input中的值清空，来做其他的操作，一般我们会想到直接使用
+document.getElementById(&amp;#34;myFile&amp;#34;).value = &amp;#34;&amp;#34;; 来完成我们的操作。这个方法也是非IE浏览器主要使用的方法。
+但是在IE中，由于IE自身的安全策略，认为 file input 是read only 的控件，所以IE是不允许这样操作的，但是在IE中也可以使用如下两个方法完成：
+ 如果file input在表单中的话，可以直接使用document.getElementById(“myForm”).reset();来重置整个表单。 如果没有使用表单的话，可以结合使用cloneNode、replaceChild两个方法来完成，如下面代码所示：  var oldfile=document.getElementById(&amp;#34;myFile&amp;#34;); var newfile=oldfile.cloneNode(false); oldfile.parentNode.replaceChild(newfile,oldfile); </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>拥抱 ArcGIS API for JavaScript 4.0 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="2015年7月，ESRI 推出了 ArcGIS API for JavaScript 3.14 和 ArcGIS API for JavaScript 4.0 Beta 1 两个 API 版本。
+前者是常规版本的一次更新，包含了对3.13bug的修改以及功能类和小部件的增加。
+而4.0则是ArcGIS API for JavaScript的一次重大变革。除了新添加对万众瞩目的 Web 3D 的支持，API自身的变化和对最新的HTML5、CSS3元素的支持使API变的更简洁、强大、灵活、高效。
+4.0的变革，主要体现在：
+  使用 ES5 Accessors API 代替使用事件来监控属性值的变化。查看详情。 绘图逻辑修改，增加MapView和SceneView来分别绘制2D、3D地图。 模块与包名的改变，使API变的更简洁，例如使用 ArcGISTiledLayer 替换 ArcGISTiledMapServiceLayer。 只支持使用 AMD 规范来定义、加载模块。 使用promise来解决事件监听带来的无限回调，让代码更简洁、优雅。 对现代浏览器的依赖，例如3D需要IE11。中国的工程师可能需要逐步引导用户由IE8 升级至新版本IE或Chrome、Firefox、Safari。   更多内容与用法，请点击查看:ArcGIS API for JavaScript Guide" />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="拥抱 ArcGIS API for JavaScript 4.0" />
+<meta property="og:description" content="2015年7月，ESRI 推出了 ArcGIS API for JavaScript 3.14 和 ArcGIS API for JavaScript 4.0 Beta 1 两个 API 版本。
+前者是常规版本的一次更新，包含了对3.13bug的修改以及功能类和小部件的增加。
+而4.0则是ArcGIS API for JavaScript的一次重大变革。除了新添加对万众瞩目的 Web 3D 的支持，API自身的变化和对最新的HTML5、CSS3元素的支持使API变的更简洁、强大、灵活、高效。
+4.0的变革，主要体现在：
+  使用 ES5 Accessors API 代替使用事件来监控属性值的变化。查看详情。 绘图逻辑修改，增加MapView和SceneView来分别绘制2D、3D地图。 模块与包名的改变，使API变的更简洁，例如使用 ArcGISTiledLayer 替换 ArcGISTiledMapServiceLayer。 只支持使用 AMD 规范来定义、加载模块。 使用promise来解决事件监听带来的无限回调，让代码更简洁、优雅。 对现代浏览器的依赖，例如3D需要IE11。中国的工程师可能需要逐步引导用户由IE8 升级至新版本IE或Chrome、Firefox、Safari。   更多内容与用法，请点击查看:ArcGIS API for JavaScript Guide" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2015/arcgis-js-api-4-0-coming/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-08-16T22:38:29+00:00" />
+<meta property="article:modified_time" content="2015-08-16T22:38:29+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="拥抱 ArcGIS API for JavaScript 4.0"/>
+<meta name="twitter:description" content="2015年7月，ESRI 推出了 ArcGIS API for JavaScript 3.14 和 ArcGIS API for JavaScript 4.0 Beta 1 两个 API 版本。
+前者是常规版本的一次更新，包含了对3.13bug的修改以及功能类和小部件的增加。
+而4.0则是ArcGIS API for JavaScript的一次重大变革。除了新添加对万众瞩目的 Web 3D 的支持，API自身的变化和对最新的HTML5、CSS3元素的支持使API变的更简洁、强大、灵活、高效。
+4.0的变革，主要体现在：
+  使用 ES5 Accessors API 代替使用事件来监控属性值的变化。查看详情。 绘图逻辑修改，增加MapView和SceneView来分别绘制2D、3D地图。 模块与包名的改变，使API变的更简洁，例如使用 ArcGISTiledLayer 替换 ArcGISTiledMapServiceLayer。 只支持使用 AMD 规范来定义、加载模块。 使用promise来解决事件监听带来的无限回调，让代码更简洁、优雅。 对现代浏览器的依赖，例如3D需要IE11。中国的工程师可能需要逐步引导用户由IE8 升级至新版本IE或Chrome、Firefox、Safari。   更多内容与用法，请点击查看:ArcGIS API for JavaScript Guide"/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">拥抱 ArcGIS API for JavaScript 4.0</h1>
+			<div class="meta">Posted on Aug 16, 2015</div>
+		</div>
+		
+
+		<section class="body">
+			<p>2015年7月，ESRI 推出了 <a href="https://developers.arcgis.com/javascript/jshelp/">ArcGIS API for JavaScript 3.14</a> 和 <a href="https://developers.arcgis.com/javascript/beta/">ArcGIS API for JavaScript 4.0 Beta 1 </a>两个 API 版本。</p>
+<p>前者是常规版本的一次更新，包含了对3.13bug的修改以及功能类和小部件的增加。</p>
+<p>而4.0则是ArcGIS API for JavaScript的一次重大变革。除了新添加对万众瞩目的 Web 3D 的支持，API自身的变化和对最新的HTML5、CSS3元素的支持使API变的更简洁、强大、灵活、高效。</p>
+<p>4.0的变革，主要体现在：</p>
+<blockquote>
+<ol>
+<li>使用 <a href="http://odoe.net/blog/arcgis-js-api-4-0beta1-accessors/">ES5 Accessors API</a> 代替使用事件来监控属性值的变化。<a href="https://developers.arcgis.com/javascript/beta/api-reference/esri-core-Accessor.html">查看详情</a>。</li>
+<li>绘图逻辑修改，增加MapView和SceneView来分别绘制2D、3D地图。</li>
+<li>模块与包名的改变，使API变的更简洁，例如使用 ArcGISTiledLayer 替换 ArcGISTiledMapServiceLayer。</li>
+<li>只支持使用 AMD 规范来定义、加载模块。</li>
+<li>使用promise来解决事件监听带来的无限回调，让代码更简洁、优雅。</li>
+<li>对现代浏览器的依赖，例如3D需要IE11。中国的工程师可能需要逐步引导用户由IE8 升级至新版本IE或Chrome、Firefox、Safari。</li>
+</ol>
+</blockquote>
+<p>更多内容与用法，请点击查看:<a href="https://developers.arcgis.com/javascript/beta/guide/">ArcGIS API for JavaScript Guide</a></p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/arcgis-api-for-javascript">ArcGIS API for JavaScript</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

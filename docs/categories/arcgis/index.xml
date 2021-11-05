@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ArcGIS on steeeeps</title>
+    <link>https://steeeeps.github.io/categories/arcgis/</link>
+    <description>Recent content in ArcGIS on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Wed, 25 Mar 2015 23:09:01 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/categories/arcgis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>arcgis json to geojson</title>
+      <link>https://steeeeps.github.io/posts/2015/arcgis-json-to-geojson/</link>
+      <pubDate>Wed, 25 Mar 2015 23:09:01 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/arcgis-json-to-geojson/</guid>
+      <description>arcmap 有个feature to json 工具可以将feature转换为json，但是如果需要geojson格式的话，需要再次转换。
+可以使用下面工具将arcgis json 转为 geojson：
+arcgis json to geojson</description>
+    </item>
+    
+  </channel>
+</rss>

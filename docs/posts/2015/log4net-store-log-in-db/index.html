@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>log4net自定义日志内容入库 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="在系统开发中，日志记录是最基本的功能，良好的日志记录习惯与记录格式，对开发调试、错误定位有很大的帮助。
+log4net是在.net开发中使用的最多的日志框架，使用很方便，只需要简单的配置，就能够将日志信息输出到文本文件中。其实log4net也支持将用户自定义的日志类型直接输出到各类型数据库中。这样就更方便的在程序中以表格或其他方式对日志进行展示。
+以sqlite数据库为例，展示log4net使用反射机制将自定义日志内容存入数据库中。
+具体步骤 1.在数据库中创建日志表 CREATE TABLE LOG (logtime timestamp,message varchar,user varchar) 2.创建自定义日志类 using System; using System.Collections.Generic; using System.Linq; using System.Text; namespace Loglite { class LogModel { public string User { get; set; } public DateTime LogTime { get; set; } public string Message { get; set; } public LogModel(string user, string message) { this.User = user; this.Message = message; this.LogTime = DateTime.Now; } } } 3.自定义视图转换器 using log4net.Layout.Pattern; using System; using System." />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="log4net自定义日志内容入库" />
+<meta property="og:description" content="在系统开发中，日志记录是最基本的功能，良好的日志记录习惯与记录格式，对开发调试、错误定位有很大的帮助。
+log4net是在.net开发中使用的最多的日志框架，使用很方便，只需要简单的配置，就能够将日志信息输出到文本文件中。其实log4net也支持将用户自定义的日志类型直接输出到各类型数据库中。这样就更方便的在程序中以表格或其他方式对日志进行展示。
+以sqlite数据库为例，展示log4net使用反射机制将自定义日志内容存入数据库中。
+具体步骤 1.在数据库中创建日志表 CREATE TABLE LOG (logtime timestamp,message varchar,user varchar) 2.创建自定义日志类 using System; using System.Collections.Generic; using System.Linq; using System.Text; namespace Loglite { class LogModel { public string User { get; set; } public DateTime LogTime { get; set; } public string Message { get; set; } public LogModel(string user, string message) { this.User = user; this.Message = message; this.LogTime = DateTime.Now; } } } 3.自定义视图转换器 using log4net.Layout.Pattern; using System; using System." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2015/log4net-store-log-in-db/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-10-28T17:58:17+00:00" />
+<meta property="article:modified_time" content="2015-10-28T17:58:17+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="log4net自定义日志内容入库"/>
+<meta name="twitter:description" content="在系统开发中，日志记录是最基本的功能，良好的日志记录习惯与记录格式，对开发调试、错误定位有很大的帮助。
+log4net是在.net开发中使用的最多的日志框架，使用很方便，只需要简单的配置，就能够将日志信息输出到文本文件中。其实log4net也支持将用户自定义的日志类型直接输出到各类型数据库中。这样就更方便的在程序中以表格或其他方式对日志进行展示。
+以sqlite数据库为例，展示log4net使用反射机制将自定义日志内容存入数据库中。
+具体步骤 1.在数据库中创建日志表 CREATE TABLE LOG (logtime timestamp,message varchar,user varchar) 2.创建自定义日志类 using System; using System.Collections.Generic; using System.Linq; using System.Text; namespace Loglite { class LogModel { public string User { get; set; } public DateTime LogTime { get; set; } public string Message { get; set; } public LogModel(string user, string message) { this.User = user; this.Message = message; this.LogTime = DateTime.Now; } } } 3.自定义视图转换器 using log4net.Layout.Pattern; using System; using System."/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">log4net自定义日志内容入库</h1>
+			<div class="meta">Posted on Oct 28, 2015</div>
+		</div>
+		
+
+		<section class="body">
+			<p>在系统开发中，日志记录是最基本的功能，良好的日志记录习惯与记录格式，对开发调试、错误定位有很大的帮助。<br>
+log4net是在.net开发中使用的最多的日志框架，使用很方便，只需要简单的配置，就能够将日志信息输出到文本文件中。其实log4net也支持将用户自定义的日志类型直接输出到各类型数据库中。这样就更方便的在程序中以表格或其他方式对日志进行展示。<br>
+以sqlite数据库为例，展示log4net使用反射机制将自定义日志内容存入数据库中。</p>
+<h2 id="具体步骤">具体步骤</h2>
+<h3 id="1在数据库中创建日志表">1.在数据库中创建日志表</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> LOG (logtime <span style="color:#66d9ef">timestamp</span>,message varchar,<span style="color:#66d9ef">user</span> varchar)
+</code></pre></div><h3 id="2创建自定义日志类">2.创建自定义日志类</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
+<span style="color:#66d9ef">using</span> System.Collections.Generic;
+<span style="color:#66d9ef">using</span> System.Linq;
+<span style="color:#66d9ef">using</span> System.Text;
+
+<span style="color:#66d9ef">namespace</span> Loglite
+{
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LogModel</span>
+    {
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> User
+        {
+            <span style="color:#66d9ef">get</span>;
+            <span style="color:#66d9ef">set</span>;
+        }
+
+
+
+        <span style="color:#66d9ef">public</span> DateTime LogTime
+        {
+            <span style="color:#66d9ef">get</span>;
+            <span style="color:#66d9ef">set</span>;
+
+        }
+
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Message
+        {
+            <span style="color:#66d9ef">get</span>;
+            <span style="color:#66d9ef">set</span>;
+        }
+
+
+        <span style="color:#66d9ef">public</span> LogModel(<span style="color:#66d9ef">string</span> user, <span style="color:#66d9ef">string</span> message)
+        {
+            <span style="color:#66d9ef">this</span>.User = user;
+            <span style="color:#66d9ef">this</span>.Message = message;
+            <span style="color:#66d9ef">this</span>.LogTime = DateTime.Now;
+        }
+    }
+}
+
+</code></pre></div><h3 id="3自定义视图转换器">3.自定义视图转换器</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> log4net.Layout.Pattern;
+<span style="color:#66d9ef">using</span> System;
+<span style="color:#66d9ef">using</span> System.Collections.Generic;
+<span style="color:#66d9ef">using</span> System.Linq;
+<span style="color:#66d9ef">using</span> System.Reflection;
+<span style="color:#66d9ef">using</span> System.Text;
+
+<span style="color:#66d9ef">namespace</span> Loglite
+{
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoglitePatternConverter</span>:PatternLayoutConverter
+    {
+
+        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> Convert(System.IO.TextWriter writer, log4net.Core.LoggingEvent loggingEvent)
+        {
+            <span style="color:#66d9ef">if</span> (Option != <span style="color:#66d9ef">null</span>)
+            {
+                <span style="color:#75715e">// Write the value for the specified key
+</span><span style="color:#75715e"></span>                WriteObject(writer, loggingEvent.Repository, LookupProperty(Option, loggingEvent));
+            }
+            <span style="color:#66d9ef">else</span>
+            {
+                <span style="color:#75715e">// Write all the key value pairs
+</span><span style="color:#75715e"></span>                WriteDictionary(writer, loggingEvent.Repository, loggingEvent.GetProperties());
+            }
+
+        }
+        <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">/// 通过反射获取传入的日志对象的某个属性的值
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">/// &lt;param name=&#34;property&#34;&gt;&lt;/param&gt;
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">object</span> LookupProperty(<span style="color:#66d9ef">string</span> property, log4net.Core.LoggingEvent loggingEvent)
+        {
+            <span style="color:#66d9ef">object</span> propertyValue = <span style="color:#66d9ef">string</span>.Empty;
+
+            PropertyInfo propertyInfo = loggingEvent.MessageObject.GetType().GetProperty(property);
+            <span style="color:#66d9ef">if</span> (propertyInfo != <span style="color:#66d9ef">null</span>)
+                propertyValue = propertyInfo.GetValue(loggingEvent.MessageObject, <span style="color:#66d9ef">null</span>);
+
+            <span style="color:#75715e">//Console.WriteLine(property + &#34; : &#34; + propertyValue);
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> propertyValue;
+        }
+    }
+}
+
+</code></pre></div><h3 id="4自定义视图">4.自定义视图</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> log4net.Layout;
+<span style="color:#66d9ef">using</span> System;
+<span style="color:#66d9ef">using</span> System.Collections.Generic;
+<span style="color:#66d9ef">using</span> System.Linq;
+<span style="color:#66d9ef">using</span> System.Text;
+
+<span style="color:#66d9ef">namespace</span> Loglite
+{
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LogliteLayout</span>:PatternLayout
+    {
+        <span style="color:#66d9ef">public</span> LogliteLayout()
+        {
+            <span style="color:#66d9ef">this</span>.AddConverter(<span style="color:#e6db74">&#34;property&#34;</span>, <span style="color:#66d9ef">typeof</span>(LoglitePatternConverter));
+
+        }
+    }
+}
+
+</code></pre></div><h3 id="5修改log4netxml">5.修改log4net.xml</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34; ?&gt;</span>
+<span style="color:#f92672">&lt;configuration&gt;</span>
+  <span style="color:#f92672">&lt;configSections&gt;</span>
+    <span style="color:#f92672">&lt;section</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;log4net&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;System.Configuration.IgnoreSectionHandler, log4net&#34;</span> <span style="color:#f92672">/&gt;</span>
+  <span style="color:#f92672">&lt;/configSections&gt;</span>
+  <span style="color:#f92672">&lt;log4net&gt;</span>
+    <span style="color:#f92672">&lt;appender</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;ADONetAppender&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;log4net.Appender.ADONetAppender,log4net&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#75715e">&lt;!--BufferSize为缓冲区大小--&gt;</span>
+      <span style="color:#f92672">&lt;bufferSize</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#f92672">/&gt;</span>
+
+      <span style="color:#75715e">&lt;!--&lt;param name=&#34;BufferSize&#34; value=&#34;2&#34; /&gt;--&gt;</span>
+      <span style="color:#75715e">&lt;!--引用--&gt;</span>
+      <span style="color:#f92672">&lt;connectionType</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;System.Data.SQLite.SQLiteConnection, System.Data.SQLite, Version=1.0.96.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139&#34;</span> <span style="color:#f92672">/&gt;</span>
+      <span style="color:#75715e">&lt;!--连接字符串--&gt;</span>
+      <span style="color:#f92672">&lt;connectionString</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;Data Source=log.sqlite&#34;</span> <span style="color:#f92672">/&gt;</span>
+      <span style="color:#75715e">&lt;!--插入语句--&gt;</span>
+      <span style="color:#f92672">&lt;commandText</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;insert into LOG (LOGTIME,MESSAGE,USER) Values(@LogTime,@Message,@User);&#34;</span> <span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;commandType</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;Text&#34;</span><span style="color:#f92672">/&gt;</span>
+
+
+      <span style="color:#75715e">&lt;!--记录时间--&gt;</span>
+      <span style="color:#f92672">&lt;parameter&gt;</span>
+        <span style="color:#f92672">&lt;parameterName</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;@LogTime&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;dbType</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;DateTime&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;layout</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;log4net.Layout.RawTimeStampLayout&#34;</span> <span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;/parameter&gt;</span>
+
+      <span style="color:#75715e">&lt;!--异常消息--&gt;</span>
+      <span style="color:#f92672">&lt;parameter&gt;</span>
+        <span style="color:#f92672">&lt;parameterName</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;@Message&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;dbType</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;String&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;layout</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;Loglite.LogliteLayout&#34;</span><span style="color:#f92672">&gt;</span>
+          <span style="color:#f92672">&lt;conversionPattern</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;%property{Message}&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/layout&gt;</span>
+      <span style="color:#f92672">&lt;/parameter&gt;</span>
+
+
+      <span style="color:#f92672">&lt;parameter&gt;</span>
+        <span style="color:#f92672">&lt;parameterName</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;@User&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;dbType</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;String&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;layout</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;Loglite.LogliteLayout&#34;</span><span style="color:#f92672">&gt;</span>
+          <span style="color:#f92672">&lt;conversionPattern</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;%property{User}&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/layout&gt;</span>
+      <span style="color:#f92672">&lt;/parameter&gt;</span>
+    <span style="color:#f92672">&lt;/appender&gt;</span>
+    <span style="color:#f92672">&lt;appender</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;LogAllToFile&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;log4net.Appender.RollingFileAppender,log4net&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#75715e">&lt;!--输出格式
+</span><span style="color:#75715e">                     每种转换符号都以%开始，后面跟着一个格式符号和换符号。
+</span><span style="color:#75715e">                     %-数字　：该项的最小长度，小于最小长度的用空格填充
+</span><span style="color:#75715e">                     %m(message):输出的日志消息
+</span><span style="color:#75715e">                     %n(new line):换行 
+</span><span style="color:#75715e">                     %d(datetime):输出当前语句运行的时刻 
+</span><span style="color:#75715e">                     %r(run time):输出程序从运行到执行到当前语句时消耗的毫秒数 
+</span><span style="color:#75715e">                     %t(thread id):当前语句所在的线程ID 
+</span><span style="color:#75715e">                     %p(priority): 日志的当前优先级别，即DEBUG、INFO、WARN…等 
+</span><span style="color:#75715e">                     %c(class):当前日志对象的名称，
+</span><span style="color:#75715e">                     %L(line )：输出语句所在的行号 
+</span><span style="color:#75715e">                     %F(file name)：输出语句所在的文件名
+</span><span style="color:#75715e">                     %logger　日志名称
+</span><span style="color:#75715e">                 --&gt;</span>
+      <span style="color:#f92672">&lt;param</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;File&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;log\&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;param</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;AppendToFile&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;param</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;MaxSizeRollBackups&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;100&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;param</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;MaximumFileSize&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;1KB&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;param</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;StaticLogFileName&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;false&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;param</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;DatePattern&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;yyyy-MM-dd&#34;</span><span style="color:#960050;background-color:#1e0010">.log&#34;&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;param</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;RollingStyle&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;Date&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;layout</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;Loglite.LogliteLayout&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;param</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;ConversionPattern&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;记录时间：%date 线程ID:[%thread] 日志级别：%-5level  %n用户：%property{User}  %n日志描述：%property{Message} %n异常信息：%exception%n&#34;</span> <span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;/layout&gt;</span>
+
+
+
+
+    <span style="color:#f92672">&lt;/appender&gt;</span>
+    <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;LogToSqlite&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;level</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;INFO&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;ADONetAppender&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/logger&gt;</span>
+    <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;LogToFile&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;level</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;ALL&#34;</span><span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;LogAllToFile&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/logger&gt;</span>
+    <span style="color:#75715e">&lt;!--所有logger的基础，root的设置在所有logger中都起作用。 
+</span><span style="color:#75715e">        当在root和logger中重复设定相同的appender时，你会发现同一日志信息将被记录两次。--&gt;</span>
+    <span style="color:#75715e">&lt;!--&lt;root&gt;
+</span><span style="color:#75715e">      &lt;level value=&#34;ERROR&#34;/&gt;
+</span><span style="color:#75715e">      --&gt;</span>
+    <span style="color:#75715e">&lt;!--ALL, DEBUG, INFO, WARN, ERROR, FATAL, OFF--&gt;</span>
+    <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">      --&gt;</span>
+    <span style="color:#75715e">&lt;!--&lt;appender-ref ref=&#34;LogAllToFile&#34;/&gt;--&gt;</span>
+    <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">      &lt;appender-ref ref=&#34;ADONetAppender&#34;/&gt;
+</span><span style="color:#75715e">    &lt;/root&gt;--&gt;</span>
+  <span style="color:#f92672">&lt;/log4net&gt;</span>
+<span style="color:#f92672">&lt;/configuration&gt;</span>
+
+</code></pre></div><h3 id="6调用log4net存储日志">6.调用log4net存储日志</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">LogModel logModel = <span style="color:#66d9ef">new</span> LogModel(<span style="color:#e6db74">&#34;steeeeps&#34;</span>, <span style="color:#e6db74">&#34;app start&#34;</span>);
+
+<span style="color:#66d9ef">string</span> assemblyFilePath = Assembly.GetExecutingAssembly().Location;
+<span style="color:#66d9ef">string</span> assemblyDirPath = Path.GetDirectoryName(assemblyFilePath);
+<span style="color:#66d9ef">string</span> configFilePath = assemblyDirPath + <span style="color:#e6db74">&#34; \\log4net.xml&#34;</span>;
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(<span style="color:#66d9ef">new</span> FileInfo(configFilePath));
+
+log4net.ILog logdb = <span style="color:#66d9ef">null</span>;
+log4net.ILog logfile = <span style="color:#66d9ef">null</span>;
+
+logdb = (log4net.ILog)log4net.LogManager.GetLogger(<span style="color:#e6db74">&#34;LogToSqlite&#34;</span>);
+logdb.Info(logModel);
+
+logfile = (log4net.ILog)log4net.LogManager.GetLogger(<span style="color:#e6db74">&#34;LogToFile&#34;</span>);
+logfile.Error(logModel, <span style="color:#66d9ef">new</span> Exception(<span style="color:#e6db74">&#34;app start has error&#34;</span>));
+</code></pre></div>
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/sqlite">SQLite</a></li>
+					
+					<li><a href="/tags/log4net">log4net</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

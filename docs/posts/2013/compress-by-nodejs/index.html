@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>基于nodejs的js、css压缩打包程序 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="之前在项目中一直想再上线之前将js、css文件进行打包压缩处理，由于js代码基本上都是用的dojo框架，dojo虽然提供了一个build功能，但是处于当时对这个功能的使用不是很明白，于是就想到了yui提供的yuicompressor功能，再加上一直对nodejs比较感兴趣，所以自己使用yuicompressor和nodejs编写了一套压缩打包的程序。
+虽然说yuicompressor是使用nodejs来调用的，但是其本质还是是调用的java。不过结合着nodejs的异步操作，使用起来还是不错的。
+对于nodejs，nodejs使用事件轮询机制来实现异步，真的是相当不错的，大量的js文件压缩，使用异步操作，效率是非常高的。不过在使用nodejs过程中，如何控制异步操作的流程，是必须要好好考虑的，不过所幸，github上有很多关于控制异步的框架可以拿来使用学习。
+使用说明：   安装nodejs
+  打开config.json,修改需要打包的配置信息。
+  运行 node pack.js 进行打包合并处理。
+  运行 node compress.js 进行压缩处理。
+  配置说明 { &#34;baseDir&#34;:&#34;H:\\cbtest\\from&#34;, &#34;targetDir&#34;:&#34;H:\\cbtest\\to&#34;, &#34;layers&#34;: [ { &#34;name&#34;: &#34;a.js&#34;, &#34;compress&#34;:true, &#34;depends&#34;: [ { &#34;name&#34;: &#34;applications.js&#34;, &#34;depends&#34;: [ { &#34;name&#34;: &#34;effects.js&#34;, &#34;depends&#34;: [] },{ &#34;name&#34;:&#34;mgr\\util.js&#34;, &#34;depends&#34;:[] } ] },{ &#34;name&#34;:&#34;portal/message.js&#34;, &#34;depends&#34;:[] } ] }, { &#34;name&#34;: &#34;b.js&#34;, &#34;compress&#34;:false, &#34;depends&#34;: [ { &#34;name&#34;: &#34;applications.js&#34;, &#34;depends&#34;: [ { &#34;name&#34;: &#34;effects." />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="基于nodejs的js、css压缩打包程序" />
+<meta property="og:description" content="之前在项目中一直想再上线之前将js、css文件进行打包压缩处理，由于js代码基本上都是用的dojo框架，dojo虽然提供了一个build功能，但是处于当时对这个功能的使用不是很明白，于是就想到了yui提供的yuicompressor功能，再加上一直对nodejs比较感兴趣，所以自己使用yuicompressor和nodejs编写了一套压缩打包的程序。
+虽然说yuicompressor是使用nodejs来调用的，但是其本质还是是调用的java。不过结合着nodejs的异步操作，使用起来还是不错的。
+对于nodejs，nodejs使用事件轮询机制来实现异步，真的是相当不错的，大量的js文件压缩，使用异步操作，效率是非常高的。不过在使用nodejs过程中，如何控制异步操作的流程，是必须要好好考虑的，不过所幸，github上有很多关于控制异步的框架可以拿来使用学习。
+使用说明：   安装nodejs
+  打开config.json,修改需要打包的配置信息。
+  运行 node pack.js 进行打包合并处理。
+  运行 node compress.js 进行压缩处理。
+  配置说明 { &#34;baseDir&#34;:&#34;H:\\cbtest\\from&#34;, &#34;targetDir&#34;:&#34;H:\\cbtest\\to&#34;, &#34;layers&#34;: [ { &#34;name&#34;: &#34;a.js&#34;, &#34;compress&#34;:true, &#34;depends&#34;: [ { &#34;name&#34;: &#34;applications.js&#34;, &#34;depends&#34;: [ { &#34;name&#34;: &#34;effects.js&#34;, &#34;depends&#34;: [] },{ &#34;name&#34;:&#34;mgr\\util.js&#34;, &#34;depends&#34;:[] } ] },{ &#34;name&#34;:&#34;portal/message.js&#34;, &#34;depends&#34;:[] } ] }, { &#34;name&#34;: &#34;b.js&#34;, &#34;compress&#34;:false, &#34;depends&#34;: [ { &#34;name&#34;: &#34;applications.js&#34;, &#34;depends&#34;: [ { &#34;name&#34;: &#34;effects." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2013/compress-by-nodejs/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2013-03-10T17:07:53+00:00" />
+<meta property="article:modified_time" content="2013-03-10T17:07:53+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="基于nodejs的js、css压缩打包程序"/>
+<meta name="twitter:description" content="之前在项目中一直想再上线之前将js、css文件进行打包压缩处理，由于js代码基本上都是用的dojo框架，dojo虽然提供了一个build功能，但是处于当时对这个功能的使用不是很明白，于是就想到了yui提供的yuicompressor功能，再加上一直对nodejs比较感兴趣，所以自己使用yuicompressor和nodejs编写了一套压缩打包的程序。
+虽然说yuicompressor是使用nodejs来调用的，但是其本质还是是调用的java。不过结合着nodejs的异步操作，使用起来还是不错的。
+对于nodejs，nodejs使用事件轮询机制来实现异步，真的是相当不错的，大量的js文件压缩，使用异步操作，效率是非常高的。不过在使用nodejs过程中，如何控制异步操作的流程，是必须要好好考虑的，不过所幸，github上有很多关于控制异步的框架可以拿来使用学习。
+使用说明：   安装nodejs
+  打开config.json,修改需要打包的配置信息。
+  运行 node pack.js 进行打包合并处理。
+  运行 node compress.js 进行压缩处理。
+  配置说明 { &#34;baseDir&#34;:&#34;H:\\cbtest\\from&#34;, &#34;targetDir&#34;:&#34;H:\\cbtest\\to&#34;, &#34;layers&#34;: [ { &#34;name&#34;: &#34;a.js&#34;, &#34;compress&#34;:true, &#34;depends&#34;: [ { &#34;name&#34;: &#34;applications.js&#34;, &#34;depends&#34;: [ { &#34;name&#34;: &#34;effects.js&#34;, &#34;depends&#34;: [] },{ &#34;name&#34;:&#34;mgr\\util.js&#34;, &#34;depends&#34;:[] } ] },{ &#34;name&#34;:&#34;portal/message.js&#34;, &#34;depends&#34;:[] } ] }, { &#34;name&#34;: &#34;b.js&#34;, &#34;compress&#34;:false, &#34;depends&#34;: [ { &#34;name&#34;: &#34;applications.js&#34;, &#34;depends&#34;: [ { &#34;name&#34;: &#34;effects."/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">基于nodejs的js、css压缩打包程序</h1>
+			<div class="meta">Posted on Mar 10, 2013</div>
+		</div>
+		
+
+		<section class="body">
+			<p>之前在项目中一直想再上线之前将js、css文件进行打包压缩处理，由于js代码基本上都是用的dojo框架，dojo虽然提供了一个build功能，但是处于当时对这个功能的使用不是很明白，于是就想到了yui提供的yuicompressor功能，再加上一直对nodejs比较感兴趣，所以自己使用yuicompressor和nodejs编写了一套压缩打包的程序。</p>
+<p>虽然说yuicompressor是使用nodejs来调用的，但是其本质还是是调用的java。不过结合着nodejs的异步操作，使用起来还是不错的。</p>
+<p>对于nodejs，nodejs使用事件轮询机制来实现异步，真的是相当不错的，大量的js文件压缩，使用异步操作，效率是非常高的。不过在使用nodejs过程中，如何控制异步操作的流程，是必须要好好考虑的，不过所幸，github上有很多关于控制异步的框架可以拿来使用学习。</p>
+<h3 id="使用说明">使用说明：</h3>
+<ul>
+<li>
+<p>安装nodejs</p>
+</li>
+<li>
+<p>打开config.json,修改需要打包的配置信息。</p>
+</li>
+<li>
+<p>运行 node pack.js 进行打包合并处理。</p>
+</li>
+<li>
+<p>运行 node compress.js 进行压缩处理。</p>
+</li>
+</ul>
+<h3 id="配置说明">配置说明</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">    {
+        <span style="color:#e6db74">&#34;baseDir&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;H:\\cbtest\\from&#34;</span>,
+        <span style="color:#e6db74">&#34;targetDir&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;H:\\cbtest\\to&#34;</span>,
+        <span style="color:#e6db74">&#34;layers&#34;</span><span style="color:#f92672">:</span> [
+            {
+                <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;a.js&#34;</span>,
+                <span style="color:#e6db74">&#34;compress&#34;</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>,
+                <span style="color:#e6db74">&#34;depends&#34;</span><span style="color:#f92672">:</span> [
+                    {
+                        <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;applications.js&#34;</span>,
+                        <span style="color:#e6db74">&#34;depends&#34;</span><span style="color:#f92672">:</span> [
+                            {
+                                <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;effects.js&#34;</span>,
+                                <span style="color:#e6db74">&#34;depends&#34;</span><span style="color:#f92672">:</span> []
+                            },{
+                                <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;mgr\\util.js&#34;</span>,
+                                <span style="color:#e6db74">&#34;depends&#34;</span><span style="color:#f92672">:</span>[]
+                            }
+                        ]
+                    },{
+                        <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;portal/message.js&#34;</span>,
+                        <span style="color:#e6db74">&#34;depends&#34;</span><span style="color:#f92672">:</span>[]
+                    }
+                ]
+            },
+            {
+                <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;b.js&#34;</span>,
+                <span style="color:#e6db74">&#34;compress&#34;</span><span style="color:#f92672">:</span><span style="color:#66d9ef">false</span>,
+                <span style="color:#e6db74">&#34;depends&#34;</span><span style="color:#f92672">:</span> [
+                    {
+                        <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;applications.js&#34;</span>,
+                        <span style="color:#e6db74">&#34;depends&#34;</span><span style="color:#f92672">:</span> [
+                            {
+                                <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;effects.js&#34;</span>,
+                                <span style="color:#e6db74">&#34;depends&#34;</span><span style="color:#f92672">:</span> []
+                            },{
+                                <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;mgr/util.js&#34;</span>,
+                                <span style="color:#e6db74">&#34;depends&#34;</span><span style="color:#f92672">:</span>[]
+                            }
+                        ]
+                    },{
+                        <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;portal/message.js&#34;</span>,
+                        <span style="color:#e6db74">&#34;depends&#34;</span><span style="color:#f92672">:</span>[]
+                    }
+                ]
+            }
+
+        ]
+    }
+
+</code></pre></div><ul>
+<li>
+<p>baseDir为原路径，targetDir为目标路径，用layers为表示打包后的js文件，name为打包后的文件名，compress可以设置是否对打包的js文件进行压缩。depends表示打包文件的依赖，通过使用depends来获取逐级依赖文件。</p>
+</li>
+<li>
+<p>所有使用到的js或css文件如果不是填的绝对路径的话，都会以baseDir为相对路径进行查找。</p>
+</li>
+<li>
+<p>在压缩的过程中，默认的是将源文件以.uncompress.js重命名，并以原文件名对文件进行压缩，如果配置文件中出现targetDir信息，就会将源文件所存在的目录结构拷贝至目标目录，并对文件进行压缩。</p>
+</li>
+<li>
+<p>在打包过程中，如果出现targetDir信息，同上。</p>
+</li>
+</ul>
+<blockquote>
+<p><a href="https://github.com/steeeeps/CompressPackage">下载源码</a></p>
+</blockquote>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/nodejs">Nodejs</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

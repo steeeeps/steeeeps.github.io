@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dojo on steeeeps</title>
+    <link>https://steeeeps.github.io/tags/dojo/</link>
+    <description>Recent content in dojo on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Mon, 06 Jul 2015 22:55:41 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/tags/dojo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>当我们在谈论 ArcGIS 前端工程师时，工程师们在谈论什么</title>
+      <link>https://steeeeps.github.io/posts/2015/what-arcgis-fe-talk-about/</link>
+      <pubDate>Mon, 06 Jul 2015 22:55:41 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/what-arcgis-fe-talk-about/</guid>
+      <description>随着HTML5的火热，不管是在校的GIS学生、马上进入工作岗位的GIS毕业生，还是有几年其他ArcGIS 开发框架开发经验的开发人员，看着ESRI停止对Flex 和 Silverlight API的更新，大力推荐开发者使用 ArcGIS API for JavaScript 来构建应用系统时，是不是都会感觉有一点小激动，小心脏扑通扑通的？都在想着能不能借HTML5的东风实现自己当上CTO、迎娶白富美、走上人生巅峰的梦想？
+那么当我们在谈论 ArcGIS 前端工程师时，工程师们在谈论什么呢？
+这个技能图参考了前两年网上流传的一张“前端工程师技能”图。看了这张图之后，你有什么感想？是不是觉得村里的小芳也挺不错的，长得好看又善良，一双美丽的大眼睛，辫子粗又长。
+其实相比于互联网行业的前端工程师所需要掌握的技能，ArcGIS 前端工程师已经很幸福了。
+面对这么多技能，作为新手，都需要怎样的一步一步去学习这些知识呢？
+ArcGIS 前端工程师入门 作为入门ArcGIS 前端工程师，无论你是学生还是有其他框架开发经验的工作人员。我假设你是刚开始接触前端开发和 ArcGIS API for JavaScript，那么你首先需要去学习以下几点：
+  学习HTML、CSS、JavaScript基础知识。
+  学习Dojo基本知识，包括但不限于AMD规范、dojo基础架构、dojoConfig配置、dojo面向对象、dijit 使用等。
+  学会使用web inspector或firebug对浏览器兼容性调试与修改。对于很多企事业单位都是用IE或360浏览器（老版本360安全浏览器。新版的360安全浏览器和极速都使用chromium内核），那么，也应该学会在IE8下对浏览器兼容性问题进行调试与修改。学会使用IETester对网站在个版本IE下的显示效果进行查看与调试。
+  学会JSON的使用。
+  学习ArcGIS API for JavaScript基本知识，包括但不限于下载并离线部署、代理配置。学会使用并理解ArcGIS 基本对象模型(如果有AO、AE、Flex等开发经验，很容易理解)，Map、Graphic、符号化、Task、Geoprocessor。
+  选择合适的开发工具，如果单纯的前端开发，推荐使用sublime text。当然，这种情况比较少，因为大多数情况下你需要和后台开发人员协同工作或者你也会涉及到后台代码编写，那根据实际情况选择visual studio、eclipse、myeclipse或其他IDE。
+  如果你学习并在实际开发中运用到了以上几点，恭喜你，你需要开始进入苦逼的进阶阶段去涉猎更多开发时需要用到的知识了。
+ArcGIS 前端工程师进阶   去学习HTML5，CSS3的知识， 在系统中做更炫、功能更丰富的应用。
+  学习JavaScript 模块化开发知识，深入学习Dojo框架及AMD规范的使用，学习自定义dojo 小部件。
+  深入学习ArcGIS API for JavaScript 框架，</description>
+    </item>
+    
+    <item>
+      <title>dojo 基础交流</title>
+      <link>https://steeeeps.github.io/posts/2014/simple-dojo-ppt/</link>
+      <pubDate>Fri, 28 Feb 2014 13:36:55 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2014/simple-dojo-ppt/</guid>
+      <description>随着富 Internet 应用的不断兴起，各种 JavaScript 开发工具包的功能也在不断增强，Dojo 正是其中的佼佼者。Dojo 提供了一套完整的开发解决方案，包括核心的 JavaScript 库、简单易用的小部件（Widget）等。
+作为arcgis javascript api 的底层框架，很多初学者在学习使用arcgis javascript api时，对于dojo的理解都不够，造成了“dojo 入门难、ags javascript api开发门槛高”等误解。
+下面的ppt主要针对dojo基础，对dojo的基础知识做一个梳理，使大家在学习使用arcgis javascript api之前学习dojo有一个比较清晰的线路。降低学习难度。
+内容中如有错误的地方，希望大家指正、交流!
+ ppt地址：http://pan.baidu.com/s/1jGkKMqU
+ </description>
+    </item>
+    
+    <item>
+      <title>dijit Tree 浮动菜单</title>
+      <link>https://steeeeps.github.io/posts/2013/dijit-tree-float-menu/</link>
+      <pubDate>Mon, 15 Apr 2013 11:06:32 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/dijit-tree-float-menu/</guid>
+      <description>使用dijit树控件时，对于额外的操作一般都会以添加右键菜单的方式来完成。但是对于用户而言，如果没有特别的提示，就有可能不知道该控件是否提供了右键操作菜单，所以，添加浮动菜单对用户体验而言是有一定增进效果的。
+源码下载
+用法  引入css  &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; type=&amp;#34;text/css&amp;#34; href=&amp;#34;../treeFloatMenu.css&amp;#34;&amp;gt;  引入js文件。(我使用的dojo1.7，并且使用AMD规范定义treeFloatMenu.js扩展模块) require([&amp;#34;dojo/ready&amp;#34;, &amp;#34;dojo/_base/window&amp;#34;, &amp;#34;dojo/store/Memory&amp;#34;, &amp;#34;dijit/tree/ObjectStoreModel&amp;#34;, &amp;#34;dijit/Tree&amp;#34;, &amp;#34;treeFloatMenu&amp;#34;], function(ready, win, Memory, ObjectStoreModel, Tree){...})  调用扩展方法显示菜单并添加菜单操作项。(tree为实例化后的Tree控件) tree.floatMenu([{ node: &amp;#39;&amp;lt;span class=&amp;#34;dijitTree-float-menu-del&amp;#34; title=&amp;#34;删除节点&amp;#34;&amp;gt;&amp;lt;/span&amp;gt;&amp;#39;, onClick: function(event){ console.log(event.floatNode); console.log(event.tree); var name = event.floatNode.item.name; alert(name); }, onTreeNodeMouseOver: function(event){ var type = event.floatNode.item.type; if (type == &amp;#39;planet&amp;#39;) { event.floatItem.style.display = &amp;#34;none&amp;#34;; } else { event.floatItem.style.display = &amp;#34;inline-block&amp;#34;; } }   }]); ```
+api说明 tree.floatMenu() 传入菜单操作项对象(floatItem，例如上面语句中的删除节点项)或对象数组。
+floatItem  node:操作项dom节点对象或html字符串。 onClick:操作项点击事件，通过event.</description>
+    </item>
+    
+    <item>
+      <title>自定义dojo主题</title>
+      <link>https://steeeeps.github.io/posts/2013/custom-dojo-theme/</link>
+      <pubDate>Sun, 14 Apr 2013 11:10:07 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2013/custom-dojo-theme/</guid>
+      <description>到现在的dojo1.8.3版本中，dojo框架提供了四个主题，nihilo、tundra、soria和claro，我个人是非常喜欢claro主题的风格，淡淡的蓝，用了一些css3的效果，整个体验都很不错,但是谁也不喜欢自己做的系统主题样式和别人一致，就像不喜欢和别人撞衫一样，所以在平时开发中也会想尽一切办法来改变dojo主题。下面就分享两个自定义dojo主题的方法。
+重写样式 这个方法可能是使用起来最简单，适用面最广的一种方法，用浏览器调试工具找出dijit的样式，修改为自己的想要的样式，比如我想修改dojo的Dialog的样式，我只需要找到Dialog对应的css样式，修改为以下css代码：
+/*------------对话框-----------*/ .steeeeps .dijitDialog { border: 1px solid #bec0e1; -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25); -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25); box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25); -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; } /*对话框标题栏*/ .steeeeps .dijitDialogTitleBar { background: rgb(248, 248, 248); /* Old browsers */ background: -moz-linear-gradient(top, rgba(248, 248, 248, 1) 0%, rgba(229, 229, 229, 1) 100%); /* FF3.6+ */ background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,248,248,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */ background:-webkit-linear-gradient(top,rgba(248, 248, 248, 1) 0%, rgba(229, 229, 229, 1) 100%); /* Chrome10+,Safari5.</description>
+    </item>
+    
+  </channel>
+</rss>

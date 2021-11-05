@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>可动态添加的TabContainer - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="公司产品新的安装包需要使用一个TabContainer，由于整个安装包大小不大，所以使用js框架不太适合，于是使用原生javascript完成了一个。
+所有js压缩后不到6kb，还算满足要求。
+包含一个dom.js,lang.js,tabContainer.js。tabContainer.min.js为前面三个js文件的压缩文件。
+TabContainer的样式参考了http:tympanus.net/codrops/2012/04/12/animated-content-tabs-with-css3/
+api介绍： window.dom(dom)介绍 dom.hasClass(/*String (&#39;a&#39;)*/classStr, /*node*/node) dom.removeClass(/*String (&#39;a&#39; or &#39;a b&#39;)*/classStrs, /*node*/node) dom.addClass(/*String (&#39;a&#39; or &#39;a b&#39;)*/classStrs, /*node*/node) dom.getDom(/*String (name:&#39;name&#39; or class:&#39;.class&#39;)*/param, /*node*/root, /*String (&#39;div&#39;)*/tag) dom.createDom(/*String (&#39;div&#39;)*/tag,/*Object*/ opts,/*domNode*/parentNode) dom.getFirstElementChild(/*domNode*/node) window.lang(lang)介绍 lang.trim(/*String*/str) lang.stopPropagation(/*Event*/event) lang.srcElement(/*Event*/event) lang.isFunction(it); lang.isString(str); lang.isIp(ip); lang.isNull(str); lang.isLinuxPath(str); lang.isWinPath(str); lang.isNum(str); lang.hasChinese(str); String.toFirstCharUpperCase(); window.TabContainer(TabContainer)介绍 var tabContainer = new TabContainer(/*domNode*/node); tabContainer.addTab({ title: &#34;title&#34;, content: &#34;&amp;lt;p&amp;gt;tab内容&amp;lt;/p&amp;gt;&#34;, closable: false }); tabContainer.addTabBtn.onclick = function(){ tabContainer.addTab({ title: &#34;title&#34;, content: &#34;&amp;lt;p&amp;gt;tab内容&amp;lt;/p&amp;gt;&#34;, closable: false }); }; var selected=tabContainer." />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="可动态添加的TabContainer" />
+<meta property="og:description" content="公司产品新的安装包需要使用一个TabContainer，由于整个安装包大小不大，所以使用js框架不太适合，于是使用原生javascript完成了一个。
+所有js压缩后不到6kb，还算满足要求。
+包含一个dom.js,lang.js,tabContainer.js。tabContainer.min.js为前面三个js文件的压缩文件。
+TabContainer的样式参考了http:tympanus.net/codrops/2012/04/12/animated-content-tabs-with-css3/
+api介绍： window.dom(dom)介绍 dom.hasClass(/*String (&#39;a&#39;)*/classStr, /*node*/node) dom.removeClass(/*String (&#39;a&#39; or &#39;a b&#39;)*/classStrs, /*node*/node) dom.addClass(/*String (&#39;a&#39; or &#39;a b&#39;)*/classStrs, /*node*/node) dom.getDom(/*String (name:&#39;name&#39; or class:&#39;.class&#39;)*/param, /*node*/root, /*String (&#39;div&#39;)*/tag) dom.createDom(/*String (&#39;div&#39;)*/tag,/*Object*/ opts,/*domNode*/parentNode) dom.getFirstElementChild(/*domNode*/node) window.lang(lang)介绍 lang.trim(/*String*/str) lang.stopPropagation(/*Event*/event) lang.srcElement(/*Event*/event) lang.isFunction(it); lang.isString(str); lang.isIp(ip); lang.isNull(str); lang.isLinuxPath(str); lang.isWinPath(str); lang.isNum(str); lang.hasChinese(str); String.toFirstCharUpperCase(); window.TabContainer(TabContainer)介绍 var tabContainer = new TabContainer(/*domNode*/node); tabContainer.addTab({ title: &#34;title&#34;, content: &#34;&amp;lt;p&amp;gt;tab内容&amp;lt;/p&amp;gt;&#34;, closable: false }); tabContainer.addTabBtn.onclick = function(){ tabContainer.addTab({ title: &#34;title&#34;, content: &#34;&amp;lt;p&amp;gt;tab内容&amp;lt;/p&amp;gt;&#34;, closable: false }); }; var selected=tabContainer." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2013/dynamic-tabs/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2013-03-09T17:14:38+00:00" />
+<meta property="article:modified_time" content="2013-03-09T17:14:38+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="可动态添加的TabContainer"/>
+<meta name="twitter:description" content="公司产品新的安装包需要使用一个TabContainer，由于整个安装包大小不大，所以使用js框架不太适合，于是使用原生javascript完成了一个。
+所有js压缩后不到6kb，还算满足要求。
+包含一个dom.js,lang.js,tabContainer.js。tabContainer.min.js为前面三个js文件的压缩文件。
+TabContainer的样式参考了http:tympanus.net/codrops/2012/04/12/animated-content-tabs-with-css3/
+api介绍： window.dom(dom)介绍 dom.hasClass(/*String (&#39;a&#39;)*/classStr, /*node*/node) dom.removeClass(/*String (&#39;a&#39; or &#39;a b&#39;)*/classStrs, /*node*/node) dom.addClass(/*String (&#39;a&#39; or &#39;a b&#39;)*/classStrs, /*node*/node) dom.getDom(/*String (name:&#39;name&#39; or class:&#39;.class&#39;)*/param, /*node*/root, /*String (&#39;div&#39;)*/tag) dom.createDom(/*String (&#39;div&#39;)*/tag,/*Object*/ opts,/*domNode*/parentNode) dom.getFirstElementChild(/*domNode*/node) window.lang(lang)介绍 lang.trim(/*String*/str) lang.stopPropagation(/*Event*/event) lang.srcElement(/*Event*/event) lang.isFunction(it); lang.isString(str); lang.isIp(ip); lang.isNull(str); lang.isLinuxPath(str); lang.isWinPath(str); lang.isNum(str); lang.hasChinese(str); String.toFirstCharUpperCase(); window.TabContainer(TabContainer)介绍 var tabContainer = new TabContainer(/*domNode*/node); tabContainer.addTab({ title: &#34;title&#34;, content: &#34;&amp;lt;p&amp;gt;tab内容&amp;lt;/p&amp;gt;&#34;, closable: false }); tabContainer.addTabBtn.onclick = function(){ tabContainer.addTab({ title: &#34;title&#34;, content: &#34;&amp;lt;p&amp;gt;tab内容&amp;lt;/p&amp;gt;&#34;, closable: false }); }; var selected=tabContainer."/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">可动态添加的TabContainer</h1>
+			<div class="meta">Posted on Mar 9, 2013</div>
+		</div>
+		
+
+		<section class="body">
+			<p>公司产品新的安装包需要使用一个TabContainer，由于整个安装包大小不大，所以使用js框架不太适合，于是使用原生javascript完成了一个。</p>
+<p>所有js压缩后不到6kb，还算满足要求。</p>
+<p><img src="/images/2013/tabcontainer.png" alt="tabcontainer"></p>
+<p>包含一个dom.js,lang.js,tabContainer.js。tabContainer.min.js为前面三个js文件的压缩文件。</p>
+<p>TabContainer的样式参考了<a href="http:tympanus.net/codrops/2012/04/12/animated-content-tabs-with-css3/">http:tympanus.net/codrops/2012/04/12/animated-content-tabs-with-css3/</a></p>
+<h2 id="api介绍">api介绍：</h2>
+<h4 id="windowdomdom介绍">window.dom(dom)介绍</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">      <span style="color:#a6e22e">dom</span>.<span style="color:#a6e22e">hasClass</span>(<span style="color:#75715e">/*String (&#39;a&#39;)*/</span><span style="color:#a6e22e">classStr</span>, <span style="color:#75715e">/*node*/</span><span style="color:#a6e22e">node</span>)  
+
+      <span style="color:#a6e22e">dom</span>.<span style="color:#a6e22e">removeClass</span>(<span style="color:#75715e">/*String (&#39;a&#39; or &#39;a b&#39;)*/</span><span style="color:#a6e22e">classStrs</span>, <span style="color:#75715e">/*node*/</span><span style="color:#a6e22e">node</span>)  
+
+      <span style="color:#a6e22e">dom</span>.<span style="color:#a6e22e">addClass</span>(<span style="color:#75715e">/*String (&#39;a&#39; or &#39;a b&#39;)*/</span><span style="color:#a6e22e">classStrs</span>, <span style="color:#75715e">/*node*/</span><span style="color:#a6e22e">node</span>)  
+
+      <span style="color:#a6e22e">dom</span>.<span style="color:#a6e22e">getDom</span>(<span style="color:#75715e">/*String (name:&#39;name&#39; or class:&#39;.class&#39;)*/</span><span style="color:#a6e22e">param</span>, <span style="color:#75715e">/*node*/</span><span style="color:#a6e22e">root</span>, <span style="color:#75715e">/*String (&#39;div&#39;)*/</span><span style="color:#a6e22e">tag</span>)  
+
+      <span style="color:#a6e22e">dom</span>.<span style="color:#a6e22e">createDom</span>(<span style="color:#75715e">/*String (&#39;div&#39;)*/</span><span style="color:#a6e22e">tag</span>,<span style="color:#75715e">/*Object*/</span> <span style="color:#a6e22e">opts</span>,<span style="color:#75715e">/*domNode*/</span><span style="color:#a6e22e">parentNode</span>)  
+
+      <span style="color:#a6e22e">dom</span>.<span style="color:#a6e22e">getFirstElementChild</span>(<span style="color:#75715e">/*domNode*/</span><span style="color:#a6e22e">node</span>)  
+</code></pre></div><h4 id="windowlanglang介绍">window.lang(lang)介绍</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+	 <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">trim</span>(<span style="color:#75715e">/*String*/</span><span style="color:#a6e22e">str</span>)  
+
+      <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">stopPropagation</span>(<span style="color:#75715e">/*Event*/</span><span style="color:#a6e22e">event</span>)  
+
+      <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">srcElement</span>(<span style="color:#75715e">/*Event*/</span><span style="color:#a6e22e">event</span>)  
+
+      <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">isFunction</span>(<span style="color:#a6e22e">it</span>);  
+
+      <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">isString</span>(<span style="color:#a6e22e">str</span>);  
+
+      <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">isIp</span>(<span style="color:#a6e22e">ip</span>);  
+
+      <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">isNull</span>(<span style="color:#a6e22e">str</span>);  
+
+      <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">isLinuxPath</span>(<span style="color:#a6e22e">str</span>);  
+
+      <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">isWinPath</span>(<span style="color:#a6e22e">str</span>);  
+
+      <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">isNum</span>(<span style="color:#a6e22e">str</span>);  
+
+      <span style="color:#a6e22e">lang</span>.<span style="color:#a6e22e">hasChinese</span>(<span style="color:#a6e22e">str</span>);  
+
+      String.<span style="color:#a6e22e">toFirstCharUpperCase</span>();    
+</code></pre></div><h4 id="windowtabcontainertabcontainer介绍">window.TabContainer(TabContainer)介绍</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tabContainer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TabContainer</span>(<span style="color:#75715e">/*domNode*/</span><span style="color:#a6e22e">node</span>);  
+      <span style="color:#a6e22e">tabContainer</span>.<span style="color:#a6e22e">addTab</span>({  
+          <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;title&#34;</span>,                 
+          <span style="color:#a6e22e">content</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&amp;lt;p&amp;gt;tab内容&amp;lt;/p&amp;gt;&#34;</span>,     
+          <span style="color:#a6e22e">closable</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>                
+      });  
+      <span style="color:#a6e22e">tabContainer</span>.<span style="color:#a6e22e">addTabBtn</span>.<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){  
+          <span style="color:#a6e22e">tabContainer</span>.<span style="color:#a6e22e">addTab</span>({  
+              <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;title&#34;</span>,  
+              <span style="color:#a6e22e">content</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&amp;lt;p&amp;gt;tab内容&amp;lt;/p&amp;gt;&#34;</span>,
+              <span style="color:#a6e22e">closable</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>  
+          });  
+      };  
+      <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">selected</span><span style="color:#f92672">=</span><span style="color:#a6e22e">tabContainer</span>.<span style="color:#a6e22e">selectedTab</span>;  
+      <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">title</span><span style="color:#f92672">=</span><span style="color:#a6e22e">selected</span>.<span style="color:#a6e22e">tabtitle</span>;  <span style="color:#75715e">// title.getAttribute(&#34;tabtitle&#34;);  
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">allTabs</span><span style="color:#f92672">=</span><span style="color:#a6e22e">tabContainer</span>.<span style="color:#a6e22e">getTabs</span>();  
+</code></pre></div><blockquote>
+<p><a href="https://github.com/steeeeps/tabContainer">下载源码</a></p>
+</blockquote>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/javascript">JavaScript</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

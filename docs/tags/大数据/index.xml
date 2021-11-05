@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>大数据 on steeeeps</title>
+    <link>https://steeeeps.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
+    <description>Recent content in 大数据 on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Tue, 26 Dec 2017 22:02:27 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>logstash 使用配置纪录</title>
+      <link>https://steeeeps.github.io/posts/2017/logstash-useage/</link>
+      <pubDate>Tue, 26 Dec 2017 22:02:27 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2017/logstash-useage/</guid>
+      <description>logstash是Elastic stack中最主要的数据获取、转换工作。主要记录一下日常使用中的配置信息。
+导入带有地理位置的 csv文件到 ES 中 input { file { path =&amp;gt; &amp;#34;/home/steeeeps/workspace/es_datas/csv/sicuan.csv&amp;#34; # type =&amp;gt; &amp;#34;testeFile_lite&amp;#34; start_position =&amp;gt; &amp;#34;beginning&amp;#34; sincedb_path =&amp;gt; &amp;#34;/home/steeeeps/workspace/es_datas/logs&amp;#34; } } filter { csv{ columns =&amp;gt; [&amp;#39;poiid&amp;#39;, &amp;#39;title&amp;#39;, &amp;#39;address&amp;#39;,&amp;#39;lon&amp;#39;,&amp;#39;lat&amp;#39;,&amp;#39;city&amp;#39;,&amp;#39;category_name&amp;#39;,&amp;#39;checkun_num&amp;#39;,&amp;#39;photo_num&amp;#39;] separator =&amp;gt; &amp;#34;,&amp;#34; } mutate { add_field =&amp;gt; { &amp;#34;[location][lat]&amp;#34; =&amp;gt; &amp;#34;%{lat}&amp;#34; } add_field =&amp;gt; { &amp;#34;[location][lon]&amp;#34; =&amp;gt; &amp;#34;%{lon}&amp;#34; } } mutate { convert =&amp;gt; { &amp;#34;[location][lat]&amp;#34; =&amp;gt; &amp;#34;float&amp;#34; &amp;#34;[location][lon]&amp;#34; =&amp;gt; &amp;#34;float&amp;#34; } } } output { elasticsearch { # action =&amp;gt; &amp;#34;index&amp;#34; hosts =&amp;gt; [&amp;#34;http://172.</description>
+    </item>
+    
+  </channel>
+</rss>

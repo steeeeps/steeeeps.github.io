@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>外面的世界很精彩 - steeeeps</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="博客一直搭建在digitalocean提供的vps上，5$一月，很便宜，之前一直使用免费vpn，但是每小时需要更换密码，不方便。
+反正vps闲着也是闲着，就搭建了一个vpn，方便工作时google用。
+在网上找了一个CentOS 6一键安装PPTP VPN脚本，还挺简单，如果有朋友需要，可以试一试。
+环境  CentOS 6.x 32位/64位 XEN/KVM/OpenVZ
+ 安装步骤  依次运行以下代码  cd /root wget http://www.huangjiexing.com/wp-content/uploads/sh/pptpd.sh chmod &#43;x pptpd.sh ./pptpd.sh 稍等片刻后，将返回以下信息表示成功  VPN service installed successfully, your VPN username is vpn, VPN password is XXXXXX 这是预设账号，运行以下命令添加帐户，按格式在新的一行写入你需要的账号和密码。  vi /etc/ppp/chap-secrets 安装成功。  如果需求不大，可以使用1小时vpn账号。 如果没有vps，推荐购买海贝vpn，同事一直在用，说还不错。
+如果需要购买vps，推荐使用digitalocean，性价比较高，现在注册充值5美元送10美元，相当于5美元使用3个月,点击购买
+技术转载自：CentOS 6一键安装PPTP VPN脚本" />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="外面的世界很精彩" />
+<meta property="og:description" content="博客一直搭建在digitalocean提供的vps上，5$一月，很便宜，之前一直使用免费vpn，但是每小时需要更换密码，不方便。
+反正vps闲着也是闲着，就搭建了一个vpn，方便工作时google用。
+在网上找了一个CentOS 6一键安装PPTP VPN脚本，还挺简单，如果有朋友需要，可以试一试。
+环境  CentOS 6.x 32位/64位 XEN/KVM/OpenVZ
+ 安装步骤  依次运行以下代码  cd /root wget http://www.huangjiexing.com/wp-content/uploads/sh/pptpd.sh chmod &#43;x pptpd.sh ./pptpd.sh 稍等片刻后，将返回以下信息表示成功  VPN service installed successfully, your VPN username is vpn, VPN password is XXXXXX 这是预设账号，运行以下命令添加帐户，按格式在新的一行写入你需要的账号和密码。  vi /etc/ppp/chap-secrets 安装成功。  如果需求不大，可以使用1小时vpn账号。 如果没有vps，推荐购买海贝vpn，同事一直在用，说还不错。
+如果需要购买vps，推荐使用digitalocean，性价比较高，现在注册充值5美元送10美元，相当于5美元使用3个月,点击购买
+技术转载自：CentOS 6一键安装PPTP VPN脚本" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://steeeeps.github.io/posts/2015/fuck-gfw/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-07-16T22:48:14+00:00" />
+<meta property="article:modified_time" content="2015-07-16T22:48:14+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="外面的世界很精彩"/>
+<meta name="twitter:description" content="博客一直搭建在digitalocean提供的vps上，5$一月，很便宜，之前一直使用免费vpn，但是每小时需要更换密码，不方便。
+反正vps闲着也是闲着，就搭建了一个vpn，方便工作时google用。
+在网上找了一个CentOS 6一键安装PPTP VPN脚本，还挺简单，如果有朋友需要，可以试一试。
+环境  CentOS 6.x 32位/64位 XEN/KVM/OpenVZ
+ 安装步骤  依次运行以下代码  cd /root wget http://www.huangjiexing.com/wp-content/uploads/sh/pptpd.sh chmod &#43;x pptpd.sh ./pptpd.sh 稍等片刻后，将返回以下信息表示成功  VPN service installed successfully, your VPN username is vpn, VPN password is XXXXXX 这是预设账号，运行以下命令添加帐户，按格式在新的一行写入你需要的账号和密码。  vi /etc/ppp/chap-secrets 安装成功。  如果需求不大，可以使用1小时vpn账号。 如果没有vps，推荐购买海贝vpn，同事一直在用，说还不错。
+如果需要购买vps，推荐使用digitalocean，性价比较高，现在注册充值5美元送10美元，相当于5美元使用3个月,点击购买
+技术转载自：CentOS 6一键安装PPTP VPN脚本"/>
+<script src="https://steeeeps.github.iojs/feather.min.js"></script>
+	
+	
+        <link href="https://steeeeps.github.io/css/fonts.7fa06c2792c8589768ffcdaf014e4bfc7f2ccbfba059f8e87131158970c23ed3.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://steeeeps.github.io/css/main.245cf2f4cbf86306cf2b642c640297777accf92ca33bea899d87920b0dad063d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://steeeeps.github.io/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css" media="(prefers-color-scheme: dark)"  />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://steeeeps.github.io">steeeeps</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">外面的世界很精彩</h1>
+			<div class="meta">Posted on Jul 16, 2015</div>
+		</div>
+		
+
+		<section class="body">
+			<p>博客一直搭建在<a href="https://www.digitalocean.com/?refcode=b4fcae38bf56">digitalocean</a>提供的vps上，5$一月，很便宜，之前一直使用免费vpn，但是每小时需要更换密码，不方便。</p>
+<p>反正vps闲着也是闲着，就搭建了一个vpn，方便工作时google用。</p>
+<p>在网上找了一个CentOS 6一键安装PPTP VPN脚本，还挺简单，如果有朋友需要，可以试一试。</p>
+<h2 id="环境">环境</h2>
+<blockquote>
+<p>CentOS 6.x 32位/64位
+XEN/KVM/OpenVZ</p>
+</blockquote>
+<h2 id="安装步骤">安装步骤</h2>
+<ol>
+<li>依次运行以下代码</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd /root
+wget http://www.huangjiexing.com/wp-content/uploads/sh/pptpd.sh
+chmod +x pptpd.sh
+./pptpd.sh
+</code></pre></div><ol start="2">
+<li>稍等片刻后，将返回以下信息表示成功</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">VPN service installed successfully, your VPN username is vpn, VPN password is XXXXXX
+</code></pre></div><ol start="3">
+<li>这是预设账号，运行以下命令添加帐户，按格式在新的一行写入你需要的账号和密码。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vi /etc/ppp/chap-secrets
+</code></pre></div><ol start="4">
+<li>安装成功。</li>
+</ol>
+<p>如果需求不大，可以使用<a href="http://freevpn1.wwdhz.com/">1小时vpn</a>账号。 <br>
+如果没有vps，推荐购买<a href="http://www.17mayi.net/sign/">海贝vpn</a>，同事一直在用，说还不错。<br>
+如果需要购买vps，推荐使用digitalocean，性价比较高，现在注册充值5美元送10美元，相当于5美元使用3个月,<a href="https://www.digitalocean.com/?refcode=b4fcae38bf56">点击购买</a></p>
+<p>技术转载自：<a href="http://www.huangjiexing.com/398.html">CentOS 6一键安装PPTP VPN脚本</a></p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/vps">VPS</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/steeeeps" title="GitHub"><i data-feather="github"></i></a>|⚡️
+	2021  © steeeeps |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script></div>
+    </body>
+</html>

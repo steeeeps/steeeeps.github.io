@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SQLite on steeeeps</title>
+    <link>https://steeeeps.github.io/tags/sqlite/</link>
+    <description>Recent content in SQLite on steeeeps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© steeeeps</copyright>
+    <lastBuildDate>Wed, 28 Oct 2015 17:58:17 +0000</lastBuildDate><atom:link href="https://steeeeps.github.io/tags/sqlite/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>log4net自定义日志内容入库</title>
+      <link>https://steeeeps.github.io/posts/2015/log4net-store-log-in-db/</link>
+      <pubDate>Wed, 28 Oct 2015 17:58:17 +0000</pubDate>
+      
+      <guid>https://steeeeps.github.io/posts/2015/log4net-store-log-in-db/</guid>
+      <description>在系统开发中，日志记录是最基本的功能，良好的日志记录习惯与记录格式，对开发调试、错误定位有很大的帮助。
+log4net是在.net开发中使用的最多的日志框架，使用很方便，只需要简单的配置，就能够将日志信息输出到文本文件中。其实log4net也支持将用户自定义的日志类型直接输出到各类型数据库中。这样就更方便的在程序中以表格或其他方式对日志进行展示。
+以sqlite数据库为例，展示log4net使用反射机制将自定义日志内容存入数据库中。
+具体步骤 1.在数据库中创建日志表 CREATE TABLE LOG (logtime timestamp,message varchar,user varchar) 2.创建自定义日志类 using System; using System.Collections.Generic; using System.Linq; using System.Text; namespace Loglite { class LogModel { public string User { get; set; } public DateTime LogTime { get; set; } public string Message { get; set; } public LogModel(string user, string message) { this.User = user; this.Message = message; this.LogTime = DateTime.Now; } } } 3.自定义视图转换器 using log4net.Layout.Pattern; using System; using System.</description>
+    </item>
+    
+  </channel>
+</rss>
